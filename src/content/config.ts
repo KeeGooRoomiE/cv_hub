@@ -103,6 +103,10 @@ const showcaseMediaSchema = z.object({
 const showcaseProjectSchema = z.object({
   slug: z.string().optional().default(''),
   name: z.string().optional().default(''),
+
+  // Sorting priority (lower shows earlier). Accepts number or numeric string.
+  order: z.coerce.number().optional(),
+
   category: z.string().optional().default(''),
   role: z.string().optional().default(''),
 

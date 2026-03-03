@@ -14,6 +14,10 @@ const lang = Astro.url.searchParams.get('lang') || 'en';
 
 const t = {
   title: lang === 'ru' ? 'Проекты' : 'Showcase',
+  subtitle:
+    lang === 'ru'
+      ? ''
+      : '',
   empty:
     lang === 'ru'
       ? 'Здесь пока ничего.'
@@ -33,9 +37,11 @@ try {
 
 projects = Array.isArray(projects) ? projects : [];
 projects = [...projects].sort((a, b) => {
-  const af = a?.featured ? 1 : 0;
-  const bf = b?.featured ? 1 : 0;
-  if (af !== bf) return bf - af;
+  const ao = Number.isFinite(Number(a?.order)) ? Number(a.order) : 9999;
+  const bo = Number.isFinite(Number(b?.order)) ? Number(b.order) : 9999;
+
+  if (ao !== bo) return ao - bo;
+
   const an = String(a?.name ?? '').toLowerCase();
   const bn = String(b?.name ?? '').toLowerCase();
   return an.localeCompare(bn);
