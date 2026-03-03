@@ -57,11 +57,14 @@ src/
     showcase/
       projects.yaml
   pages/
-    index.astro        # Main CV page
-    showcase.astro     # Projects showcase page
+    index.astro        # Main CV page (EN)
+    ru.astro           # Main CV page (RU)
+    showcase.astro     # Projects showcase page (EN)
+    showcase/ru.astro  # Projects showcase page (RU)
   components/
-    Layout.astro
-    Header.astro
+    Layout.astro       # Общий layout (шапка + <main>)
+    Header.astro       # Шапка (логотип, навигация, переключатель языка)
+    HomePage.astro     # Разметка главной страницы (блоки, которые можно тасовать)
 ```
 
 ### Content Model
@@ -98,6 +101,47 @@ YAML → Astro Content Collection → Page → Component → Static HTML
 Later extension:
 
 YAML → Generator Script → PDF / DOCX / TXT
+
+---
+
+## Home page layout (как тасовать блоки)
+
+Главная страница (EN и RU версии) собирается через общий компонент `HomePage.astro`.
+
+- `src/pages/index.astro` и `src/pages/ru.astro`:
+  - читают данные из `cv/en.yaml` / `cv/ru.yaml`;
+  - подготавливают ссылки на скачивание резюме;
+  - вызывают `<HomePage lang=... data=... pdfUrl=... />`.
+- Вся разметка и порядок блоков живут в `src/components/HomePage.astro`.
+
+### Структура `HomePage.astro`
+
+Внутри используется двухколоночный лейаут:
+
+- левая колонка — `aside.sidebar`
+- правая колонка — `main.main-content`
+
+Каждый крупный блок — отдельный `<article>` или `<section>` с комментарием.
+
+**Левая колонка (`sidebar`):**
+
+- блок **Download resume** — кнопки PDF / DOCX / TXT
+- блок **Skills** — навыки по группам
+
+**Правая колонка (`main-content`):**
+
+- блок **Hero** — имя, тайтл, summary, контакты
+- блок **Achievements** — достижения (если есть в YAML)
+- блок **Experience** — таймлайн опыта
+
+Чтобы изменить порядок блоков, достаточно:
+
+1. Открыть `src/components/HomePage.astro`.
+2. Найти нужный закомментированный блок (Download, Skills, Hero, Achievements, Experience).
+3. Переместить соответствующий `<article>` / `<section>` выше или ниже внутри `aside` или `main`.
+4. Чтобы скрыть блок — удалить его целиком (или закомментировать).
+
+Логика языка (`lang`) и текстов (`t.*`) находится внутри `HomePage.astro`, поэтому EN/RU страницы не дублируют разметку, а только подают данные.
 
 ---
 
