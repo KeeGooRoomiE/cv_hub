@@ -20,10 +20,10 @@ const { title = 'CV Hub', lang = 'en' } = Astro.props;
   <body>
     <header class="header">
       <div class="container header__row">
-        <a class="brand" href={`/?lang=${lang}`}>CV Hub</a>
+        <a class="brand" href={`./?lang=${lang}`}>CV Hub</a>
         <nav class="nav">
-          <a href={`/?lang=${lang}`}>{lang === 'ru' ? 'Главная' : 'Home'}</a>
-          <a href={`/showcase?lang=${lang}`}>{lang === 'ru' ? 'Шоукейс' : 'Showcase'}</a>
+          <a href={`./?lang=${lang}`}>{lang === 'ru' ? 'Главная' : 'Home'}</a>
+          <a href={`./showcase?lang=${lang}`}>{lang === 'ru' ? 'Шоукейс' : 'Showcase'}</a>
         </nav>
         <div class="lang">
           <a class={lang === 'en' ? 'active' : ''} href={`${Astro.url.pathname}?lang=en`}>EN</a>
