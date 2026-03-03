@@ -1,25 +1,14 @@
-<file name=0 path=/Users/xandergusarov/Documents/GitHub/cv_hub/README.md># CV Hub
+# CV Hub
+
+![Deploy](https://github.com/KeeGooRoomiE/cv_hub/actions/workflows/deploy.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Astro](https://img.shields.io/badge/built%20with-Astro-ff5d01)
 
 **Resume as Code.** A static, data-driven personal CV site built with Astro and powered by a single YAML source of truth.
 
 Instead of maintaining separate PDF, DOC, web, and LinkedIn versions — one YAML file generates everything.
 
----
-
-## Summary
-
-- [Who is this for](#who-is-this-for)
-- [What you get](#what-you-get)
-- [Quick start](#quick-start)
-- [How to edit your data](#how-to-edit-your-data)
-- [How to customize the look](#how-to-customize-the-look)
-- [How to deploy to GitHub Pages](#how-to-deploy-to-github-pages)
-- [Generate YAML from an existing resume](#generate-yaml-from-an-existing-resume)
-- [Documentation](#documentation)
-- [Project structure](#project-structure)
-- [Tech stack](#tech-stack)
-- [Roadmap](#roadmap)
-- [License](#license)
+🌐 **[keegooroomie.github.io/cv_hub](https://keegooroomie.github.io/cv_hub/)**
 
 ---
 
@@ -40,7 +29,7 @@ CV Hub works for anyone who wants a professional website with full personal cont
 - Main page — CV
 - Showcase page — projects and case studies
 - Two language support (RU / EN)
-- Ability to generate PDF / DOCX / TXT from the same data
+- Downloadable resume files (PDF / DOCX / TXT) generated automatically from YAML
 - Clean static HTML deployed on GitHub Pages
 - Full control over the visual style through a single CSS file
 
@@ -98,46 +87,7 @@ src/content/
     projects.yaml ← projects list
 ```
 
-### `cv/en.yaml` structure
-
-```yaml
-name: "Your Name"
-title: "Your Title"
-summary: "Brief professional summary."
-
-contacts:
-  - type: email
-    value: you@example.com
-  - type: github
-    value: github.com/yourhandle
-
-skills:
-  - category: "Tools"
-    items: ["Figma", "Notion", "Git"]
-
-experience:
-  - company: "Company Name"
-    role: "Your Role"
-    period: "2022 — present"
-    description: "What you did there."
-    stack: ["Tool A", "Tool B"]
-```
-
-### `showcase/projects.yaml` structure
-
-```yaml
-projects:
-  - name: "Project Name"
-    role: "Author"
-    year: 2024
-    description: "What this project does."
-    stack: ["Figma", "GitHub"]
-    links:
-      - label: "GitHub"
-        url: "https://github.com/yourhandle/project"
-```
-
-After editing, save the files — the page will reload automatically in `npm run dev` mode.
+For full YAML structure reference and field descriptions — see **[`docs/INFO.md`](docs/INFO.md)**.
 
 ---
 
@@ -146,7 +96,7 @@ After editing, save the files — the page will reload automatically in `npm run
 All styles live in one file:
 
 ```
-src/styles/global.css
+public/styles/global.css
 ```
 
 The file is token-based — to change the color scheme of the entire site, just edit the `:root` block at the top:
@@ -186,6 +136,35 @@ Your site will be live at:
 https://YOUR_ACCOUNT.github.io/cv-hub/
 ```
 
+The deploy workflow runs automatically on every push to `main`. The `base` URL is resolved dynamically from `GITHUB_REPOSITORY` — so forks work out of the box without any config changes.
+
+---
+
+## Resume file generation
+
+DOCX and TXT files are generated automatically from YAML during build:
+
+```bash
+npm run build
+# runs: node scripts/generate-resume.js && astro build
+```
+
+To generate files without building the site:
+
+```bash
+npm run generate
+```
+
+Output:
+```
+public/downloads/resume_en.txt
+public/downloads/resume_ru.txt
+public/downloads/resume_en.docx
+public/downloads/resume_ru.docx
+```
+
+PDF is placed manually into `public/downloads/` for now. Automated PDF generation via Playwright is planned.
+
 ---
 
 ## Generate YAML from an existing resume
@@ -196,7 +175,7 @@ Use an LLM (ChatGPT, Claude, etc.) with the ready-made prompt:
 
 👉 **[See `docs/llm-resume-guide.md`](docs/llm-resume-guide.md)**
 
-Step-by-step instructions and a prompt that takes your resume and returns a ready YAML to drop into the project.
+Step-by-step instructions and a prompt that takes your resume and returns ready YAML to drop into the project.
 
 ---
 
@@ -204,24 +183,14 @@ Step-by-step instructions and a prompt that takes your resume and returns a read
 
 ```
 docs/
-  llm-resume-guide.md    ← How to generate YAML from a resume using an LLM
-  INFO.md                ← Project overview: goals, architecture, data flow
+  INFO.md                ← Project overview, YAML reference, data flow
   ENGINEERING.md         ← Engineering decisions and project philosophy
-  release-guide.md       ← How to version and publish releases
-  github-labels.md       ← Repository labels setup
+  llm-resume-guide.md    ← How to generate YAML from a resume using an LLM
 ```
 
-### Direct links
+**`INFO.md`** — start here if you want to understand the project or adapt it. Covers goals, architecture, full YAML schema with examples, and component structure.
 
-- 📘 [INFO.md](docs/INFO.md) — Project overview and data flow
-- 🏗 [ENGINEERING.md](docs/ENGINEERING.md) — Architectural decisions and trade-offs
-- 🤖 [llm-resume-guide.md](docs/llm-resume-guide.md) — How to generate YAML from an existing resume
-- 🚀 [release-guide.md](docs/release-guide.md) — Release and versioning guide
-- 🏷 [github-labels.md](docs/github-labels.md) — Suggested repository labels
-
-**`INFO.md`** — the starting point for understanding the project. Explains what CV Hub is, what problem it solves, and how the data flow works (`YAML → Astro → HTML`). Useful to read before forking — and before feeding the project to an LLM for help with customization.
-
-**`ENGINEERING.md`** — an architectural journal. Explains why Astro over React or Angular, why YAML, what trade-offs were made deliberately, and where the project is heading.
+**`ENGINEERING.md`** — architectural journal. Explains why Astro over React or Angular, why YAML, what trade-offs were made deliberately.
 
 ---
 
@@ -236,19 +205,23 @@ src/
     showcase/
       projects.yaml
   pages/
-    index.astro        # Main CV page
+    index.astro        # Main CV page (EN)
+    ru.astro           # Main CV page (RU)
     showcase.astro     # Showcase page
   components/
     Layout.astro
     Header.astro
+    HomePage.astro
+public/
   styles/
     global.css         # All site styles
+  downloads/           # Generated resume files
+scripts/
+  generate-resume.js   # DOCX + TXT generator
 docs/
-  llm-resume-guide.md
   INFO.md
   ENGINEERING.md
-  release-guide.md
-  github-labels.md
+  llm-resume-guide.md
 ```
 
 ---
@@ -257,24 +230,13 @@ docs/
 
 - [Astro](https://astro.build) — static site generator
 - YAML — single source of truth
+- [docx](https://docx.js.org) — DOCX generation
 - GitHub Pages — deployment
-- GitHub Actions — CI/CD (in progress)
-
----
-
-## Roadmap
-
-- [ ] PDF generation via Playwright
-- [ ] DOCX generation via Pandoc
-- [ ] Zod schema validation for YAML
-- [ ] Dark / light theme toggle
-- [ ] Project filtering by tags
-- [ ] SEO + OpenGraph
-- [ ] CLI build tool
+- GitHub Actions — CI/CD
 
 ---
 
 ## License
 
 Source code: MIT  
-Content (resume data): © Author</file>
+Content (resume data): © Author
