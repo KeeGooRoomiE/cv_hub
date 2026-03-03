@@ -4,12 +4,14 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/generate-resume.js && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate": "node scripts/generate-resume.js"
   },
   "dependencies": {
     "astro": "^5.17.1",
+    "docx": "^9.5.0",
     "hast-util-parse-selector": "^4.0.0",
     "yaml": "^2.8.2"
   }
