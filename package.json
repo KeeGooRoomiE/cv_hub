@@ -4,10 +4,11 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/generate-resume.js && astro build",
+    "prebuild": "node .github/scripts/generate-resume.js",
+    "build": "node .github/scripts/generate-resume.js && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate": "node scripts/generate-resume.js"
+    "generate": "node .github/scripts/generate-resume.js"
   },
   "dependencies": {
     "astro": "^5.17.1",
