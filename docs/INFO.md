@@ -145,6 +145,141 @@ Language logic (`lang`) and UI strings (`t.*`) live inside `HomePage.astro`, so 
 
 ---
 
+
+---
+
+## Showcase Project Fields (How to Fill `projects.yaml`)
+
+All fields in `showcase/projects.yaml` are technically optional (schema allows empty values),
+but some are strongly recommended for a meaningful project card.
+
+Minimum recommended field:
+- `name` — Project title (string). If missing, card falls back to "Untitled".
+
+---
+
+### Core Fields
+
+- `slug` (string)
+  Internal identifier. Used for anchors or future routing. Optional.
+
+- `name` (string)
+  Project title displayed on the card. Recommended.
+
+- `role` (string)
+  Your role in the project (e.g. "DevOps Engineer", "Gameplay Engineer"). Optional.
+
+- `year` (string | number)
+  Time reference (e.g. "2024", "2023–2024"). Stored as string internally. Optional.
+
+- `description` (string)
+  Short project summary. Optional but recommended.
+
+---
+
+### Visual & Theming
+
+- `theme` (string)
+  Predefined visual theme token (e.g. `blue`, `purple`, `emerald`, `red`, etc.).
+  Controlled in CSS.
+
+- `accent` (HEX string)
+  Custom color override (e.g. `"#3b82f6"`).
+  If provided, overrides theme accent.
+
+- `featured` (boolean)
+  Marks project as featured (affects sorting and future highlighting). Optional.
+
+---
+
+### Structured Data Blocks
+
+- `platforms` (string[])
+  Target platforms (e.g. `[Linux, iOS, Web]`). Optional.
+
+- `stack` (string[])
+  Technologies used. Optional.
+
+- `tags` (string[])
+  Keywords for filtering/grouping. Optional.
+
+---
+
+### Metrics
+
+```yaml
+metrics:
+  - label: Deploy time
+    value: "8m → 2m"
+    source: https://example.com
+```
+
+- `label` (string)
+  What was done / measured.
+- `value` (string)
+  Result or impact.
+- `source` (string)
+  Optional link to proof or reference.
+
+All metric fields are optional.
+
+---
+
+### Links
+
+```yaml
+links:
+  - label: Repo
+    url: https://example.com
+    type: repo
+```
+
+- `label` (string)
+  Link text.
+- `url` (string)
+  Destination URL.
+- `type` (string)
+  Semantic type (repo, demo, store, article, etc.). Optional.
+
+Links without both `label` and `url` are not rendered.
+
+---
+
+### Media
+
+```yaml
+media:
+  - type: image | gif | video
+    src: /media/projects/.../file.jpg
+    alt: Description
+    featured: true
+```
+
+- `type` (`image` | `gif` | `video`)
+- `src` (string)
+  Path relative to `/public`.
+- `alt` (string)
+  Accessibility description.
+- `featured` (boolean)
+  Determines primary preview media.
+
+If media file fails to load, it is automatically removed from rendering.
+
+---
+
+### Optionality Philosophy
+
+All fields are optional by schema design.
+
+UI renders only what exists:
+- Empty blocks are not displayed.
+- Missing arrays do not break layout.
+- Broken media is removed automatically.
+
+This allows flexible, minimal, or highly detailed project entries.
+
+---
+
 ## Why This Approach
 
 Traditional resume formats create duplication:
