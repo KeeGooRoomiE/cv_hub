@@ -22,6 +22,17 @@ const metrics = project?.metrics ?? [];
 const links = project?.links ?? [];
 const media = project?.media ?? [];
 
+// GitHub Pages can serve the site under a base path (e.g. /cv_hub/).
+// YAML usually uses absolute-like paths (/media/...). Prefix BASE_URL for local assets.
+const withBase = (p = '') => {
+  const s = String(p);
+  if (!s) return '';
+  // keep absolute URLs and data URIs untouched
+  if (/^(https?:)?\/\//i.test(s) || s.startsWith('data:')) return s;
+  const clean = s.replace(/^\/+/, '');
+  return `${import.meta.env.BASE_URL}${clean}`;
+};
+
 const featuredMedia = media.find((m) => m.featured) ?? media[0] ?? null;
 
 // Inline style override if accent HEX is provided
@@ -49,7 +60,7 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
       {featuredMedia.type === 'video' && (
         <video
           class="media__el"
-          src={featuredMedia.src}
+          src={withBase(featuredMedia.src)}
           controls
           playsinline
           preload="metadata"
@@ -59,7 +70,7 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
       {(featuredMedia.type === 'image' || featuredMedia.type === 'gif') && (
         <img
           class="media__el"
-          src={featuredMedia.src}
+          src={withBase(featuredMedia.src)}
           alt={featuredMedia.alt ?? ''}
           loading="lazy"
           onerror="this.closest('.media')?.remove();"
@@ -71,7 +82,7 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
           {media.map((m, idx) => (
             <a
               class={`thumb ${m === featuredMedia ? 'thumb--active' : ''}`}
-              href={m.src}
+              href={withBase(m.src)}
               target="_blank"
               rel="noopener"
               title={m.alt ?? `Media ${idx + 1}`}
@@ -79,7 +90,7 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
               {(m.type === 'image' || m.type === 'gif') && (
                 <img
                   class="thumb__img"
-                  src={m.src}
+                  src={withBase(m.src)}
                   alt={m.alt ?? ''}
                   loading="lazy"
                   onerror="this.closest('.thumb')?.remove();"
