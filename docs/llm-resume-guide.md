@@ -18,6 +18,8 @@ CV Hub stores all resume data in YAML files (`cv/en.yaml`, `cv/ru.yaml`).
 
 If you already have a resume in PDF, DOCX, plain text, or any other format — no need to fill in the YAML manually. Hand it to an LLM with the prompt below and get ready YAML to drop into the project.
 
+Alternatively, if your resume exists as a JSON Resume file, you can convert it directly via CLI — no LLM needed.
+
 ---
 
 ## Supported input formats
@@ -26,11 +28,65 @@ If you already have a resume in PDF, DOCX, plain text, or any other format — n
 - DOCX — open and copy the content, or attach the file
 - Plain text / Markdown
 - LinkedIn — `linkedin.com/in/you → More → Save to PDF`
+- JSON Resume — convert directly via `npm run resume:import`
 - Any other text format with professional information
 
 ---
 
-## Steps
+## Option A — Convert from JSON Resume (CLI, no LLM)
+
+If your resume is already in [JSON Resume](https://jsonresume.org) format, you can convert it directly to YAML without using an LLM.
+
+### 1. Place your JSON file
+
+```
+docs/cv_en.json   ← English version
+docs/cv_ru.json   ← Russian version
+```
+
+### 2. Run the converter
+
+```bash
+# Single language
+npm run resume:import -- docs/cv_en.json en
+npm run resume:import -- docs/cv_ru.json ru
+
+# Both at once
+npm run resume:import:all
+```
+
+### 3. Result
+
+```
+src/content/cv/en.yaml   ← ready to use
+src/content/cv/ru.yaml   ← ready to use
+public/downloads/json/cv_en.json
+public/downloads/json/cv_ru.json
+```
+
+### JSON Resume field mapping
+
+| JSON Resume | CV Hub YAML |
+|---|---|
+| `basics.label` | `title` |
+| `basics.profiles[]` | `contacts[]` |
+| `work[].name` | `experience[].company` |
+| `work[].position` | `experience[].role` |
+| `work[].highlights[]` | `experience[].description[]` |
+| `work[].keywords[]` | `experience[].stack[]` |
+| `work[].startDate` + `endDate` | `experience[].period` |
+| `skills[].name` | `skills[].group` |
+| `skills[].keywords[]` | `skills[].items[]` |
+| `languages[].fluency` | `languages[].level` |
+| `education[].studyType` + `area` | `education[].degree` |
+| `x_achievements[]` | `achievements[]` |
+
+> **Note:** `x_achievements` is a custom field outside the JSON Resume standard.
+> Add it manually to your JSON file if needed.
+
+---
+
+## Option B — Generate from any resume via LLM
 
 ### 1. Prepare your resume
 
@@ -159,8 +215,6 @@ Open `http://localhost:4321` and check that everything renders correctly.
 
 ## Expected output example
 
-The model should return something like this:
-
 ```yaml
 name: "Jane Doe"
 title: "Frontend Developer"
@@ -231,15 +285,19 @@ Remove the `--- RU ---` line from the prompt and specify which language you need
 ## Flow
 
 ```
-PDF / DOCX / TXT resume
+PDF / DOCX / TXT / LinkedIn PDF
         ↓
-   LLM + prompt
+   LLM + prompt          ← Option B
         ↓
    en.yaml + ru.yaml
+        ↑
+   JSON Resume (.json)
+        ↓
+   npm run resume:import  ← Option A (no LLM)
         ↓
    git commit + push
         ↓
-   CV Hub rebuilds → site updated + resume files regenerated
+   CV Hub rebuilds → site + resume files regenerated
 ```
 
 YAML is the single source of truth. Everything else is generated from it.
