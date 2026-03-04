@@ -58,9 +58,7 @@ const skillGroups = rawSkills
   )
   .filter((g) => g.items.length > 0);
 
-const currentYear = new Date().getFullYear();
-const authorName = data?.name ?? 'Alexander Gusarov';
-const authorGit = 'https://github.com/KeeGooRoomiE';
+
 ---
 
 <Layout title={pageTitle} lang={lang} section="main">
@@ -168,7 +166,6 @@ const authorGit = 'https://github.com/KeeGooRoomiE';
           3. Experience: основной таймлайн опыта.
           Обычно внизу, но его можно поднять выше hero/achievements.
         */}
-        <section class="section">
           <h2 class="h2">{t.experience}</h2>
 
           {experience.length > 0 ? (
@@ -198,17 +195,9 @@ const authorGit = 'https://github.com/KeeGooRoomiE';
               </p>
             </article>
           )}
-        </section>
       </main>
     </div>
   </section>
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span>© {currentYear} {authorName}</span>
-      <a href={authorGit} target="_blank" rel="noopener" class="footer__link">
-        GitHub
-      </a>
-    </div>
-  </footer>
+  
 </Layout>
 

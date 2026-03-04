@@ -2,70 +2,71 @@
   global.css
   CV Hub
 
-  Single-source tokens: edit the block below to recolor / reshape the entire site.
+  Created by Alexander Gusarov on 03.03.2026.
+  @spartan121
 */
 
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DESIGN TOKENS
+   Этот блок — единственное что нужно переопределить в файле темы.
+   Все токены реально используются в компонентах.
    ───────────────────────────────────────────────────────────────────────────── */
 :root {
-  /* Core palette */
+  /* Фон страницы */
   --bg: #070a10;
-  --surface: #0b111b;
-  --surface-2: #0f1726;
 
-  /* Card glass + depth */
+  /* Фоновые глоу-градиенты (radial на body) */
+  --bg-glow-1: rgba(59 130 246 / 0.22);
+  --bg-glow-2: rgba(96 165 250 / 0.12);
+
+  /* Текст */
+  --text: rgba(233, 238, 247, 0.96);
+  --text-strong: rgba(233, 238, 247, 0.92);
+  --muted: rgba(166, 177, 194, 0.90);
+
+  /* Бордеры */
+  --border: rgba(255, 255, 255, 0.10);
+  --border-2: rgba(255, 255, 255, 0.16);
+
+  /* Акцент */
+  --accent: #3b82f6;
+  --accent-2: #60a5fa;
+  --accent-rgb: 59 130 246;
+  --accent-2-rgb: 96 165 250;
+
+  /* Градиент бренда (CV Hub в хедере) */
+  --brand-grad: linear-gradient(90deg, var(--accent), var(--accent-2));
+
+  /* Карточки */
   --card-bg: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.055),
     rgba(255, 255, 255, 0.022)
   );
-  --card-bg-2: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.035),
-    rgba(255, 255, 255, 0.014)
-  );
 
-  --text: rgba(233, 238, 247, 0.96);
-  --muted: rgba(166, 177, 194, 0.90);
-
-  --border: rgba(255, 255, 255, 0.10);
-  --border-2: rgba(255, 255, 255, 0.16);
-
-  /* Accent */
-  --accent: #3b82f6;
-  --accent-2: #60a5fa;
-
-  --accent-rgb: 59 130 246;
-  --accent-2-rgb: 96 165 250;
-
-  /* Brand gradients */
-  --brand-grad: linear-gradient(90deg, var(--accent), var(--accent-2));
-  --brand-glow: rgba(var(--accent-rgb) / 0.24);
-  --brand-glow-2: rgba(var(--accent-2-rgb) / 0.16);
-
-  /* Shadows */
+  /* Тени */
   --shadow: 0 16px 44px rgba(0, 0, 0, 0.50);
   --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.34);
 
-  /* Radius */
+  /* Радиусы */
   --r-lg: 18px;
-  --r-md: 14px;
   --r-pill: 999px;
 
-  /* Layout */
+  /* Хедер */
+  --header-bg: rgba(7, 10, 16, 0.70);
+
+  /* Лейаут */
   --container: 980px;
 
-  /* Background FX */
-  --bg-glow-1: rgba(var(--accent-rgb) / 0.22);
-  --bg-glow-2: rgba(var(--accent-2-rgb) / 0.12);
-
-  /* Interaction */
-  --ring: 0 0 0 3px rgba(var(--accent-rgb) / 0.18);
-  --ease: cubic-bezier(.2,.8,.2,1);
+  /* Анимация */
+  --ease: cubic-bezier(.2, .8, .2, 1);
   --t: 180ms var(--ease);
+
+  /* Фокус */
+  --ring: 0 0 0 3px rgba(var(--accent-rgb) / 0.18);
 }
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    BASE
@@ -79,8 +80,8 @@ body {
   color: var(--text);
   background:
     radial-gradient(1200px 700px at 12% -12%, var(--bg-glow-1), transparent 60%),
-    radial-gradient(980px 520px at 92% 0%, var(--bg-glow-2), transparent 55%),
-    radial-gradient(800px 520px at 50% 120%, rgba(255,255,255,0.04), transparent 55%),
+    radial-gradient(980px 520px at 92% 0%,    var(--bg-glow-2), transparent 55%),
+    radial-gradient(800px 520px at 50% 120%,  rgba(255,255,255,0.04), transparent 55%),
     var(--bg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -90,8 +91,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body::before{
-  content:"";
+body::before {
+  content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -124,6 +125,7 @@ a:hover { text-decoration: underline; }
   z-index: 1;
 }
 
+
 /* ─────────────────────────────────────────────────────────────────────────────
    HEADER
    ───────────────────────────────────────────────────────────────────────────── */
@@ -133,7 +135,7 @@ a:hover { text-decoration: underline; }
   top: 0;
   z-index: 20;
   border-bottom: 1px solid var(--border);
-  background: rgba(7, 10, 16, 0.70);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
 }
 
@@ -170,7 +172,6 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
 }
 
-/* Language switch */
 .lang {
   display: flex;
   gap: 8px;
@@ -181,6 +182,7 @@ a:hover { text-decoration: underline; }
   border-radius: 10px;
   border: 1px solid transparent;
   color: var(--muted);
+  transition: color var(--t), background var(--t), border-color var(--t);
 }
 
 .lang a:hover {
@@ -195,38 +197,22 @@ a:hover { text-decoration: underline; }
   background: rgba(var(--accent-rgb) / 0.10);
 }
 
+
 /* ─────────────────────────────────────────────────────────────────────────────
    LAYOUT
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Generic grids */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-@media (min-width: 900px) {
-  .grid { grid-template-columns: 1fr 1fr; }
-}
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  margin-top: 14px;
-}
-
-@media (min-width: 900px) {
-  .grid2 { grid-template-columns: 1fr 1fr; }
-}
-
-/* Main page layout: sidebar + content */
 .page-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
   align-items: flex-start;
+}
+
+@media (min-width: 960px) {
+  .page-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
+  }
 }
 
 .sidebar {
@@ -241,14 +227,20 @@ a:hover { text-decoration: underline; }
   gap: 14px;
 }
 
-@media (min-width: 960px) {
-  .page-grid {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
-  }
+/* Showcase grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 
+@media (min-width: 900px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+
 /* ─────────────────────────────────────────────────────────────────────────────
-   CARDS + TYPOGRAPHY
+   CARDS
    ───────────────────────────────────────────────────────────────────────────── */
 
 .card {
@@ -257,8 +249,8 @@ a:hover { text-decoration: underline; }
   border-radius: var(--r-lg);
   padding: 16px;
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(10px);
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
+  /* backdrop-filter: blur(10px); */
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
 }
 
 .card:hover {
@@ -266,6 +258,29 @@ a:hover { text-decoration: underline; }
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
+
+.card__meta {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.card__desc {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TYPOGRAPHY
+   ───────────────────────────────────────────────────────────────────────────── */
 
 .h2 {
   margin: 0 0 10px;
@@ -299,7 +314,22 @@ a:hover { text-decoration: underline; }
   justify-content: space-between;
 }
 
-/* CV hero */
+/* Строка с подзаголовком внутри карточки (Platforms / Stack / Tags) */
+.row { margin-top: 12px; }
+.row__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HERO
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .hero { padding: 18px; }
 
 .hero__top {
@@ -319,7 +349,7 @@ a:hover { text-decoration: underline; }
 .hero__title {
   margin: 8px 0 0;
   font-weight: 750;
-  color: rgba(233, 238, 247, 0.90);
+  color: var(--text-strong);
 }
 
 .hero__summary {
@@ -328,15 +358,11 @@ a:hover { text-decoration: underline; }
   max-width: 70ch;
 }
 
-.hero__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-}
+.hero__contacts { margin-top: 14px; }
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   BUTTONS + PILLS + TAGS
+   BUTTONS
    ───────────────────────────────────────────────────────────────────────────── */
 
 .btnrow {
@@ -354,22 +380,19 @@ a:hover { text-decoration: underline; }
   color: var(--text);
   font-weight: 650;
   text-decoration: none;
-  box-shadow: 0 10px 22px rgba(var(--accent-rgb) / 0.10);
   transition: transform var(--t), background var(--t), border-color var(--t), box-shadow var(--t);
 }
 
 .btn:hover {
-  background: rgba(var(--accent-rgb) / 0.22);
+  background: rgba(var(--accent-rgb) / 0.28);
   border-color: rgba(var(--accent-rgb) / 0.35);
   text-decoration: none;
   transform: translateY(-1px);
-  box-shadow: 0 16px 34px rgba(var(--accent-rgb) / 0.14);
 }
 
 .btn--ghost {
   background: rgba(255, 255, 255, 0.04);
   border-color: var(--border);
-  color: var(--text);
 }
 
 .btn--ghost:hover {
@@ -377,7 +400,11 @@ a:hover { text-decoration: underline; }
   border-color: var(--border-2);
 }
 
-/* Pills (contacts) */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PILLS + TAGS + LINKS
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .pillrow {
   display: flex;
   flex-wrap: wrap;
@@ -403,13 +430,12 @@ a:hover { text-decoration: underline; }
   transform: translateY(-1px);
 }
 
-/* Tags */
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   padding: 0;
-  margin: 12px 0 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -418,12 +444,17 @@ a:hover { text-decoration: underline; }
   border-radius: var(--r-pill);
   padding: 5px 10px;
   font-size: 12px;
-  color: rgba(233, 238, 247, 0.92);
+  color: var(--text-strong);
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* Links row inside cards (showcase) */
-.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
 .link {
   padding: 7px 10px;
   border-radius: 10px;
@@ -440,19 +471,27 @@ a:hover { text-decoration: underline; }
   transform: translateY(-1px);
 }
 
-/* Optional: skill groups (reserved for later) */
-.skillsgrid { display: grid; gap: 12px; }
-.skillsgroup__title { font-weight: 700; margin-bottom: 6px; color: rgba(233, 238, 247, 0.92); }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SHOWCASE: PROJECT THEMING + MEDIA + METRICS
+   SKILLS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.skillsgrid { display: grid; gap: 12px; }
+
+.skillsgroup__title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-strong);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SHOWCASE: PROJECT CARDS
    ───────────────────────────────────────────────────────────────────────────── */
 
 .project {
-  /* Default accent for the card; can be overridden by theme or inline vars */
   --card-accent: var(--accent);
   --card-accent-rgb: var(--accent-rgb);
-
   position: relative;
   overflow: hidden;
   align-self: start;
@@ -465,7 +504,7 @@ a:hover { text-decoration: underline; }
   pointer-events: none;
   border-radius: var(--r-lg);
   background:
-    radial-gradient(600px 220px at 20% 0%, rgba(var(--card-accent-rgb) / 0.18), transparent 60%),
+    radial-gradient(600px 220px at 20% 0%,  rgba(var(--card-accent-rgb) / 0.18), transparent 60%),
     radial-gradient(500px 220px at 85% 20%, rgba(var(--card-accent-rgb) / 0.10), transparent 55%);
   opacity: 0.9;
 }
@@ -476,7 +515,8 @@ a:hover { text-decoration: underline; }
   border-color: rgba(var(--card-accent-rgb) / 0.28);
 }
 
-/* Theme tokens */
+/* Темы проектов */
+.project--auto,
 .project--blue   { --card-accent-rgb: 59 130 246;  --card-accent: #3b82f6; }
 .project--purple { --card-accent-rgb: 168 85 247;  --card-accent: #a855f7; }
 .project--amber  { --card-accent-rgb: 245 158 11;  --card-accent: #f59e0b; }
@@ -484,14 +524,17 @@ a:hover { text-decoration: underline; }
 .project--red    { --card-accent-rgb: 239 68 68;   --card-accent: #ef4444; }
 .project--slate  { --card-accent-rgb: 148 163 184; --card-accent: #94a3b8; }
 
-/* Project links follow card accent */
 .project .link:hover {
   border-color: rgba(var(--card-accent-rgb) / 0.28);
   background: rgba(var(--card-accent-rgb) / 0.10);
 }
 
-/* Media preview sizing */
-.media{
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MEDIA (showcase)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.media {
   margin-top: 12px;
   border-radius: 14px;
   overflow: hidden;
@@ -500,7 +543,7 @@ a:hover { text-decoration: underline; }
   max-height: 360px;
 }
 
-.media__el{
+.media__el {
   width: 100%;
   height: 100%;
   max-height: 360px;
@@ -508,92 +551,122 @@ a:hover { text-decoration: underline; }
   object-fit: cover;
 }
 
-/* Thumbnails */
-.thumbs{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:10px;
-  border-top:1px solid rgba(255,255,255,0.10);
+.thumbs {
+  display: flex;
+  gap: 10px;
+  overflow: auto;
+  padding: 10px;
+  border-top: 1px solid rgba(255,255,255,0.10);
   background: rgba(255,255,255,0.02);
 }
 
-.thumb{
-  flex:0 0 auto;
-  width:72px;
-  height:44px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.12);
+.thumb {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.03);
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
-.thumb:hover{
+.thumb:hover {
   border-color: rgba(var(--card-accent-rgb) / 0.28);
   background: rgba(var(--card-accent-rgb) / 0.10);
 }
 
-.thumb--active{
+.thumb--active {
   border-color: rgba(var(--card-accent-rgb) / 0.35);
   box-shadow: 0 0 0 2px rgba(var(--card-accent-rgb) / 0.14);
 }
 
-.thumb__img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+.thumb__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.thumb__video{
-  font-weight:750;
-  opacity:.9;
+.thumb__video {
+  font-weight: 750;
+  opacity: .9;
 }
 
-/* Metrics grid (up to 5-ish per row; centers when fewer) */
-.metrics-grid{
-  display:grid;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   METRICS (showcase)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.metrics-grid {
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  max-width: 100%;
   margin: 18px auto 0;
   justify-content: center;
   justify-items: center;
   text-align: center;
 }
 
-@media (max-width: 920px){
-  .metrics-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 920px) {
+  .metrics-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-@media (max-width: 560px){
-  .metrics-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 560px) {
+  .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.metric-card{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  align-items:center;
-  width:100%;
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
 }
 
-.metric-label{
-  font-size:12px;
-  opacity:.65;
-  letter-spacing:.2px;
+.metric-label {
+  font-size: 12px;
+  opacity: .65;
+  letter-spacing: .2px;
 }
 
-.metric-value{
-  font-size:16px;
-  font-weight:700;
+.metric-value {
+  font-size: 16px;
+  font-weight: 700;
   color: var(--card-accent, var(--accent));
 }
 
-.project--no-media .card__desc{ margin-top: 10px; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FOOTER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.footer {
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  padding: 16px 0;
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer__link {
+  color: var(--muted);
+  transition: color var(--t);
+}
+
+.footer__link:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    ACCESSIBILITY
@@ -606,8 +679,8 @@ a:hover { text-decoration: underline; }
   box-shadow: var(--ring);
 }
 
-@media (prefers-reduced-motion: reduce){
-  *{
+@media (prefers-reduced-motion: reduce) {
+  * {
     transition: none !important;
     scroll-behavior: auto !important;
   }

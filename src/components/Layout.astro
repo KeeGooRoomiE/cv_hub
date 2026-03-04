@@ -7,12 +7,25 @@
 //  @spartan121
 //
 import '../styles/global.css';
-import '../styles/themes/midnight.css'; 
+
+
+// Change theme here 
+//    
+//import '../styles/themes/vscode.css'; 
+//
+// Change theme here 
+
 const { title = 'CV Hub', lang = 'en', section = 'main' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const homeHref = `${base}/${lang === 'ru' ? 'ru' : ''}`;
 const showcaseHref = `${base}/showcase${lang === 'ru' ? '/ru' : ''}`;
+
+const data = {};
+
+const currentYear = new Date().getFullYear();
+const authorName = data?.name ?? 'Alexander Gusarov';
+const authorGit = 'https://github.com/KeeGooRoomiE';
 
 const otherLang = lang === 'ru' ? 'en' : 'ru';
 const switchHref =
@@ -46,5 +59,14 @@ const switchHref =
     <main>
       <slot />
     </main>
+
+    <footer class="footer">
+    <div class="container footer__inner">
+      <span>© {currentYear} {authorName}</span>
+      <a href={authorGit} target="_blank" rel="noopener" class="footer__link">
+        GitHub
+      </a>
+    </div>
+  </footer>
   </body>
 </html>
