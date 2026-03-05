@@ -180,15 +180,16 @@ The file is token-based — to restyle the entire site, edit only the `:root` bl
 
 ```css
 :root {
-  --bg: #070a10;        /* page background */
-  --text: #e9eef7;      /* primary text */
-  --muted: #a6b1c2;     /* secondary text */
-  --accent: #3b82f6;    /* accent color */
-  --accent-2: #60a5fa;  /* secondary accent */
-  --card-bg: ...;       /* card surface */
-  --border: ...;        /* border color */
-  --r-lg: 18px;         /* card border radius */
-  --header-bg: ...;     /* header background */
+  --bg: #070a10;          /* page background */
+  --text: #e9eef7;        /* primary text */
+  --text-strong: #edf2fc; /* headings and bold text */
+  --muted: #a6b1c2;       /* secondary text */
+  --accent: #3b82f6;      /* accent color */
+  --accent-2: #60a5fa;    /* secondary accent */
+  --card-bg: ...;         /* card surface gradient */
+  --border: ...;          /* border color */
+  --r-lg: 18px;           /* card border radius */
+  --header-bg: ...;       /* header background with opacity */
 }
 ```
 
@@ -202,13 +203,20 @@ Ready-made themes are in:
 src/styles/themes/
 ```
 
+| File | Description |
+|---|---|
+| `frosted.css` | Dark glass, muted tones |
+| `light.css` | Light background, dark text |
+| `nordic.css` | Nord-inspired, cold blue-grey |
+| `peachy.css` | Warm peach, light background |
+
 To switch themes, change the import in `src/components/Layout.astro`:
 
 ```js
-import '../styles/themes/github-dark.css';
+import '../styles/themes/nordic.css';
 ```
 
-Previews for themes are available **[Here](docs/repo-assets)**
+Previews for all themes are available in **[`docs/repo-assets`](docs/repo-assets)**.
 
 ---
 
@@ -291,31 +299,17 @@ npm run resume:linkedin      # parse LinkedIn PDF export → YAML (best-effort)
 
 ```
 docs/
-  INFO.md                                                 ← YAML reference, data flow, component structure
-  ENGINEERING.md                                          ← Engineering decisions and project philosophy
-  llm-resume-guide.md                                     ← How to generate YAML from a resume using an LLM
-  BKG_INFO.md                                             ← How to setup live backgound animtaion
+  INFO.md              ← YAML reference, data flow, component structure
+  ENGINEERING.md       ← Engineering decisions and project philosophy
+  llm-resume-guide.md  ← How to generate YAML from a resume using an LLM
+  BKG_INFO.md          ← AnimatedBackground component docs
   examples/
-    [example_cv.yaml](docs/examples/example_cv.yaml)      ← Full YAML example with all supported fields
-    [example_cv.json](docs/examples/example_cv.json)      ← JSON Resume format example
-  repo-assets/
-    preview_main.jpeg                                     ← README preview image
-    github-labels                                         ← GitHub label configuration
-    release-guide                                         ← Release process notes
+    example_cv.yaml    ← Full YAML example with all supported fields
+    example_cv.json    ← JSON Resume format example
+  repo-assets/         ← Theme previews, GitHub label config, release guide
 ```
-Links to docs:
 
-[INFO.md](docs/INFO.md) 
-
-[ENGINEERING.md](docs/ENGINEERING.md) 
-
-[llm-resume-guide.md](docs/llm-resume-guide.md)
-
-[BKG_INFO.md](docs/BKG_INFO.md)
-
-[example_cv.yaml](docs/examples/example_cv.yaml)
-
-[example_cv.json](docs/examples/example_cv.json)
+Links: [INFO.md](docs/INFO.md) · [ENGINEERING.md](docs/ENGINEERING.md) · [llm-resume-guide.md](docs/llm-resume-guide.md) · [BKG_INFO.md](docs/BKG_INFO.md) · [example_cv.yaml](docs/examples/example_cv.yaml) · [example_cv.json](docs/examples/example_cv.json)
 
 ---
 
@@ -336,9 +330,10 @@ src/
       index.astro            # Showcase page (EN)
       ru.astro               # Showcase page (RU)
   components/
-    Layout.astro
-    HomePage.astro
-    ProjectCard.astro
+    Layout.astro             # Shared layout with header + animated background
+    HomePage.astro           # Main page blocks (reorderable)
+    ProjectCard.astro        # Project card: normal + archived collapse modes
+    AnimatedBackground.astro # CSS-only animated orb background
   scripts/
     resume-export-pdf.mjs      # PDF generator (Playwright)
     resume-import-json.mjs     # JSON Resume → YAML converter
@@ -348,9 +343,7 @@ src/
     themes/                  # Ready-made color themes
 public/
   media/
-    projects/                # Showcase media files
-      project1/
-      project2/
+    projects/                # Showcase media files, one folder per project
   downloads/                 # Generated resume files (after build)
     json/                    # JSON Resume exports
 .github/
@@ -361,14 +354,12 @@ public/
 docs/
   INFO.md
   ENGINEERING.md
+  BKG_INFO.md
   llm-resume-guide.md
   examples/
     example_cv.yaml
     example_cv.json
   repo-assets/
-    preview_main.jpeg
-    github-labels
-    release-guide
 ```
 
 ---
