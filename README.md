@@ -289,19 +289,19 @@ npm run resume:linkedin      # parse LinkedIn PDF export → YAML (best-effort)
 
 ## Documentation
 
-```
+
 docs/
-  [INFO.md](docs/INFO.md)               ← YAML reference, data flow, component structure
-  [ENGINEERING.md](docs/ENGINEERING.md)         ← Engineering decisions and project philosophy
-  [llm-resume-guide.md](docs/llm-resume-guide.md)    ← How to generate YAML from a resume using an LLM
+  [INFO.md](docs/INFO.md)                                 ← YAML reference, data flow, component structure
+  [ENGINEERING.md](docs/ENGINEERING.md)                   ← Engineering decisions and project philosophy
+  [llm-resume-guide.md](docs/llm-resume-guide.md)         ← How to generate YAML from a resume using an LLM
   examples/
     [example_cv.yaml](docs/examples/example_cv.yaml)      ← Full YAML example with all supported fields
     [example_cv.json](docs/examples/example_cv.json)      ← JSON Resume format example
   repo-assets/
-    preview_main.jpeg    ← README preview image
-    github-labels        ← GitHub label configuration
-    release-guide        ← Release process notes
-```
+    preview_main.jpeg                                     ← README preview image
+    github-labels                                         ← GitHub label configuration
+    release-guide                                         ← Release process notes
+
 
 ---
 
