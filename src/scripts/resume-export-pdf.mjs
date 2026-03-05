@@ -2,7 +2,7 @@
  * resume-export-pdf.mjs
  *
  * Reads src/content/cv/en.yaml and ru.yaml,
- * builds a clean print HTML and exports PDF via Playwright.
+ * builds a clean two-column print HTML and exports PDF via Playwright.
  *
  * Usage:
  *   npm run resume:pdf
@@ -35,13 +35,6 @@ function loadYaml(filename) {
   return parse(raw);
 }
 
-function stripUrl(url = '') {
-  return url
-    .replace(/^mailto:/, '')
-    .replace(/^https?:\/\/(www\.)?/, '')
-    .replace(/\/$/, '');
-}
-
 function cleanPeriod(period = '') {
   return period
     .replace(/—\s*undefined/g, '')
@@ -52,92 +45,108 @@ function cleanPeriod(period = '') {
 function html(cv, lang = 'en') {
   const T = {
     en: {
+      about:        'About me',
       achievements: 'Key Achievements',
-      skills: 'Skills',
-      experience: 'Experience',
-      education: 'Education',
-      languages: 'Languages',
-      stack: 'Stack',
+      skills:       'Skills',
+      experience:   'Experience',
+      education:    'Education',
+      languages:    'Languages',
     },
     ru: {
+      about:        'Обо мне',
       achievements: 'Ключевые достижения',
-      skills: 'Навыки',
-      experience: 'Опыт',
-      education: 'Образование',
-      languages: 'Языки',
-      stack: 'Стек',
+      skills:       'Навыки',
+      experience:   'Опыт',
+      education:    'Образование',
+      languages:    'Языки',
     },
   };
 
   const tr = T[lang] ?? T.en;
 
-  const contact = (cv.contacts ?? [])
-    .map(c => `<span><span class="contact-label">${c.label}:</span> <a href="${c.url}">${stripUrl(c.url)}</a></span>`)
-    .join('<span class="sep">·</span>');
+  /* ── Contacts: label as clickable link, URL hidden ── */
+  const contactsHtml = (cv.contacts ?? [])
+    .map(c => `<div class="contact-row"><a href="${c.url}">${c.label}</a></div>`)
+    .join('');
 
-  const achievements = (cv.achievements ?? []).length ? `
-    <section>
+  /* ── Education ── */
+  const educationHtml = (cv.education ?? []).length ? `
+    <div class="sidebar-section">
+      <div class="sidebar-divider"></div>
+      <h3>${tr.education}</h3>
+      ${(cv.education ?? []).map(e => `
+        <div class="edu-item">
+          <div class="edu-institution">${e.institution}</div>
+          ${e.period ? `<div class="edu-period">${e.period}</div>` : ''}
+          ${e.degree ? `<div class="edu-degree">${e.degree}</div>` : ''}
+          ${e.field  ? `<div class="edu-field">${e.field}</div>`   : ''}
+        </div>
+      `).join('')}
+    </div>` : '';
+
+  /* ── Skills ── */
+  const skillsHtml = (cv.skills ?? []).length ? `
+    <div class="sidebar-section">
+      <div class="sidebar-divider"></div>
+      <h3>${tr.skills}</h3>
+      ${(cv.skills ?? []).map(s => {
+        const groupName = typeof s === 'string' ? null : (s.group ?? null);
+        const items = typeof s === 'string' ? [s] : (s.items ?? []);
+        return `
+        <div class="skill-group-block">
+          ${groupName ? `<div class="skill-group-name">${groupName}</div>` : ''}
+          <div class="skill-items">${items.join(' · ')}</div>
+        </div>`;
+      }).join('')}
+    </div>` : '';
+
+  /* ── Languages ── */
+  const languagesHtml = (cv.languages ?? []).length ? `
+    <div class="sidebar-section">
+      <div class="sidebar-divider"></div>
+      <h3>${tr.languages}</h3>
+      ${(cv.languages ?? []).map(l => `
+        <div class="lang-row">
+          <div class="lang-name">${l.language}</div>
+          <div class="lang-level">${l.level}</div>
+        </div>
+      `).join('')}
+    </div>` : '';
+
+  /* ── About / Summary ── */
+  const aboutHtml = cv.summary ? `
+    <section class="content-section">
+      <h2>${tr.about}</h2>
+      <p class="summary-text">${cv.summary}</p>
+    </section>` : '';
+
+  /* ── Achievements ── */
+  const achievementsHtml = (cv.achievements ?? []).length ? `
+    <section class="content-section">
       <h2>${tr.achievements}</h2>
-      <ul>
-        ${cv.achievements.map(a => `<li>${a}</li>`).join('')}
+      <ul class="bullets">
+        ${(cv.achievements ?? []).map(a => `<li>${a}</li>`).join('')}
       </ul>
     </section>` : '';
 
-  const skills = (cv.skills ?? []).length ? `
-    <section>
-      <h2>${tr.skills}</h2>
-      <div class="skills">
-        ${cv.skills.map(s => `
-          <div class="skill-row">
-            <span class="skill-group">${s.group}:</span>
-            <span class="skill-items">${(s.items ?? []).join(', ')}</span>
-          </div>`).join('')}
-      </div>
-    </section>` : '';
-
-  const experience = (cv.experience ?? []).length ? `
-    <section>
+  /* ── Experience ── */
+  const experienceHtml = (cv.experience ?? []).length ? `
+    <section class="content-section">
       <h2>${tr.experience}</h2>
-      ${cv.experience.map(exp => {
+      ${(cv.experience ?? []).map(exp => {
         const desc = Array.isArray(exp.description) ? exp.description.filter(Boolean) : [];
-        const first = desc[0];
-        const rest = desc.slice(1);
-
         return `
-        <div class="entry">
-          <div class="entry-lead">
-            <div class="entry-header">
-              <span class="entry-title"><strong>${exp.company}</strong>${exp.role ? ` — ${exp.role}` : ''}</span>
-              <span class="entry-period">${cleanPeriod(exp.period)}</span>
+        <div class="exp-entry">
+          <div class="exp-lead">
+            <div class="exp-header">
+              <div class="exp-company">${exp.company}${exp.role ? ` <span class="exp-role">— ${exp.role}</span>` : ''}</div>
+              <div class="exp-period">${cleanPeriod(exp.period)}</div>
             </div>
-            ${first ? `<ul class="bullets"><li>${first}</li></ul>` : ''}
           </div>
-
-          ${rest.length ? `<ul class="bullets">${rest.map(d => `<li>${d}</li>`).join('')}</ul>` : ''}
-
-          ${exp.stack?.length
-            ? `<p class="stack"><strong>${tr.stack}:</strong> ${exp.stack.join(', ')}</p>`
-            : ''}
+          ${desc.length ? `<ul class="bullets">${desc.map(d => `<li>${d}</li>`).join('')}</ul>` : ''}
+          ${exp.stack?.length ? `<div class="exp-stack">${exp.stack.join(', ')}</div>` : ''}
         </div>`;
       }).join('')}
-    </section>` : '';
-
-  const education = (cv.education ?? []).length ? `
-    <section>
-      <h2>${tr.education}</h2>
-      ${cv.education.map(e => `
-        <div class="entry">
-          <div class="entry-header">
-            <span class="entry-title"><strong>${e.institution}</strong> — ${e.degree}</span>
-            <span class="entry-period">${cleanPeriod(e.period)}</span>
-          </div>
-        </div>`).join('')}
-    </section>` : '';
-
-  const languages = (cv.languages ?? []).length ? `
-    <section>
-      <h2>${tr.languages}</h2>
-      <p>${cv.languages.map(l => `${l.language}: ${l.level}`).join(' · ')}</p>
     </section>` : '';
 
   return `<!DOCTYPE html>
@@ -147,81 +156,175 @@ function html(cv, lang = 'en') {
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --accent:     #1F439B;
+      --text:       #1a1a1a;
+      --muted:      #555555;
+      --light:      #888888;
+      --sidebar-bg: #F5F5F5;
+      --divider:    #1a1a1a;
+    }
+
+    html, body {
+      width: 210mm;
+      height: 297mm;
+    }
+
     body {
-      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
-      font-size: 11pt;
-      color: #1a1a1a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5pt;
+      font-weight: 400;
+      color: var(--text);
       background: #fff;
-      padding: 14mm 18mm;
+      display: grid;
+      grid-template-columns: 66mm 1fr;
       line-height: 1.5;
     }
 
-    a { color: #2563eb; text-decoration: none; }
+    a { color: inherit; text-decoration: none; }
 
-    /* ── Header ── */
-    .cv-name {
-      font-size: 22pt;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-    .cv-title {
-      font-size: 13pt;
-      color: #2563eb;
-      margin-bottom: 8px;
-    }
-    .cv-contacts {
+    /* ─────────────────────────────────────────
+       SIDEBAR
+       ───────────────────────────────────────── */
+    .sidebar {
+      background: var(--sidebar-bg);
+      padding: 13mm 7mm 13mm 8mm;
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px 0;
-      font-size: 9.5pt;
-      color: #444;
-      margin-bottom: 12px;
+      flex-direction: column;
     }
-    .cv-contacts .sep { margin: 0 7px; color: #ccc; }
-    .contact-label { color: #666; font-weight: 600; }
 
-    /* ── Summary ── */
-    .cv-summary {
-      font-size: 10.5pt;
+    .cv-name {
+      font-size: 18pt;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    /* General role — black, lighter weight */
+    .cv-title {
+      font-size: 9.5pt;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    /* Contacts: label only as link */
+    .contact-row {
+      margin-bottom: 3px;
+      font-size: 8.5pt;
+    }
+
+    .contact-row a {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Sidebar sections */
+    .sidebar-section { margin-top: 2px; }
+
+    .sidebar-divider {
+      border: none;
+      border-top: 1px solid #d0d0d0;
+      margin: 10px 0 8px;
+    }
+
+    .sidebar-section h3 {
+      font-size: 8.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    /* Education */
+    .edu-item { margin-bottom: 8px; }
+
+    .edu-institution {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 8.5pt;
+    }
+
+    .edu-period {
+      font-size: 8pt;
+      color: var(--light);
+    }
+
+    .edu-degree, .edu-field {
+      font-size: 8.5pt;
+      color: var(--muted);
+    }
+
+    /* Skills */
+    .skill-group-block { margin-bottom: 7px; }
+
+    .skill-group-name {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 8.5pt;
+      margin-bottom: 1px;
+    }
+
+    .skill-items {
+      font-size: 8.5pt;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* Languages — stacked, not side-by-side */
+    .lang-row {
+      margin-bottom: 5px;
+    }
+
+    .lang-name {
+      font-weight: 600;
+      font-size: 8.5pt;
+      color: var(--text);
+    }
+
+    .lang-level {
+      font-size: 8pt;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       MAIN CONTENT
+       ───────────────────────────────────────── */
+    .content {
+      padding: 13mm 10mm 13mm 10mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-section { margin-bottom: 13px; }
+
+    /* Section titles — bigger, black, thicker divider */
+    .content-section h2 {
+      font-size: 13pt;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--divider);
+    }
+
+    /* Summary */
+    .summary-text {
+      font-size: 9.5pt;
       color: #333;
-      margin-bottom: 14px;
-      border-left: 3px solid #2563eb;
-      padding-left: 10px;
       line-height: 1.6;
     }
 
-    /* ── Sections ── */
-    section { margin-bottom: 14px; }
+    /* Experience */
+    .exp-entry { margin-bottom: 11px; }
 
-    h2 {
-      font-size: 10.5pt;
-      font-weight: 700;
-      color: #1a1a1a;
-      border-bottom: 1.5px solid #2563eb;
-      padding-bottom: 3px;
-      margin-bottom: 7px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+    /* Only header stays glued to first bullet on page break */
+    .exp-lead { break-inside: avoid; }
 
-    /* ── Skills ── */
-    .skills { display: flex; flex-direction: column; gap: 2px; }
-    .skill-row { display: flex; gap: 6px; font-size: 10pt; }
-    .skill-group {
-      font-weight: 600;
-      min-width: 160px;
-      flex-shrink: 0;
-      color: #222;
-    }
-    .skill-items { color: #444; }
-
-    /* ── Experience / Education ── */
-    .entry { margin-bottom: 10px; }
-
-    /* Keep only (header + first bullet) together; allow the rest to flow to avoid large gaps */
-    .entry-lead { break-inside: avoid-page; }
-
-    .entry-header {
+    .exp-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
@@ -229,44 +332,74 @@ function html(cv, lang = 'en') {
       margin-bottom: 3px;
     }
 
-    .entry-title { font-size: 10.5pt; flex: 1; }
-    .entry-period {
+    .exp-company {
+      font-size: 10pt;
+      font-weight: 600;
+      color: var(--accent);
+      flex: 1;
+    }
+
+    /* Role — same color as company */
+    .exp-role {
+      font-weight: 400;
+      color: var(--accent);
       font-size: 9.5pt;
-      color: #666;
+    }
+
+    .exp-period {
+      font-size: 8.5pt;
+      color: var(--light);
       white-space: nowrap;
+    }
+
+    /* Stack — indented to align with bullet text, not bullet marker */
+    .exp-stack {
+      font-size: 8pt;
+      color: var(--light);
+      margin-top: 3px;
+      padding-left: 13px;
       font-style: italic;
     }
 
+    /* Bullets */
     .bullets {
-      padding-left: 16px;
-      margin: 3px 0 4px;
-      break-inside: auto;
+      padding-left: 13px;
+      margin: 3px 0;
     }
+
     .bullets li {
-      font-size: 9.5pt;
+      font-size: 9pt;
       color: #333;
       margin-bottom: 2px;
-      line-height: 1.45;
+      line-height: 1.5;
     }
-    .bullets li::marker { color: #2563eb; }
 
-    .stack {
-      font-size: 9pt;
-      color: #444;
-      margin-top: 3px;
+    .bullets li::marker {
+      color: var(--accent);
+      font-size: 8pt;
     }
   </style>
 </head>
 <body>
-  <div class="cv-name">${cv.name}</div>
-  <div class="cv-title">${cv.title}</div>
-  <div class="cv-contacts">${contact}</div>
-  ${cv.summary ? `<div class="cv-summary">${cv.summary}</div>` : ''}
-  ${achievements}
-  ${skills}
-  ${experience}
-  ${education}
-  ${languages}
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="cv-name">${cv.name ?? ''}</div>
+    <div class="cv-title">${cv.title ?? ''}</div>
+
+    ${contactsHtml}
+    ${educationHtml}
+    ${skillsHtml}
+    ${languagesHtml}
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    ${aboutHtml}
+    ${achievementsHtml}
+    ${experienceHtml}
+  </div>
+
 </body>
 </html>`;
 }
