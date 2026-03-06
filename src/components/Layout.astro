@@ -18,7 +18,17 @@ import AnimatedBackground from './AnimatedBackground.astro';
 //
 // Change theme here 
 
-const { title = 'CV Hub', lang = 'en', section = 'main' } = Astro.props;
+const { title = 'CV Hub', lang = 'en', section = 'main', description, ogImage } = Astro.props;
+
+const siteUrl = 'https://keegooroomii.github.io/cv_hub';
+const defaultDescription = lang === 'ru'
+  ? 'Резюме Александра Гусарова — DevOps Engineer. Kubernetes, Terraform, AWS, CI/CD.'
+  : 'Alexander Gusarov — DevOps Engineer. Kubernetes, Terraform, AWS, CI/CD.';
+const defaultImage = `${siteUrl}/og-image.png`;
+
+const metaDescription = description ?? defaultDescription;
+const metaImage = ogImage ?? defaultImage;
+const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const homeHref = `${base}/${lang === 'ru' ? 'ru' : ''}`;
@@ -35,6 +45,8 @@ const switchHref =
   section === 'showcase'
     ? `${base}/showcase${otherLang === 'ru' ? '/ru' : ''}`
     : `${base}/${otherLang === 'ru' ? 'ru' : ''}`;
+
+
 ---
 
 <!doctype html>
@@ -43,6 +55,22 @@ const switchHref =
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+      <meta name="description" content={metaDescription} />
+      <link rel="canonical" href={canonicalUrl} />
+
+      <!-- Open Graph -->
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:image" content={metaImage} />
+      <meta property="og:locale" content={lang === 'ru' ? 'ru_RU' : 'en_US'} />
+
+      <!-- Twitter Card -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={metaDescription} />
+      <meta name="twitter:image" content={metaImage} />
   </head>
   <body>
   <AnimatedBackground />
