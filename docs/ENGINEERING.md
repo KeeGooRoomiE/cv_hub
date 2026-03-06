@@ -96,6 +96,20 @@ YAML выступает как Single Source of Truth.
 
 ---
 
+### Почему URL-параметр для тем, а не localStorage
+
+Темы переключаются через `?theme=name` в URL — без JavaScript-хранилища.
+
+Причины:
+- URL — shareable: можно поделиться конкретной темой как ссылкой
+- Нет зависимости от браузерного состояния
+- Работает при первом открытии без flash of unstyled content
+- Прозрачно и предсказуемо
+
+Доступные значения: `frosted`, `light`, `nordic`, `peachy`
+
+---
+
 ## 3. Модель данных
 
 Структура CV намеренно плоская и читаемая.
@@ -210,7 +224,6 @@ npm run build                                 # всё + сайт
 - Rust-парсер YAML как отдельный эксперимент
 - Поддержка нескольких профилей (DevOps / GameDev)
 - JSON export для рекрутеров (публичный endpoint)
-- SEO + OpenGraph
 
 ---
 
@@ -243,8 +256,11 @@ upload artifact → deploy → GitHub Pages
 
 ## 9. Расширяемость
 
-Возможные улучшения:
+Реализовано:
+- URL-based theme switching — темы без пересборки, shareable ссылки
+- Changelog страница — версионирование самого проекта как артефакта
 
+Возможные улучшения:
 - Поддержка нескольких профилей (DevOps / GameDev / Fullstack)
 - Фильтрация проектов по тегам на Showcase
 - Темная / светлая тема по системным настройкам
@@ -263,6 +279,15 @@ upload artifact → deploy → GitHub Pages
 - Время cold start
 
 Даже персональный сайт может быть инженерно измеримым.
+
+Текущий Lighthouse (production):
+
+| Метрика | Score |
+|---|---|
+| Performance | 100 |
+| Accessibility | 100 |
+| Best Practices | 96 |
+| SEO | 100 |
 
 ---
 
