@@ -1,0 +1,244 @@
+---
+// GalaxyBackground.astro
+// Spiral galaxy canvas background with mouse parallax
+// Ported from DragonGameStudios GML galaxy_create (2016) → TypeScript/Canvas (2026)
+//
+
+export interface Props {
+  stars?: number;
+  arms?: number;
+  tightness?: number;
+  radius?: number;
+  class?: string;
+}
+
+const {
+  stars = 1800,
+  arms = 4,
+  tightness = 0.42,
+  radius = 0.38, // fraction of min(width, height)
+  class: className = '',
+} = Astro.props;
+---
+
+<canvas
+  id="galaxy-bg"
+  class={`galaxy-bg ${className}`}
+  aria-hidden="true"
+></canvas>
+
+<style>
+  .galaxy-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background: #00000f;
+  }
+</style>
+
+<script define:vars={{ stars, arms, tightness, radius }}>
+  (function () {
+    const canvas = document.getElementById('galaxy-bg');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    // ── Config ────────────────────────────────────────────────────
+    const CONFIG = {
+      numStars: stars,
+      numArms: arms,
+      spiralTightness: tightness,
+      radiusFraction: radius,
+      fanRate: 0.52,
+      bunching: 0.9,
+      bunching2: 1.2,
+      displacementFactor: 0.18,   // max spread from arm axis
+      mouseStrength: 0.035,        // how much mouse moves layers
+      rotationSpeed: 0.000015,     // radians per ms
+      nebulaCount: 5,
+    };
+
+    // ── State ─────────────────────────────────────────────────────
+    let W = 0, H = 0, galaxyRadius = 0;
+    let mouse = { x: 0, y: 0 };
+    let targetMouse = { x: 0, y: 0 };
+    let rotation = 0;
+    let lastTime = performance.now();
+
+    // Star layers for parallax depth
+    // layer 0 = far (slow), layer 2 = near (fast)
+    const LAYERS = 3;
+    const starLayers = Array.from({ length: LAYERS }, () => []);
+
+    // ── Galaxy generator (ported from GML) ────────────────────────
+    function seededRandom(seed) {
+      // Simple LCG so galaxy looks the same on resize
+      let s = seed;
+      return function () {
+        s = (s * 1664525 + 1013904223) & 0xffffffff;
+        return (s >>> 0) / 0xffffffff;
+      };
+    }
+
+    function generateGalaxy() {
+      for (let l = 0; l < LAYERS; l++) starLayers[l].length = 0;
+
+      const rand = seededRandom(42);
+      const armSpacing = (Math.PI * 2) / CONFIG.numArms;
+      const randomInterval = Math.pow(galaxyRadius, 1 / CONFIG.bunching);
+      const randomInterval2 = Math.pow(
+        galaxyRadius * CONFIG.displacementFactor,
+        1 / CONFIG.bunching2
+      );
+
+      for (let i = 0; i < CONFIG.numStars; i++) {
+        const arm = Math.floor(rand() * CONFIG.numArms);
+        const dist = Math.pow(rand() * randomInterval, CONFIG.bunching);
+        const angle =
+          dist * 2 * CONFIG.spiralTightness + arm * armSpacing;
+
+        // random displacement vector (unit-ish)
+        let dx = rand() * 2 - 1;
+        let dy = rand() * 2 - 1;
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        const disp =
+          (Math.pow(rand() * randomInterval2, CONFIG.bunching2) / len) *
+          Math.pow(dist, CONFIG.fanRate);
+
+        const x = Math.cos(angle) * dist + dx * disp;
+        const y = Math.sin(angle) * dist + dy * disp;
+
+        // brightness: brighter toward center
+        const normDist = dist / galaxyRadius;
+        const brightness = 0.3 + 0.7 * Math.pow(1 - normDist, 1.5);
+
+        // colour: blue-white on arms, warm at core
+        const hue = normDist < 0.15
+          ? 45 + rand() * 20            // warm core
+          : 190 + rand() * 60;          // blue/cyan arms
+        const sat = normDist < 0.15 ? 60 : 40 + rand() * 30;
+        const size = 0.4 + rand() * (normDist < 0.12 ? 1.8 : 0.9);
+
+        // assign to parallax layer
+        const layer = Math.floor(rand() * LAYERS);
+        starLayers[layer].push({ x, y, brightness, hue, sat, size, layer });
+      }
+    }
+
+    // ── Nebula blobs ──────────────────────────────────────────────
+    const nebulae = [];
+    function generateNebulae(rand) {
+      nebulae.length = 0;
+      for (let n = 0; n < CONFIG.nebulaCount; n++) {
+        const arm = Math.floor(rand() * CONFIG.numArms);
+        const armSpacing = (Math.PI * 2) / CONFIG.numArms;
+        const dist = galaxyRadius * (0.25 + rand() * 0.55);
+        const angle = dist * 2 * CONFIG.spiralTightness + arm * armSpacing;
+        nebulae.push({
+          x: Math.cos(angle) * dist,
+          y: Math.sin(angle) * dist,
+          r: galaxyRadius * (0.12 + rand() * 0.14),
+          hue: 180 + rand() * 120,
+          alpha: 0.03 + rand() * 0.04,
+        });
+      }
+    }
+
+    // ── Resize ────────────────────────────────────────────────────
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      galaxyRadius = Math.min(W, H) * CONFIG.radiusFraction;
+      const rand = seededRandom(99);
+      generateGalaxy();
+      generateNebulae(rand);
+    }
+
+    // ── Draw ──────────────────────────────────────────────────────
+    function draw(now) {
+      const dt = now - lastTime;
+      lastTime = now;
+      rotation += CONFIG.rotationSpeed * dt;
+
+      // smooth mouse follow
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // deep space background gradient
+      const bg = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.max(W, H) * 0.7);
+      bg.addColorStop(0, '#05050f');
+      bg.addColorStop(1, '#00000a');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      const cx = W / 2;
+      const cy = H / 2;
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rotation);
+
+      // nebulae
+      for (const neb of nebulae) {
+        const mx = mouse.x * CONFIG.mouseStrength * 0.5;
+        const my = mouse.y * CONFIG.mouseStrength * 0.5;
+        const g = ctx.createRadialGradient(
+          neb.x + mx, neb.y + my, 0,
+          neb.x + mx, neb.y + my, neb.r
+        );
+        g.addColorStop(0, `hsla(${neb.hue},70%,60%,${neb.alpha * 2})`);
+        g.addColorStop(1, `hsla(${neb.hue},60%,40%,0)`);
+        ctx.beginPath();
+        ctx.arc(neb.x + mx, neb.y + my, neb.r, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+      }
+
+      // core glow
+      const coreGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, galaxyRadius * 0.22);
+      coreGlow.addColorStop(0, 'rgba(255,230,160,0.18)');
+      coreGlow.addColorStop(0.4, 'rgba(200,160,80,0.06)');
+      coreGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.arc(0, 0, galaxyRadius * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = coreGlow;
+      ctx.fill();
+
+      // stars per layer with parallax offset
+      for (let l = 0; l < LAYERS; l++) {
+        const parallaxScale = (l + 1) / LAYERS * CONFIG.mouseStrength;
+        const mx = mouse.x * parallaxScale;
+        const my = mouse.y * parallaxScale;
+
+        for (const s of starLayers[l]) {
+          const sx = s.x + mx;
+          const sy = s.y + my;
+          ctx.beginPath();
+          ctx.arc(sx, sy, s.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${s.hue},${s.sat}%,${70 + s.brightness * 30}%,${s.brightness})`;
+          ctx.fill();
+        }
+      }
+
+      ctx.restore();
+
+      requestAnimationFrame(draw);
+    }
+
+    // ── Events ────────────────────────────────────────────────────
+    window.addEventListener('mousemove', (e) => {
+      targetMouse.x = e.clientX - W / 2;
+      targetMouse.y = e.clientY - H / 2;
+    });
+
+    window.addEventListener('resize', resize, { passive: true });
+
+    // ── Boot ──────────────────────────────────────────────────────
+    resize();
+    requestAnimationFrame(draw);
+  })();
+</script>
