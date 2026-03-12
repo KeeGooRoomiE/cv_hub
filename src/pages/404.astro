@@ -1,0 +1,12 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const homeHref = `${base}/`;
+---
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url={homeHref}" />
+  </head>
+  <body></body>
+</html>
