@@ -584,6 +584,12 @@ a:hover { text-decoration: underline; }
   margin-top: 12px;
 }
 
+.project .links a:only-child {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
 .link {
   padding: 7px 10px;
   border-radius: 10px;
