@@ -1,0 +1,128 @@
+---
+//
+//  ProjectPage.astro
+//  CV Hub — Case study page template
+//
+//  Created by Alexander Gusarov on 30.03.2026.
+//  @spartan121
+//
+import Layout from './Layout.astro';
+import TextBlock  from './blocks/TextBlock.astro';
+import ImageBlock from './blocks/ImageBlock.astro';
+import Divider    from './blocks/DividerBlock.astro';
+
+const { data, showcaseHref, langLinks, lang } = Astro.props;
+---
+
+<Layout title={data?.title ?? ''} lang={lang} section="showcase" profile="">
+<div class="project-page container">
+
+  <!-- Nav: back + language switcher -->
+  <nav class="project-page__nav">
+    <a class="btn btn--ghost" href={showcaseHref}>← Showcase</a>
+  </nav>
+
+  <!-- Header -->
+  <header class="project-page__header">
+    {(data.role || data.year) && (
+      <div class="project-page__meta muted">
+        {data.role && <span>{data.role}</span>}
+        {data.role && data.year && <span>·</span>}
+        {data.year && <span>{data.year}</span>}
+      </div>
+    )}
+
+    <h1 class="project-page__title">{data.title}</h1>
+
+    {data.tagline && (
+      <p class="project-page__tagline muted">{data.tagline}</p>
+    )}
+
+    {(data.platforms?.length > 0 || data.stack?.length > 0) && (
+      <div class="project-page__tags-row">
+        {data.platforms?.length > 0 && (
+          <div class="row">
+            <div class="row__title">Platforms</div>
+            <ul class="tags">
+              {data.platforms.map((p: string) => <li class="tag">{p}</li>)}
+            </ul>
+          </div>
+        )}
+        {data.stack?.length > 0 && (
+          <div class="row">
+            <div class="row__title">Stack</div>
+            <ul class="tags">
+              {data.stack.map((s: string) => <li class="tag">{s}</li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+    )}
+
+    {data.links?.filter((l: any) => l?.url).length > 0 && (
+      <div class="links">
+        {data.links.filter((l: any) => l?.url).map((l: any) => (
+          <a class="btn" href={l.url} target="_blank" rel="noopener">{l.label}</a>
+        ))}
+      </div>
+    )}
+  </header>
+
+  <!-- Blocks -->
+  {(data.blocks ?? []).map((block: any) => {
+    if (block.type === 'divider') return <Divider />;
+    if (block.type === 'text')    return <TextBlock  {...block} />;
+    if (block.type === 'image')   return <ImageBlock {...block} />;
+    return null;
+  })}
+
+</div>
+</Layout>
+
+<style>
+  .project-page {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 8px 0 60px;
+  }
+
+  .project-page__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .project-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-page__meta {
+    display: flex;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .project-page__title {
+    margin: 0;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.15;
+  }
+
+  .project-page__tagline {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 60ch;
+  }
+
+  .project-page__tags-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>

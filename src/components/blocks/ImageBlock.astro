@@ -1,0 +1,96 @@
+---
+//
+//  blocks/ImageBlock.astro
+//  CV Hub — Image block
+//
+//  All fields optional.
+//  If src is missing — renders text content only (if any).
+//
+
+const { src, alt, caption, title, subtitle, body } = Astro.props;
+
+const hasText = title || subtitle || body || caption;
+const hasSrc  = !!src;
+if (!hasText && !hasSrc) return;
+
+const withBase = (p = '') => {
+  const s = String(p);
+  if (!s) return '';
+  if (/^(https?:)?\/\//i.test(s) || s.startsWith('data:')) return s;
+  const clean = s.replace(/^\/+/, '');
+  const base = String(import.meta.env.BASE_URL || '/');
+  return (base.endsWith('/') ? base : base + '/') + clean;
+};
+---
+
+<div class="image-block">
+  {title    && <h2 class="image-block__title">{title}</h2>}
+  {subtitle && <p  class="image-block__subtitle">{subtitle}</p>}
+  {body     && <p  class="image-block__body">{body}</p>}
+
+  {hasSrc && (
+    <figure class="image-block__figure">
+      <img
+        src={withBase(src)}
+        alt={alt ?? title ?? ''}
+        loading="lazy"
+        class="image-block__img"
+        onerror="this.closest('figure')?.remove();"
+      />
+      {caption && (
+        <figcaption class="image-block__caption">{caption}</figcaption>
+      )}
+    </figure>
+  )}
+</div>
+
+<style>
+   .image-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .image-block__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .image-block__subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .image-block__body {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .image-block__figure {
+    margin: 0;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .image-block__img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .image-block__caption {
+    display: block;
+    font-size: 12px;
+    padding: 8px 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+</style>
