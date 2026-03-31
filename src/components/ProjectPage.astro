@@ -6,15 +6,16 @@
 //  Created by Alexander Gusarov on 30.03.2026.
 //  @spartan121
 //
-
+import Layout from './Layout.astro';
 import TextBlock  from './blocks/TextBlock.astro';
 import ImageBlock from './blocks/ImageBlock.astro';
 import Divider    from './blocks/DividerBlock.astro';
 
-const { data, showcaseHref, langLinks } = Astro.props;
+const { data, showcaseHref, langLinks, lang } = Astro.props;
 ---
 
-<div class="project-page">
+<Layout title={data?.title ?? ''} lang={lang} section="showcase" profile="">
+<div class="project-page container">
 
   <!-- Nav: back + language switcher -->
   <nav class="project-page__nav">
@@ -29,7 +30,7 @@ const { data, showcaseHref, langLinks } = Astro.props;
   </nav>
 
   <!-- Header -->
-  <header class="project-page__header card">
+  <header class="project-page__header">
     {(data.role || data.year) && (
       <div class="project-page__meta muted">
         {data.role && <span>{data.role}</span>}
@@ -83,6 +84,7 @@ const { data, showcaseHref, langLinks } = Astro.props;
   })}
 
 </div>
+</Layout>
 
 <style>
   .project-page {
@@ -127,7 +129,7 @@ const { data, showcaseHref, langLinks } = Astro.props;
 
   .project-page__tags-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
+    flex-direction: column;
+    gap: 10px;
   }
 </style>

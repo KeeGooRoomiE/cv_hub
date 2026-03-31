@@ -62,6 +62,30 @@ export async function getStaticPaths() {
   const langs: { id: string; label: string }[] = langCfg?.data?.languages ?? [];
   const langIds = langs.map((l) => l.id);
 
+  // Helpers redefined inside getStaticPaths — required by Astro's isolated context
+  const MEDIA_DIR = path.join(process.cwd(), 'public/media/projects');
+  function _toPrefix(s: string) { return s.replace(/-/g, '_'); }
+  function _loadYaml(slug: string, lang: string) {
+    const dir     = path.join(MEDIA_DIR, slug);
+    const prefix  = _toPrefix(slug);
+    const primary = path.join(dir, `${prefix}_${lang}.yaml`);
+    const fallback= path.join(dir, `${prefix}_${defaultLang}.yaml`);
+    try {
+      if (fs.existsSync(primary))  return parse(fs.readFileSync(primary, 'utf8'));
+      if (fs.existsSync(fallback)) return parse(fs.readFileSync(fallback, 'utf8'));
+    } catch {}
+    return null;
+  }
+  function _getSlugs(): string[] {
+    if (!fs.existsSync(MEDIA_DIR)) return [];
+    return fs.readdirSync(MEDIA_DIR).filter((name) => {
+      const dir    = path.join(MEDIA_DIR, name);
+      const prefix = _toPrefix(name);
+      if (!fs.statSync(dir).isDirectory()) return false;
+      return langIds.some((l) => fs.existsSync(path.join(dir, `${prefix}_${l}.yaml`)));
+    });
+  }
+
   const paths: any[] = [];
 
   // ── 1. Showcase list for non-default languages ─────────────────────────
@@ -73,11 +97,11 @@ export async function getStaticPaths() {
   }
 
   // ── 2. Project case study pages ────────────────────────────────────────
-  const slugs = getSlugsWithYaml(langIds);
+  const slugs = _getSlugs();
 
   for (const slug of slugs) {
     // Default lang → /showcase/{slug}
-    if (loadProjectYaml(slug, defaultLang, defaultLang)) {
+    if (_loadYaml(slug, defaultLang)) {
       paths.push({
         params: { rest: slug },
         props:  { kind: 'project', lang: defaultLang, defaultLang, slug },
@@ -86,7 +110,7 @@ export async function getStaticPaths() {
 
     // Non-default langs → /showcase/{slug}/{lang}
     for (const lang of langs.filter((l) => l.id !== defaultLang)) {
-      if (!loadProjectYaml(slug, lang.id, defaultLang)) continue;
+      if (!_loadYaml(slug, lang.id)) continue;
       paths.push({
         params: { rest: `${slug}/${lang.id}` },
         props:  { kind: 'project', lang: lang.id, defaultLang, slug },
