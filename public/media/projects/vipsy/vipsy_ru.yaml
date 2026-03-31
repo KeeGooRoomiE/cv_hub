@@ -50,41 +50,41 @@ blocks:
 
   - type: image
     title: "Вступительные экраны"
-    src: public/media/projects/vipsy/starting_screens.png
+    src: /media/projects/vipsy/starting_screens.png
     alt: "Вступительные экраны"
     
   - type: image
     title: "Флоу авторизации"
-    src: public/media/projects/vipsy/auth_flow.png
+    src: /media/projects/vipsy/auth_flow.png
     alt: "Флоу авторизации"
 
   - type: image
     title: "Личный кабинет"
-    src: public/media/projects/vipsy/account.png
+    src: /media/projects/vipsy/account.png
     alt: "Личный кабинет"
 
   - type: image
     title: "Направления и специалисты"
-    src: public/media/projects/vipsy/specs.png
+    src: /media/projects/vipsy/specs.png
     alt: "Направления и специалисты"
 
   # ── Картинка с заголовком и текстом сверху ──────────────────────────────
   - type: image
     title: "Запись к специалисту"
     subtitle: "Гибкий сценарий записи: пользователь может сразу выбрать удобное время или оформить запись без времени и вернуться к расписанию позже. Это снижает барьер входа и не теряет пользователя, который ещё не готов к конкретной дате."
-    src: public/media/projects/vipsy/record.png
+    src: /media/projects/vipsy/record.png
     alt: "Запись к специалисту"
 
   - type: image
     title: "Купить услугу"
     subtitle: "Поддерживается несколько сценариев: можно купить услугу без привязки ко времени и записаться позже, а можно сразу выбрать специалиста и удобный слот. Абонемент оформляется отдельно без выбора времени, затем активируется через личный кабинет, после чего пользователь самостоятельно записывается на сеансы."
-    src: public/media/projects/vipsy/buy.png
+    src: /media/projects/vipsy/buy.png
     alt: "Купить услугу"
 
   - type: image
     title: "Мои услуги"
     subtitle: "Все купленные услуги разделены на текущие и архивные. Из текущих услуг можно записаться на сеанс, если время ещё не было выбрано при покупке. Есть опция переноса или отмены сеанса, а также активации абонемента. Всё управление сессиями сосредоточено в одном месте — пользователю не нужно искать нужное действие по разным экранам."
-    src: public/media/projects/vipsy/serv.png
+    src: /media/projects/vipsy/serv.png
     alt: "Мои услуги"
    
   - type: text
