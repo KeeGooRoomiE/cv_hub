@@ -49,20 +49,21 @@ const withBase = (p = '') => {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
 
   .image-block__title {
     margin: 0;
-    font-size: 20px;
+    font-size: 40px;
     font-weight: 700;
     color: var(--text);
   }
 
   .image-block__subtitle {
     margin: 0;
-    font-size: 14px;
+    font-size: 24px;
+    margin-bottom: 16px;
     color: var(--muted);
   }
 
@@ -70,13 +71,15 @@ const withBase = (p = '') => {
     margin: 0;
     color: var(--muted);
     line-height: 1.7;
+    
     white-space: pre-wrap;
   }
 
   .image-block__figure {
     margin: 0;
-    border-radius: var(--r-lg);
+    border-radius: 20px;
     overflow: hidden;
+    margin-top: 16px;
     border: 1px solid var(--border);
   }
 
@@ -88,7 +91,7 @@ const withBase = (p = '') => {
 
   .image-block__caption {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     padding: 8px 12px;
     color: var(--muted);
     border-top: 1px solid var(--border);

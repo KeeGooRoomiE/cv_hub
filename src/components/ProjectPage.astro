@@ -80,11 +80,12 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
 </Layout>
 
 <style>
+
   .project-page {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding: 8px 0 60px;
+    padding: 16px 0 60px;
   }
 
   .project-page__nav {
@@ -101,6 +102,13 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
     gap: 12px;
   }
 
+  .text-block__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
   .project-page__meta {
     display: flex;
     gap: 6px;
@@ -109,8 +117,10 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
 
   .project-page__title {
     margin: 0;
-    font-size: clamp(24px, 4vw, 38px);
+    font-size: 60px;
     line-height: 1.15;
+    margin-top: 20px;
+    margin-bottom: -4px;
   }
 
   .project-page__tagline {
