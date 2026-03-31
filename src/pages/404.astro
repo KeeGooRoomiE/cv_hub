@@ -1,12 +1,39 @@
 ---
+
+import Layout from '../components/Layout.astro';
+import { makeT } from '../scripts/t';
+
+const {
+  title = 'CV Hub',
+  lang = 'en',
+  profile = '',
+} = Astro.props;
+
+// --- Meta ---
+const repo = import.meta.env.GITHUB_REPOSITORY;
+const [owner] = repo ? repo.split('/') : [null, null];
+const siteUrl = owner
+  ? `https://${owner}.github.io/`
+  : 'http://localhost:4321';
+
+const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const homeHref = `${base}/`;
 ---
 
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url={homeHref}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <meta http-equiv="refresh" content={`5; url=${base}/`} />
+
   </head>
-  <body></body>
+  <body>
+    <Layout title={404} lang={lang} section="main" profile={profile}>
+    <section class="container">
+      <div class="h0">404</div>
+    </section>
+    </Layout>
+  </body>
 </html>

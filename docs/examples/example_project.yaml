@@ -1,0 +1,31 @@
+- slug: my-project          # имя папки в public/media/projects/
+  name: "My Project"
+  order: 1                  # порядок в списке, меньше = выше
+  role: "Lead Developer"
+  year: "2024"
+  description: "Короткое описание для карточки в списке."
+  platforms: [iOS, Android]
+  stack: [Unity, C#]
+  tags: [Multiplayer, Mobile]
+  theme: blue               # blue | cyan | emerald | magenta
+  featured: true            #делает значок пина
+  archived: false           #делает карточку сложенной
+  metrics:
+    - label: Revenue
+      value: "$100K+"
+    - label: Players
+      value: "50K+"
+    - label: Metric
+      value: "Value"
+  media:
+    - type: image
+      src: /media/projects/my-project/cover.png
+      alt: "My Project cover"
+      featured: true
+  links:
+    - label: App Store
+      url: https://apps.apple.com/...
+    - label: GitHub
+      url: https://github.com/...
+    - label: Random link
+      url: https://random.link

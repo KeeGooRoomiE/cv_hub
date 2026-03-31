@@ -1,0 +1,270 @@
+---
+//
+//  showcase/[...rest].astro
+//  CV Hub — Dynamic showcase routes
+//
+//  Handles:
+//    /showcase/en              → showcase list in EN (non-default lang)
+//    /showcase/cv-hub          → project case study, default lang
+//    /showcase/cv-hub/en       → project case study, EN
+//
+//  Case study YAMLs live on disk:
+//    public/media/projects/{slug}/{slug_underscored}_{lang}.yaml
+//    e.g. public/media/projects/cv-hub/cv_hub_ru.yaml
+//
+//  Created by Alexander Gusarov on 30.03.2026.
+//  @spartan121
+//
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { parse } from 'yaml';
+import { getEntry } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectPage from '../../components/ProjectPage.astro';
+import { makeT } from '../../scripts/t';
+
+const MEDIA_DIR = path.join(process.cwd(), 'public/media/projects');
+
+// cv-hub → cv_hub
+function toPrefix(slug: string) {
+  return slug.replace(/-/g, '_');
+}
+
+// Load YAML from disk with lang fallback
+function loadProjectYaml(slug: string, lang: string, defaultLang: string) {
+  const dir      = path.join(MEDIA_DIR, slug);
+  const prefix   = toPrefix(slug);
+  const primary  = path.join(dir, `${prefix}_${lang}.yaml`);
+  const fallback = path.join(dir, `${prefix}_${defaultLang}.yaml`);
+  try {
+    if (fs.existsSync(primary))  return parse(fs.readFileSync(primary, 'utf8'));
+    if (fs.existsSync(fallback)) return parse(fs.readFileSync(fallback, 'utf8'));
+  } catch {}
+  return null;
+}
+
+// Slugs that have at least one lang yaml
+function getSlugsWithYaml(langIds: string[]): string[] {
+  if (!fs.existsSync(MEDIA_DIR)) return [];
+  return fs.readdirSync(MEDIA_DIR).filter((name) => {
+    const dir    = path.join(MEDIA_DIR, name);
+    const prefix = toPrefix(name);
+    if (!fs.statSync(dir).isDirectory()) return false;
+    return langIds.some((l) => fs.existsSync(path.join(dir, `${prefix}_${l}.yaml`)));
+  });
+}
+
+export async function getStaticPaths() {
+  const langCfg     = await getEntry('languages', 'languages');
+  const defaultLang: string = langCfg?.data?.default ?? 'ru';
+  const langs: { id: string; label: string }[] = langCfg?.data?.languages ?? [];
+  const langIds = langs.map((l) => l.id);
+
+  // Helpers redefined inside getStaticPaths — required by Astro's isolated context
+  const MEDIA_DIR = path.join(process.cwd(), 'public/media/projects');
+  function _toPrefix(s: string) { return s.replace(/-/g, '_'); }
+  function _loadYaml(slug: string, lang: string) {
+    const dir     = path.join(MEDIA_DIR, slug);
+    const prefix  = _toPrefix(slug);
+    const primary = path.join(dir, `${prefix}_${lang}.yaml`);
+    const fallback= path.join(dir, `${prefix}_${defaultLang}.yaml`);
+    try {
+      if (fs.existsSync(primary))  return parse(fs.readFileSync(primary, 'utf8'));
+      if (fs.existsSync(fallback)) return parse(fs.readFileSync(fallback, 'utf8'));
+    } catch {}
+    return null;
+  }
+  function _getSlugs(): string[] {
+    if (!fs.existsSync(MEDIA_DIR)) return [];
+    return fs.readdirSync(MEDIA_DIR).filter((name) => {
+      const dir    = path.join(MEDIA_DIR, name);
+      const prefix = _toPrefix(name);
+      if (!fs.statSync(dir).isDirectory()) return false;
+      return langIds.some((l) => fs.existsSync(path.join(dir, `${prefix}_${l}.yaml`)));
+    });
+  }
+
+  const paths: any[] = [];
+
+  // ── 1. Showcase list for non-default languages ─────────────────────────
+  for (const lang of langs.filter((l) => l.id !== defaultLang)) {
+    paths.push({
+      params: { rest: lang.id },
+      props:  { kind: 'list', lang: lang.id, defaultLang },
+    });
+  }
+
+  // ── 2. Project case study pages ────────────────────────────────────────
+  const slugs = _getSlugs();
+
+  for (const slug of slugs) {
+    // Default lang → /showcase/{slug}
+    if (_loadYaml(slug, defaultLang)) {
+      paths.push({
+        params: { rest: slug },
+        props:  { kind: 'project', lang: defaultLang, defaultLang, slug },
+      });
+    }
+
+    // Non-default langs → /showcase/{slug}/{lang}
+    for (const lang of langs.filter((l) => l.id !== defaultLang)) {
+      if (!_loadYaml(slug, lang.id)) continue;
+      paths.push({
+        params: { rest: `${slug}/${lang.id}` },
+        props:  { kind: 'project', lang: lang.id, defaultLang, slug },
+      });
+    }
+  }
+
+  return paths;
+}
+
+// ── Runtime ────────────────────────────────────────────────────────────────
+
+const { kind, lang, defaultLang, slug } = Astro.props;
+
+const langCfg    = await getEntry('languages', 'languages');
+const allLangs: { id: string; label: string }[] = langCfg?.data?.languages ?? [];
+const langIds    = allLangs.map((l) => l.id);
+const base       = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const translations = await getEntry('i18n', 'translations');
+const t = makeT(translations?.data ?? {}, lang);
+
+// ── Showcase list ──────────────────────────────────────────────────────────
+
+let projects: any[] = [];
+let projectSlugsWithPages = new Set<string>();
+
+if (kind === 'list') {
+  try {
+    const entry = await getEntry('showcase', 'projects');
+    projects = entry?.data?.projects ?? [];
+  } catch {}
+
+  projects = [...projects].sort((a, b) => {
+    const ao = Number.isFinite(Number(a?.order)) ? Number(a.order) : 9999;
+    const bo = Number.isFinite(Number(b?.order)) ? Number(b.order) : 9999;
+    if (ao !== bo) return ao - bo;
+    return String(a?.name ?? '').toLowerCase().localeCompare(String(b?.name ?? '').toLowerCase());
+  });
+
+  projectSlugsWithPages = new Set(getSlugsWithYaml(langIds));
+}
+
+const featured = projects.filter((p: any) => p.featured && !p.archived && !p.archive);
+const regular  = projects.filter((p: any) => !p.featured && !p.archived && !p.archive);
+const archived = projects.filter((p: any) => p.archived || p.archive);
+
+// ── Project page ───────────────────────────────────────────────────────────
+
+const projectData = kind === 'project' ? loadProjectYaml(slug, lang, defaultLang) : null;
+
+const showcaseHref = lang === defaultLang
+  ? `${base}/showcase`
+  : `${base}/showcase/${lang}`;
+
+const langLinks = kind === 'project'
+  ? allLangs
+      .filter((l) => loadProjectYaml(slug, l.id, defaultLang) !== null)
+      .map((l) => ({
+          id:     l.id,
+          label:  l.label,
+          href:   l.id === defaultLang
+                    ? `${base}/showcase/${slug}`
+                    : `${base}/showcase/${slug}/${l.id}`,
+          active: l.id === lang,
+        }))
+  : [];
+---
+
+{kind === 'list' ? (
+  <Layout title={t('showcase.page_title')} lang={lang} section="showcase" profile="">
+    <section class="container">
+      <header class="showcase__header">
+        <h1>{t('showcase.title')}</h1>
+      </header>
+
+      {projects.length === 0 && (
+        <article class="card"><p class="muted">{t('showcase.empty')}</p></article>
+      )}
+
+      {featured.length > 0 && (
+        <div class="showcase__section">
+          <h2 class="showcase__section-title">{t('showcase.featured')}</h2>
+          <div class="grid">
+            {featured.map((p: any) => (
+              <ProjectCard
+                project={p}
+                lang={lang}
+                hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
+                base={base}
+                defaultLang={defaultLang}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {regular.length > 0 && (
+        <div class="showcase__section showcase__section--regular">
+          <div class="grid">
+            {regular.map((p: any) => (
+              <ProjectCard
+                project={p}
+                lang={lang}
+                hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
+                base={base}
+                defaultLang={defaultLang}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {archived.length > 0 && (
+        <div class="showcase__section showcase__section--archive">
+          {archived.map((p: any) => (
+            <ProjectCard
+              project={p}
+              lang={lang}
+              hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
+              base={base}
+              defaultLang={defaultLang}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  </Layout>
+) : (
+  <ProjectPage
+    lang={lang}
+    data={projectData}
+    langLinks={langLinks}
+    showcaseHref={showcaseHref}
+  />
+)}
+
+<style>
+  .showcase__header { margin-bottom: 24px; }
+  .showcase__header h1 { margin: 0; }
+  .showcase__section { margin-bottom: 14px; }
+  .showcase__section--regular { margin-top: 40px; }
+  .showcase__section--archive {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .showcase__section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+</style>

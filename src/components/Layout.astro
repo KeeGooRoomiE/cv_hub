@@ -24,6 +24,7 @@ const {
   profile = '',
   description,
   ogImage,
+  customLangLinks,
 } = Astro.props;
 
 // --- Config ---
@@ -58,11 +59,13 @@ function buildHref(profileSlug: string, langId: string): string {
 }
 
 const homeHref     = buildHref(profile, lang);
-const showcaseHref = section === 'showcase'
-  ? Astro.url.pathname
+
+const isShowcaseIndex = Astro.url.pathname === `${base}/showcase`;
+const showcaseHref = isShowcaseIndex
+  ? `${base}/showcase`
   : `${base}/showcase`;
 
-const langLinks = allLangs.map(l => ({
+const langLinks = customLangLinks ?? allLangs.map(l => ({
   id:     l.id,
   label:  l.label,
   href:   buildHref(profile, l.id),
@@ -78,6 +81,7 @@ const profileLinks = allProfiles.map(p => ({
 
 const currentYear = new Date().getFullYear();
 const authorGit = 'https://github.com/KeeGooRoomiE/cv_hub';
+const authorGitHubPage = 'https://github.com/KeeGooRoomiE/';
 ---
 
 <!doctype html>
@@ -160,7 +164,9 @@ const authorGit = 'https://github.com/KeeGooRoomiE/cv_hub';
 
     <footer class="footer">
       <div class="container footer__inner">
-        <span>© {currentYear}</span>
+        <span><a href={authorGitHubPage} target="_blank" rel="noopener" class="footer__link">
+          Alexander Gusarov
+        </a> © {currentYear}</span>
         <a href={authorGit} target="_blank" rel="noopener" class="footer__link">
           GitHub
         </a>

@@ -6,7 +6,6 @@
   @spartan121
 */
 
-
 /* ─────────────────────────────────────────────────────────────────────────────
    DESIGN TOKENS
    Этот блок — единственное что нужно переопределить в файле темы.
@@ -127,6 +126,20 @@ a:hover { text-decoration: underline; }
 
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   404 PAGE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.h0 {
+  margin: 24px;
+  font-size: 256px;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
    HEADER
    ───────────────────────────────────────────────────────────────────────────── */
 
@@ -199,6 +212,36 @@ a:hover { text-decoration: underline; }
   background: rgba(var(--accent-rgb) / 0.10);
 }
 
+@media (max-width: 640px) {
+  .header__row {
+    gap: 6px;
+  }
+
+  .nav {
+    gap: 0;
+  }
+
+  /* Главная дублирует бренд — скрываем */
+  .nav > a:first-child {
+    display: none;
+  }
+
+  .nav a,
+  .dropdown__trigger {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  .lang {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .lang a {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+}
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DROPDOWN
@@ -554,6 +597,12 @@ a:hover { text-decoration: underline; }
   margin-top: 12px;
 }
 
+.project .links a:only-child {
+  display: block;
+  width: 50%;
+  text-align: center;
+}
+
 .link {
   padding: 7px 10px;
   border-radius: 10px;
@@ -904,4 +953,55 @@ a:hover { text-decoration: underline; }
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CHANGELOG
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.changelog__header { margin-bottom: 14px; }
+.changelog__header h1 { margin: 0; }
+.changelog__header p { margin: 8px 0 0; }
+
+.timeline { display: flex; flex-direction: column; gap: 16px; }
+
+.changelog__entry { padding: 24px; }
+
+.changelog__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.changelog__version {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.changelog__date {
+  font-size: 0.85rem;
+}
+
+.changelog__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.changelog__item {
+  display: flex;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.changelog__type {
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding-top: 2px;
 }

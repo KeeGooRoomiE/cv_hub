@@ -34,7 +34,7 @@ Treat your career like a system.
 
 ![CV Hub Preview](docs/repo-assets/preview_main.jpeg)
 
-🌐 **Live demo:** https://keegooroomii.github.io/cv_hub/
+🌐 **Live demo:** https://keegooroomie.github.io/cv_hub/
 
 ---
 
