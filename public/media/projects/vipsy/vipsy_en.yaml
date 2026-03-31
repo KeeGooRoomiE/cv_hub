@@ -1,0 +1,101 @@
+title: "Vipsy"
+blocks:
+  - type: image
+    src: /media/projects/vipsy/cover.png
+    alt: "Main screen screenshot"
+
+  - type: text
+    title: "About the Project"
+    body: |
+      Vipsy is a mobile application for finding a psychologist and choosing a therapy type. The product helps users not only find a specialist but also understand which approach suits them best. The goal is to guide the user from a vague "I need help" to a concrete appointment with the right professional.
+
+  - type: text
+    links:
+      - label: AppStore
+        url: https://docs.example.com
+
+  - type: divider
+
+  - type: text
+    title: "Problems"
+    bullets:
+      - Users often don’t know the specialist or therapy type — the app should help with the selection without overwhelming them or requiring prior knowledge
+      - 'Distrust of specialists and online consultations, difficulty comparing options'
+      - 'Complex monetization logic: clearly presenting both one-time sessions and subscriptions'
+      - 'The personal account must handle managing appointments, session history, and purchases without overload'
+  
+  - type: divider
+
+  - type: text
+    title: "Solution"
+    bullets:
+      - 'Designed a dual selection flow: users can choose a therapy type or service — then get relevant specialists — or directly book a specific specialist with their service'
+      - 'Created a specialist card emphasizing trust: work directions, approach, experience, services — all on one screen without unnecessary navigation'
+      - 'Built clear purchase logic: one-time sessions and subscriptions are visually separated, with a simple booking flow'
+      - 'Designed a personal account separating active appointments, history, and purchases'
+      - 'Created a visually calm and safe interface to reduce anxiety'
+
+  - type: divider
+
+  - type: text
+    title: "Results"
+    bullets:
+      - 'Complete user journey built from first screen to confirmed appointment'
+      - 'Simplified the process of choosing a specialist and therapy type through structured information'
+      - 'Interface perceived as calm and safe for the user'
+      - 'Project delivered as a commercial order within agreed deadlines'
+
+  - type: divider
+
+  - type: image
+    title: "Intro Screens"
+    src: public/media/projects/vipsy/starting_screens.png
+    alt: "Intro screens"
+    
+  - type: image
+    title: "Authorization Flow"
+    src: public/media/projects/vipsy/auth_flow.png
+    alt: "Authorization flow"
+
+  - type: image
+    title: "Personal Account"
+    src: public/media/projects/vipsy/account.png
+    alt: "Personal account"
+
+  - type: image
+    title: "Therapies and Specialists"
+    src: public/media/projects/vipsy/specs.png
+    alt: "Therapies and specialists"
+
+  - type: image
+    title: "Booking a Specialist"
+    subtitle: "Flexible booking: users can immediately choose a convenient time or create a booking without selecting a time and return later. This lowers the entry barrier and retains users not yet ready to pick a date."
+    src: public/media/projects/vipsy/record.png
+    alt: "Booking a specialist"
+
+  - type: image
+    title: "Purchase Service"
+    subtitle: "Supports multiple scenarios: a service can be bought without a scheduled time and booked later, or the user can select a specialist and convenient slot immediately. Subscriptions are purchased separately without time selection, then activated in the personal account, after which the user books sessions themselves."
+    src: public/media/projects/vipsy/buy.png
+    alt: "Purchase service"
+
+  - type: image
+    title: "My Services"
+    subtitle: "All purchased services are divided into current and archived. From current services, the user can book a session if no time was chosen during purchase. Options include rescheduling, canceling a session, and activating subscriptions. All session management is centralized — the user doesn’t need to search across screens."
+    src: public/media/projects/vipsy/serv.png
+    alt: "My services"
+
+  - type: text
+    title: "Thank you for watching!"
+
+  - type: divider
+
+  - type: text
+    title: "Contacts"
+    links:
+      - label: Email
+        url: mailto:vkovalikova243@gmail.com
+      - label: LinkedIn
+        url: https://www.linkedin.com/in/valeria-kovalikova/
+      - label: Telegram
+        url: https://t.me/kennusk
