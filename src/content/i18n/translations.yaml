@@ -86,6 +86,16 @@ changelog:
     ru: "Записей пока нет."
     zh: "暂无记录。"
 
+notfound404:
+  title: 
+    en: "404"
+    ru: "404"
+    zh: "404"
+  subtitle:
+    en: ""
+    ru: ""
+    zh: ""
+
 meta:
   description:
     en: "CV Hub - one place for your actual resume."
