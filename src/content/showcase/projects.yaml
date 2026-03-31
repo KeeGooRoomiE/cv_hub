@@ -21,6 +21,12 @@ projects:
       - label: GitHub
         url: https://github.com/KeeGooRoomiE/cv_hub
         type: repo
+      - label: Changelog
+        url: /cv_hub/changelog
+        type: article
+      - label: Deep Dive
+        url: /cv_hub/showcase/cv-hub
+        type: product
 
       - label: Changelog
         url: /changelog
