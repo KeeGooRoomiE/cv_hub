@@ -1,6 +1,18 @@
+# CV Hub — Case Study YAML example
+#
+# Файл кейс стади живёт по пути:
+#   public/media/projects/{slug}/{slug_underscored}_{lang}.yaml
+#
+# Пример: public/media/projects/my-project/my_project_ru.yaml
+#         public/media/projects/my-project/my_project_en.yaml
+#
+# Страница генерируется автоматически при наличии файла.
+# URL: /showcase/{slug}          ← дефолтный язык
+#      /showcase/{slug}/en       ← остальные языки
+
 title: "My Project"
-role: "Lead Developer"
-year: "2024"
+role: "Lead Developer"          # Отображается под заголовком (опционально)
+year: "2024"                    # Год (опционально)
 tagline: "Короткое описание под заголовком на странице кейса."
 
 platforms: [iOS, Android]
@@ -33,6 +45,8 @@ blocks:
     subtitle: "Схема взаимодействия сервисов"
     src: /media/projects/my-project/architecture.png
     alt: "Архитектурная схема"
+    body: |
+      Дополнительный текст над картинкой. Поддерживает переносы строк.
 
   # ── Разделитель ─────────────────────────────────────────────────────────
   - type: divider

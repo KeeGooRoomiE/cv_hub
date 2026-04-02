@@ -14,7 +14,7 @@ import Divider    from './blocks/DividerBlock.astro';
 const { data, showcaseHref, langLinks, lang } = Astro.props;
 ---
 
-<Layout title={data?.title ?? ''} lang={lang} section="showcase" profile="">
+<Layout title={data?.title ?? ''} lang={lang} section="showcase" profile="" customLangLinks={langLinks}>
 <div class="project-page container">
 
   <!-- Nav: back + language switcher -->

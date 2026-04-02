@@ -1,4 +1,10 @@
+# CV Hub — Showcase project entry example
+#
+# Добавляется в src/content/showcase/projects.yaml
+# в массив projects:
+
 - slug: my-project          # имя папки в public/media/projects/
+                            # также используется для роутинга кейс стади: /showcase/my-project
   name: "My Project"
   order: 1                  # порядок в списке, меньше = выше
   role: "Lead Developer"
@@ -8,8 +14,8 @@
   stack: [Unity, C#]
   tags: [Multiplayer, Mobile]
   theme: blue               # blue | cyan | emerald | magenta
-  featured: true            #делает значок пина
-  archived: false           #делает карточку сложенной
+  featured: true            # показывает значок пина
+  archived: false           # делает карточку свёрнутой с раскрытием по клику
   metrics:
     - label: Revenue
       value: "$100K+"
@@ -21,11 +27,14 @@
     - type: image
       src: /media/projects/my-project/cover.png
       alt: "My Project cover"
-      featured: true
+      featured: true        # эта картинка показывается в карточке
   links:
     - label: App Store
       url: https://apps.apple.com/...
+      type: store
     - label: GitHub
       url: https://github.com/...
-    - label: Random link
-      url: https://random.link
+      type: repo
+    - label: Case Study     # ссылка на страницу кейс стади (без /cv_hub/)
+      url: /showcase/my-project
+      type: product

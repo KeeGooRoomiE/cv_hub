@@ -61,9 +61,9 @@ function buildHref(profileSlug: string, langId: string): string {
 const homeHref     = buildHref(profile, lang);
 
 const isShowcaseIndex = Astro.url.pathname === `${base}/showcase`;
-const showcaseHref = isShowcaseIndex
+const showcaseHref = lang === defaultLang
   ? `${base}/showcase`
-  : `${base}/showcase`;
+  : `${base}/showcase/${lang}`;
 
 const langLinks = customLangLinks ?? allLangs.map(l => ({
   id:     l.id,

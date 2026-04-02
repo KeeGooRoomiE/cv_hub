@@ -1,4 +1,19 @@
 changelog:
+  - version: "1.5.1"
+    date: "2026-04-02"
+    changes:
+      - type: fixed
+        text: "Language switcher on Showcase list now correctly switches language instead of redirecting to home"
+      - type: fixed
+        text: "Language switcher on Case Study pages now correctly switches language of the current project"
+      - type: fixed
+        text: "Back button and Showcase nav link now preserve current language across navigation"
+      - type: fixed
+        text: "Project card links now respect BASE_URL — no more hardcoded /cv_hub/ prefix required in YAML"
+      - type: fixed
+        text: "ProjectPage mobile layout — horizontal padding now correctly applied on small screens"
+      - type: fixed
+        text: "Showcase slug setup for other languages was incorrect for projects with flags archived and featured"  
   - version: "1.5.0"
     date: "2026-03-31"
     changes:

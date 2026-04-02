@@ -9,118 +9,58 @@
 [![Lighthouse SEO](https://img.shields.io/badge/Lighthouse-SEO%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomii.github.io/cv_hub/)
 [![Last Commit](https://img.shields.io/github/last-commit/KeeGooRoomiE/cv_hub?color=blue)](https://github.com/KeeGooRoomiE/cv_hub/commits/main)
 [![Stars](https://img.shields.io/github/stars/KeeGooRoomiE/cv_hub?style=social)](https://github.com/KeeGooRoomiE/cv_hub/stargazers)
-[![Visitors](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKeeGooRoomiE%2Fcv_hub&count_bg=%2379C83D&title_bg=%23555555&title=visitors&edge_flat=false)](https://hits.seeyoufarm.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KeeGooRoomiE/cv_hub/blob/main/CONTRIBUTING.md)
 
-**Resume as Code. Reproducible. Versioned. Deployable.**
-
-CV Hub turns your resume into infrastructure.
-
-One YAML file becomes:
-
-- A live personal website
-- Downloadable PDF, DOCX and TXT files
-- Multiple role-specific CV versions from a single source
-- A structured, version-controlled professional profile
-- A reproducible build artifact
-
-No duplicated resumes. No platform lock-in. No visual builders.
-
-Just data → build → deploy.
-
-Treat your career like a system.
-
-## Preview
-
-![CV Hub Preview](docs/repo-assets/preview_main.jpeg)
+**Your personal site, CV, and project portfolio — from one YAML file.**
 
 🌐 **Live demo:** https://keegooroomie.github.io/cv_hub/
 
+![CV Hub Preview](docs/repo-assets/preview_main.jpeg)
+
 ---
 
-## Who is this for
+## ⚡ Get your site live in 5 minutes
 
-CV Hub works for anyone who wants a professional website with full personal control:
+```bash
+git clone https://github.com/YOUR_ACCOUNT/cv_hub.git
+cd cv_hub
+npm install && npm run dev
+```
 
-- Developers, DevOps engineers, designers, managers, analysts — any specialist
-- Anyone who wants multiple role-specific CV versions (DevOps, GameDev, Fullstack) from one source
-- Anyone tired of Tilda, Notion, Canva, and other platforms
-- Anyone who wants to version their resume with Git and automate format generation
+Open `http://localhost:4321`. Edit `src/content/cv/en.yaml`. Push — site deploys automatically.
 
-> Minimum requirement — basic familiarity with the command line and Git. If you can clone a repo and edit text files, that's enough.
+> Already have a resume? Paste it into Claude or ChatGPT with the prompt from [`docs/LLM-CONTEXT.md`](docs/LLM-CONTEXT.md) and get ready YAML in seconds.
 
 ---
 
 ## What you get
 
-- Main page — CV
-- Showcase page — projects and case studies
-- Changelog page — version history of your CV Hub
-- Multi-language support — add as many languages as you need
-- Multi-profile support — role-specific CV versions (DevOps, GameDev, Fullstack…) from one YAML source
-- Downloadable resume files (PDF / DOCX / TXT) generated automatically per profile and language
-- Clean static HTML deployed on GitHub Pages
-- Full control over the visual style through a single CSS file with theme support
-- URL-based theme switching for live previews
+One YAML file generates everything:
+
+| | |
+|---|---|
+| 🌐 Live website | Clean personal site with CV, projects, and case studies |
+| 📄 PDF / DOCX / TXT | Auto-generated resume files for every profile and language |
+| 🎭 Multiple profiles | DevOps, GameDev, Fullstack — different CV versions, one source |
+| 🌍 Multi-language | EN, RU, or any language — switcher included |
+| 📁 Case studies | Per-project deep-dive pages with text, images, architecture |
+| 🎨 Themes | 4 built-in themes, switchable via URL |
+
+No duplicated resumes. No platform lock-in. No visual builders.
 
 ---
 
-## Why this exists
+## Why CV Hub
 
-Most people maintain:
-- A PDF resume
+You probably maintain:
+- A PDF resume (two versions, at least)
 - A LinkedIn profile
-- A portfolio site
-- A Notion page
-- A DOCX file somewhere on their desktop
+- A portfolio on Notion, Tilda, or some other platform
+- A DOCX somewhere on your desktop
 
-They all drift out of sync. And when you're applying to a DevOps role and a backend role at the same time, you maintain two separate copies of everything.
+They all drift out of sync.
 
-CV Hub eliminates duplication and centralizes everything into one structured source of truth.
-
-Edit once. Define profiles. Regenerate everything. Commit changes. Deploy.
-
----
-
-## Quick start
-
-From zero to live site in under 5 minutes.
-
-### 1. Fork the repository
-
-Click **Fork** in the top right corner of the repository page on GitHub.
-
-After forking you'll have your own copy: `github.com/YOUR_ACCOUNT/cv_hub`
-
-### 2. Clone to your local machine
-
-```bash
-git clone https://github.com/YOUR_ACCOUNT/cv_hub.git
-cd cv_hub
-```
-
-### 3. Install dependencies
-
-```bash
-npm install
-npx playwright install chromium --with-deps
-```
-
-### 4. Run locally
-
-```bash
-npm run dev
-```
-
-The site will be available at `http://localhost:4321`
-
-Pages:
-- `/` — main CV page (default language)
-- `/ru` — CV in Russian (or any other configured language)
-- `/devops` — DevOps profile (if configured)
-- `/devops/ru` — DevOps profile in Russian
-- `/showcase` — projects showcase
-- `/changelog` — version history
+CV Hub replaces all of them with a single YAML file and a deterministic pipeline. Edit once — everything updates. Same source generates your DevOps CV, your GameDev CV, and your portfolio site simultaneously.
 
 ---
 
@@ -153,83 +93,62 @@ For full YAML structure reference — see **[`docs/INFO.md`](docs/INFO.md)**.
 
 ## Multi-profile system
 
-CV Hub supports multiple role-specific CV versions generated from a single base YAML.
-
-### How it works
+CV Hub supports multiple role-specific CV versions from a single base YAML.
 
 1. `src/content/cv/en.yaml` — your full base CV
-2. `src/content/cv/en_devops.yaml` — delta file with only the fields that change
+2. `src/content/cv/en_devops.yaml` — delta with only the fields that change
 3. `src/scripts/merge.mjs` merges them into `public/cv/en_devops.yaml`
 4. The site generates `/devops` with the merged result
 
-**Merge rules:**
-- Scalar fields (`title`, `summary`): spec wins, missing fields fall back to base
-- `skills`: entire block replaced if provided in spec
-- `experience`: whitelist — only companies listed in spec appear; fields merged per entry by `company` key
-- Other arrays (`achievements`, `contacts`, `education`): spec wins entirely if provided
+See **[`docs/INFO.md`](docs/INFO.md)** for merge rules and delta file format.
 
-### Profile configuration
+---
 
-```yaml
-# src/content/profiles/profiles.yml
-profiles:
-  - id: default
-    label: "Generalist"
-    slug: ""
-    spec: null
-  - id: devops
-    label: "DevOps"
-    slug: "devops"
-    spec: devops       # reads en_devops.yaml / ru_devops.yaml
-  - id: gamedev
-    label: "Game Developer"
-    slug: "gamedev"
-    spec: gamedev
+## Showcase and Case Studies
+
+### Project cards
+
+Add projects to `src/content/showcase/projects.yaml`. Each card supports metrics, media gallery, stack tags, archive toggle, and links.
+
+See `docs/examples/example_project.yaml` for a full annotated example.
+
+### Case study pages
+
+For any project you want a deep-dive page, create a YAML file:
+
+```
+public/media/projects/{slug}/{slug_underscored}_{lang}.yaml
 ```
 
-`slug` is the URL segment. `spec` is the delta filename prefix.
+Example: `public/media/projects/cv-hub/cv_hub_en.yaml` → `/showcase/cv-hub/en`
 
-### Delta file example
+The page is generated automatically. No code changes needed.
 
+Case study content is built from blocks — `text`, `image`, `divider`. All fields are optional. See `docs/examples/example_cs.yaml` for all block types.
+
+To link a project card to its case study:
 ```yaml
-# src/content/cv/en_devops.yaml — only what changes
-title: DevOps / Platform Engineer | Kubernetes · Terraform · AWS
-
-summary: >
-  DevOps-focused summary here...
-
-skills:
-  - group: Orchestration
-    items: [Kubernetes, Helm, Docker]
-  - group: IaC
-    items: [Terraform, Ansible]
-
-experience:
-  - company: InfoScale        # full entry from base, no override
-  - company: AZNResearch
-    role: Backend Engineer    # override role for this profile
-    description:
-      - Focused bullet points for DevOps context
+links:
+  - label: Case Study
+    url: /showcase/cv-hub    # no /cv_hub/ prefix — base is added automatically
+    type: product
 ```
-
-Profiles without a `profiles.yml` work fine — the site falls back to a single default profile.
 
 ---
 
 ## Language configuration
 
-Languages are configured in `src/content/languages/languages.yml`:
-
 ```yaml
-default: "en"
+# src/content/languages/languages.yml
+default: "ru"
 languages:
-  - id: "en"
-    label: "EN"
   - id: "ru"
     label: "RU"
+  - id: "en"
+    label: "EN"
 ```
 
-Add any language — create the corresponding `{lang}.yaml` base file in `src/content/cv/`, add UI strings to `translations.yaml`, and it will appear in the language switcher automatically.
+Add any language — create `{lang}.yaml`, add UI strings to `translations.yaml`, and it appears in the language switcher automatically.
 
 ---
 
@@ -237,7 +156,7 @@ Add any language — create the corresponding `{lang}.yaml` base file in `src/co
 
 ### Option A — Edit YAML directly
 
-Open `src/content/cv/en.yaml` and fill in your data manually.
+Open `src/content/cv/en.yaml` and fill in your data.
 See [`docs/INFO.md`](docs/INFO.md) for the full field reference.
 
 ### Option B — Import from JSON Resume
@@ -247,27 +166,21 @@ npm run resume:import -- docs/cv_en.json en
 npm run resume:import:all
 ```
 
-### Option C — Generate from any resume via LLM
+### Option C — Generate via LLM
 
-If you have a PDF, DOCX, or plain text resume — use Claude or ChatGPT with the ready-made prompt.
-
-👉 **[See `docs/llm-resume-guide.md`](docs/llm-resume-guide.md)**
+Feed your resume (PDF, DOCX, plain text) to Claude or ChatGPT with the prompt from `docs/llm-context.md`. The document also contains full project context for AI tools — feed it before making any code changes.
 
 ---
 
-## How to customize the look
+## Customization
 
-All styles live in `src/styles/global.css`.
-
-The file is token-based — edit only the `:root` block to restyle the entire site:
+All styles live in `src/styles/global.css`. Token-based — edit only the `:root` block to restyle:
 
 ```css
 :root {
   --bg: #070a10;
   --accent: #3b82f6;
   --text: rgba(233, 238, 247, 0.96);
-  --card-bg: linear-gradient(...);
-  --r-lg: 18px;
 }
 ```
 
@@ -280,27 +193,15 @@ The file is token-based — edit only the `:root` block to restyle the entire si
 | `nordic.css` | Nord-inspired, cold blue-grey |
 | `peachy.css` | Warm peach, light background |
 
-To switch the default theme, change the import in `src/components/Layout.astro`:
-
-```js
-import '../styles/themes/nordic.css';
-```
-
-#### Live theme preview via URL
-
-Any theme can be previewed live without changing code:
+Preview any theme live via URL:
 
 ```
 https://YOUR_ACCOUNT.github.io/cv_hub/?theme=peachy
 ```
 
-Available values: `frosted`, `light`, `nordic`, `peachy`
-
-Previews for all themes: **[`docs/repo-assets`](docs/repo-assets)**
-
 ---
 
-## How to deploy to GitHub Pages
+## How to deploy
 
 ### 1. Enable GitHub Pages
 
@@ -316,43 +217,23 @@ git push
 
 Your site will be live at `https://YOUR_ACCOUNT.github.io/cv_hub/`
 
-The deploy workflow runs automatically on every push to `main`. The `base` URL and `siteUrl` are resolved dynamically from `GITHUB_REPOSITORY` — forks work out of the box without any config changes.
+The deploy workflow runs automatically on every push to `main`. `BASE_URL` and `siteUrl` are resolved dynamically from `GITHUB_REPOSITORY` — forks work out of the box without config changes.
 
 ---
 
 ## Resume file generation
-
-All resume files are generated automatically during build:
 
 ```bash
 npm run build
 ```
 
 Build order:
-1. `cv:build` — merge base + spec YAMLs into `public/cv/`
-2. `resume:generate` — DOCX + TXT from merged YAMLs
+1. `cv:build` — merge YAMLs → `public/cv/`
+2. `resume:generate` — DOCX + TXT
 3. `resume:pdf` — PDF via Playwright
 4. `astro build` — static site
 
-Output after build:
-
-```
-public/cv/
-  en.yaml
-  ru.yaml
-  en_devops.yaml
-  ru_devops.yaml
-  en_gamedev.yaml
-  ru_gamedev.yaml
-
-public/downloads/
-  resume_en.pdf / .docx / .txt
-  resume_ru.pdf / .docx / .txt
-  resume_en_devops.pdf / .docx / .txt
-  resume_ru_devops.pdf / .docx / .txt
-  resume_en_gamedev.pdf / .docx / .txt
-  resume_ru_gamedev.pdf / .docx / .txt
-```
+Output: `public/downloads/resume_{lang}[_{spec}].{pdf|docx|txt}`
 
 ---
 
@@ -376,62 +257,55 @@ npm run resume:linkedin      # parse LinkedIn PDF export → YAML (best-effort)
 ```
 src/
   content/
-    cv/
-      en.yaml              # base CV in English
-      ru.yaml              # base CV in Russian
-      en_devops.yaml       # DevOps delta (spec)
-      ru_devops.yaml
-      en_gamedev.yaml      # GameDev delta (spec)
-      ru_gamedev.yaml
-    profiles/
-      profiles.yml         # profile registry (optional)
-    languages/
-      languages.yml        # language config
-    i18n/
-      translations.yaml    # UI strings for all languages
-    showcase/
-      projects.yaml
-    changelog/
-      changelog.yaml
+    cv/                    # CV data (base + deltas)
+    profiles/profiles.yml
+    languages/languages.yml
+    i18n/translations.yaml
+    showcase/projects.yaml
+    changelog/changelog.yaml
   pages/
     index.astro            # default profile + default lang
     [...slug].astro        # all other profile × lang combos
     showcase/
-      index.astro
+      index.astro          # default lang
+      [...rest].astro      # non-default langs + case study pages
     changelog.astro
   components/
-    Layout.astro           # shared layout: header, nav, footer
-    HomePage.astro         # CV page blocks
-    ProjectCard.astro      # project card with archive toggle
+    Layout.astro
+    HomePage.astro
+    ProjectCard.astro
+    ProjectPage.astro      # case study page template
+    blocks/                # TextBlock, ImageBlock, DividerBlock
     AnimatedBackground.astro
   scripts/
-    merge.mjs              # YAML merge pipeline
-    t.ts                   # i18n helper
-    resume-export-pdf.mjs  # PDF generator (Playwright)
-    resume-import-json.mjs # JSON Resume → YAML converter
-    resume-import-linkedin.mjs
+    merge.mjs
+    t.ts
+    resume-export-pdf.mjs
+    resume-import-json.mjs
   styles/
-    global.css             # all styles + design tokens
-    themes/                # color themes
+    global.css
+    themes/
 
 public/
-  cv/                      # merged YAML artifacts (generated)
-  themes/                  # built theme files (auto-copied)
-  downloads/               # generated resume files (after build)
+  cv/                      # merged YAMLs (generated)
+  downloads/               # resume files (generated)
+  media/projects/          # project assets + case study YAMLs
+  themes/
 
 .github/
-  scripts/
-    generate-resume.js     # DOCX + TXT generator
-  workflows/
-    deploy.yml             # CI/CD
+  scripts/generate-resume.js
+  workflows/deploy.yml
 
 docs/
-  INFO.md
-  ENGINEERING.md
-  BKG_INFO.md
-  llm-resume-guide.md
+  INFO.md                  # data structure + field reference
+  ENGINEERING.md           # architecture decisions
+  BKG_INFO.md              # AnimatedBackground docs
+  llm-context.md           # full project context for AI tools
   examples/
-  repo-assets/
+    example_cv.yaml
+    example_cv.json
+    example_project.yaml
+    example_cs.yaml        # all case study block types
 ```
 
 ---
@@ -451,10 +325,20 @@ docs/
 
 | File | Description |
 |---|---|
-| [INFO.md](docs/INFO.md) | YAML field reference, data flow, i18n, profiles |
+| [INFO.md](docs/INFO.md) | YAML field reference, routing, i18n, profiles, case studies |
 | [ENGINEERING.md](docs/ENGINEERING.md) | Architecture decisions, system design, trade-offs |
-| [llm-resume-guide.md](docs/llm-resume-guide.md) | Generate YAML from any resume using an LLM |
+| [llm-context.md](docs/llm-context.md) | Full project context for AI tools (Claude, ChatGPT, Cursor) |
 | [BKG_INFO.md](docs/BKG_INFO.md) | AnimatedBackground component docs |
+
+---
+
+## ⭐ If this is useful
+
+```
+⭐ Star this repo if you want to stop rewriting your resume every time you apply
+🍴 Fork it — your site will be live in minutes
+🐛 Found a bug or have an idea? Open an issue
+```
 
 ---
 

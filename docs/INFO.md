@@ -11,11 +11,13 @@
 3. [Multi-profile система](#3-multi-profile-система)
 4. [Языки и i18n](#4-языки-и-i18n)
 5. [Showcase — projects.yaml](#5-showcase--projectsyaml)
-6. [Changelog — changelog.yaml](#6-changelog--changelogyaml)
-7. [Поток данных](#7-поток-данных)
-8. [Компоненты](#8-компоненты)
-9. [Роутинг](#9-роутинг)
-10. [Генерация документов](#10-генерация-документов)
+6. [Case Study страницы](#6-case-study-страницы)
+7. [Changelog — changelog.yaml](#7-changelog--changelogyaml)
+8. [Поток данных](#8-поток-данных)
+9. [Компоненты](#9-компоненты)
+10. [Роутинг](#10-роутинг)
+11. [Генерация документов](#11-генерация-документов)
+12. [LLM-контекст](#12-llm-контекст)
 
 ---
 
@@ -27,7 +29,7 @@ src/content/
     en.yaml              ← base CV in English
     ru.yaml              ← base CV in Russian
     en_devops.yaml       ← DevOps delta (optional)
-    ru_devops.yaml       ← DevOps delta in Russian (optional)
+    ru_devops.yaml
     en_gamedev.yaml      ← GameDev delta (optional)
     ru_gamedev.yaml
   profiles/
@@ -40,98 +42,43 @@ src/content/
     projects.yaml        ← showcase projects
   changelog/
     changelog.yaml       ← version history
+
+public/
+  media/
+    projects/
+      {slug}/            ← project assets
+        cover.png
+        {slug_}_{lang}.yaml  ← case study content (optional)
 ```
 
-После выполнения `npm run cv:build` в `public/cv/` появляются смёрженные артефакты:
-
-```
-public/cv/
-  en.yaml
-  ru.yaml
-  en_devops.yaml
-  ru_devops.yaml
-  en_gamedev.yaml
-  ru_gamedev.yaml
-```
+После выполнения `npm run cv:build` в `public/cv/` появляются смёрженные артефакты.
 
 ---
 
 ## 2. CV YAML — полный справочник полей
-
-### Верхний уровень
 
 ```yaml
 name: "Alexander Gusarov"
 title: "DevOps Engineer | Kubernetes · Terraform · AWS"
 summary: >
   Multi-line summary text.
-  Supports YAML block scalar.
 
-contacts: [...]
-achievements: [...]
-skills: [...]
-experience: [...]
-education: [...]
-languages: [...]
-```
-
-### contacts
-
-```yaml
 contacts:
   - label: Email
     url: mailto:your@email.com
   - label: GitHub
     url: https://github.com/username
-  - label: Telegram
-    url: https://t.me/username
-  - label: LinkedIn
-    url: https://linkedin.com/in/username
-  - label: Upwork
-    url: https://upwork.com/freelancers/~...
-```
 
-Поддерживается любое количество контактов. `url` может быть любой ссылкой или `mailto:`.
-
-### achievements
-
-```yaml
 achievements:
-  - "Managed infrastructure for 750+ Linux servers with 99.9% uptime"
+  - "Managed infrastructure for 750+ Linux servers"
   - "Reduced deploy time from 8 to 2 minutes (−75%)"
-  - "Cut AWS costs from $550 to $300/month (−45%)"
-```
 
-Массив строк. Отображается как список ключевых достижений.
-
-### skills
-
-Поддерживаются два формата — плоский и групповой:
-
-```yaml
-# Плоский (все теги в одном блоке)
-skills:
-  - Kubernetes
-  - Docker
-  - Terraform
-
-# Групповой (рекомендуется)
 skills:
   - group: Orchestration
     items: [Kubernetes, Helm, Docker]
   - group: IaC & Automation
     items: [Terraform, Ansible]
-  - group: Cloud
-    items: [AWS — EC2, S3, RDS, VPC, IAM, ALB]
-  - group: Languages
-    items: [Go, Python, Bash]
-```
 
-Оба формата можно смешивать в одном массиве.
-
-### experience
-
-```yaml
 experience:
   - company: "InfoScale"
     role: "DevOps Engineer"
@@ -139,32 +86,13 @@ experience:
     description:
       - "Administered Kubernetes production clusters"
       - "Built IaC solution with Terraform + Ansible on AWS"
-      - "Reduced MTTR by 60% with custom Grafana dashboards"
-    stack: [Kubernetes, Helm, Docker, Terraform, AWS, Go]
-```
+    stack: [Kubernetes, Helm, Docker, Terraform, AWS]
 
-Поля:
-- `company` — название компании (используется как ключ при merge)
-- `role` — должность
-- `period` — период работы (свободная строка)
-- `description` — массив строк с описанием задач
-- `stack` — массив технологий (отображается курсивом под описанием)
-
-### education
-
-```yaml
 education:
   - institution: "Udemy"
     degree: "Certified Kubernetes Administrator"
     period: "2025"
-  - institution: "Siberian Polytechnic University"
-    degree: "Faculty of Information Technology"
-    period: "2017–2018"
-```
 
-### languages (spoken)
-
-```yaml
 languages:
   - language: Russian
     level: Native
@@ -172,80 +100,56 @@ languages:
     level: IELTS 7.0 (B2)
 ```
 
+`skills` поддерживает и плоский формат (массив строк), и групповой. Оба можно смешивать.
+
 ---
 
 ## 3. Multi-profile система
 
-### Концепция
-
-Один базовый YAML + delta-файлы для каждого профиля. Merge-пайплайн собирает итоговые артефакты перед сборкой сайта.
-
 ### profiles.yml
 
 ```yaml
-# src/content/profiles/profiles.yml
 profiles:
   - id: default
     label: "Generalist"
-    slug: ""          # URL-сегмент. Пустая строка = корень /
-    spec: null        # null = копировать base как есть
-
+    slug: ""        # пустая строка = корень /
+    spec: null      # null = копировать base как есть
   - id: devops
     label: "DevOps"
-    slug: "devops"    # URL: /devops, /devops/ru
-    spec: devops      # читает en_devops.yaml, ru_devops.yaml
-
-  - id: gamedev
-    label: "Game Developer"
-    slug: "gamedev"
-    spec: gamedev
+    slug: "devops"
+    spec: devops    # читает en_devops.yaml, ru_devops.yaml
 ```
 
-`slug` и `spec` — разные вещи:
-- `slug` — то, что в URL
-- `spec` — префикс имени delta-файла (`{lang}_{spec}.yaml`)
-
-Это позволяет иметь `/backend` в URL, но читать из `en_devops.yaml`.
-
-Если `profiles.yml` отсутствует — система работает с одним дефолтным профилем.
+`slug` (URL) и `spec` (префикс файла) — разные вещи, могут отличаться.
 
 ### Delta-файл
 
-Delta-файл содержит только то, что меняется. Все остальные поля берутся из base.
+Содержит только то, что меняется. Остальное берётся из base.
 
 ```yaml
 # src/content/cv/en_devops.yaml
 title: "DevOps / Platform Engineer | Kubernetes · Terraform · AWS"
-
-summary: >
-  DevOps-focused summary...
 
 skills:
   - group: Orchestration
     items: [Kubernetes, Helm, Docker]
 
 experience:
-  - company: InfoScale        # поля целиком из base, переопределений нет
-
+  - company: InfoScale        # берётся целиком из base
   - company: AZNResearch
     role: "Backend Engineer"  # переопределяем role
     description:
-      - "Developed backend microservices with .NET Core"
-      - "Introduced Git workflow and CI pipelines"
-    # stack не указан → берётся из base
+      - "Focused bullet for DevOps context"
 ```
 
 ### Правила merge
 
 | Поле | Поведение |
 |---|---|
-| Скалярные поля (`title`, `summary`, `name`) | spec wins; отсутствующие — из base |
+| Скалярные (`title`, `summary`) | spec wins; отсутствующие — из base |
 | `skills` | Целиком заменяется если указан в spec |
-| `experience` | Whitelist по `company`. Только перечисленные компании. Поля мёрджатся: base + spec override |
-| `achievements` | Целиком заменяется если указан в spec |
-| `contacts`, `education`, `languages` | Целиком заменяется если указан в spec |
-
-**Важно про `experience` whitelist:** если компания указана в spec только как `- company: InfoScale` без других полей — она попадает в результат с полным содержимым из base. Это способ включить запись без изменений.
+| `experience` | Whitelist по `company`; поля мёрджатся per entry |
+| `achievements`, `contacts`, `education`, `languages` | Целиком заменяется если указан в spec |
 
 ---
 
@@ -254,28 +158,26 @@ experience:
 ### languages.yml
 
 ```yaml
-# src/content/languages/languages.yml
-default: "en"
+default: "ru"
 languages:
-  - id: "en"
-    label: "EN"
   - id: "ru"
     label: "RU"
+  - id: "en"
+    label: "EN"
 ```
 
-`default` определяет язык для URL `/` (без языкового сегмента).
+`default` определяет язык для URL без языкового сегмента.
 
 ### Добавление языка
 
 1. Добавить запись в `languages.yml`
-2. Создать `src/content/cv/{lang}.yaml` (или оставить без файла — будет фоллбек на default)
+2. Создать `src/content/cv/{lang}.yaml`
 3. Добавить переводы в `translations.yaml`
-4. Опционально: создать `src/content/cv/{lang}_{spec}.yaml` для каждого профиля
+4. Опционально: `src/content/cv/{lang}_{spec}.yaml` для каждого профиля
 
 ### translations.yaml
 
 ```yaml
-# src/content/i18n/translations.yaml
 nav:
   home:
     en: "Home"
@@ -288,12 +190,6 @@ cv:
   skills:
     en: "Skills"
     ru: "Навыки"
-  experience:
-    en: "Experience"
-    ru: "Опыт"
-  download:
-    en: "Download"
-    ru: "Скачать"
 
 meta:
   description:
@@ -304,207 +200,234 @@ meta:
     ru: "ru_RU"
 ```
 
-Фоллбек-цепочка: запрошенный язык → `en` → ключ пути (как fallback строка).
-
-### i18n хелпер
-
-```ts
-import { makeT } from '../scripts/t';
-
-const translations = await getEntry('i18n', 'translations');
-const t = makeT(translations.data, lang);
-
-t('nav.home')       // → "Home" / "Главная"
-t('cv.skills')      // → "Skills" / "Навыки"
-```
+Фоллбек-цепочка: запрошенный язык → `en` → ключ пути.
 
 ---
 
 ## 5. Showcase — projects.yaml
 
 ```yaml
-# src/content/showcase/projects.yaml
 projects:
-  - id: bhop-jump
-    title: "Bhop Jump"
-    description: "Multiplayer mobile game with P2P + dedicated server architecture."
-    tags: [Unity, C#, Multiplayer, iOS, Android]
+  - slug: bhop-jump
+    name: "Bhop Jump"
+    order: 1
+    role: "Gameplay Engineer"
+    year: "2017"
+    description: "Competitive mobile parkour game."
     platforms: [iOS, Android]
-    color: cyan           # blue | cyan | emerald | magenta
-    featured: true
-    archived: false
-    links:
-      - label: App Store
-        url: https://apps.apple.com/...
-      - label: GitHub
-        url: https://github.com/...
+    stack: [Unity, C#]
+    tags: [Mobile, Multiplayer]
+    theme: blue               # blue | cyan | emerald | magenta
+    featured: true            # показывает pin-иконку
+    archived: false           # сворачивает карточку с toggle
+    metrics:
+      - label: Revenue
+        value: "$160K+"
     media:
       - type: image
         src: /media/projects/bhop-jump/01.jpg
-    metrics:
-      - label: Revenue Q1
-        value: "$160K+"
-      - label: Players
-        value: "up to 16"
+        alt: "Bhop Jump gameplay"
+        featured: true
+    links:
+      - label: App Store
+        url: https://apps.apple.com/...
+        type: store
+      - label: Case Study
+        url: /showcase/bhop-jump   # без /cv_hub/ — base подставится автоматически
+        type: product
 ```
 
-Поля `color`: `blue` (default), `cyan`, `emerald`, `magenta` — определяют акцентный цвет карточки.
-
-`archived: true` — карточка сворачивается, раскрывается по клику.
-
-`featured: true` — показывает pin-иконку на карточке.
-
-`metrics` — отображается как сетка метрик внутри карточки.
+**Никогда не хардкодить `/cv_hub/` в URL.** Внутренние пути пишутся без base-префикса.
 
 ---
 
-## 6. Changelog — changelog.yaml
+## 6. Case Study страницы
+
+### Как это работает
+
+Страница генерируется автоматически если файл существует:
+
+```
+public/media/projects/{slug}/{slug_underscored}_{lang}.yaml
+```
+
+Примеры:
+```
+public/media/projects/cv-hub/cv_hub_ru.yaml   → /showcase/cv-hub
+public/media/projects/cv-hub/cv_hub_en.yaml   → /showcase/cv-hub/en
+```
+
+Никаких изменений в `.astro` файлах не нужно.
+
+### Структура YAML
 
 ```yaml
-# src/content/changelog/changelog.yaml
-entries:
-  - version: "1.3.0"
-    date: "2026-03-11"
-    title: "Multi-profile system"
-    changes:
-      - "Added profiles × languages routing"
-      - "merge.mjs — YAML merge pipeline"
-      - "Per-profile PDF/DOCX/TXT generation"
-  - version: "1.2.0"
-    date: "2026-03-03"
-    title: "Initial release"
-    changes:
-      - "CV page with EN/RU support"
-      - "Showcase page"
-      - "GitHub Actions CI/CD"
+title: "Project Title"
+role: "My Role"           # опционально
+year: "2024"              # опционально
+tagline: "Короткое описание под заголовком."
+
+platforms: [Web]
+stack: [Astro, TypeScript]
+
+links:
+  - label: GitHub
+    url: https://github.com/...
+
+blocks:
+  - type: image
+    src: /media/projects/my-project/cover.png
+    alt: "Cover"
+
+  - type: divider
+
+  - type: text
+    title: "Overview"
+    body: |
+      Многострочный текст.
+
+  - type: text
+    title: "What I did"
+    bullets:
+      - Пункт один
+      - Пункт два
+
+  - type: image
+    title: "Architecture"
+    subtitle: "Схема"
+    body: "Текст над картинкой."
+    src: /media/projects/my-project/arch.png
+    alt: "Architecture"
+    caption: "Подпись под картинкой"
 ```
+
+### Типы блоков
+
+| Тип | Поля |
+|---|---|
+| `text` | `title`, `subtitle`, `body`, `bullets`, `links` — все опциональны |
+| `image` | `title`, `subtitle`, `body`, `src`, `alt`, `caption` — все опциональны |
+| `divider` | нет полей |
+
+Полный пример всех блоков — `docs/examples/example_cs.yaml`.
 
 ---
 
-## 7. Поток данных
+## 7. Changelog — changelog.yaml
+
+```yaml
+changelog:
+  - version: "1.5.1"
+    date: "2026-04-02"
+    changes:
+      - type: fixed
+        text: "Language switcher on Showcase now works correctly"
+      - type: added
+        text: "New feature"
+      - type: changed
+        text: "Changed behavior"
+      - type: removed
+        text: "Removed feature"
+```
+
+Типы: `added`, `changed`, `fixed`, `removed`.
+
+---
+
+## 8. Поток данных
 
 ```
-src/content/cv/en.yaml          (base)
-src/content/cv/en_devops.yaml   (spec delta)
+src/content/cv/en.yaml + en_devops.yaml
          ↓
      merge.mjs
          ↓
-  public/cv/en_devops.yaml      (merged artifact)
+  public/cv/en_devops.yaml
          ↓
     ┌────┴──────────────────────────────┐
     ↓                                   ↓
 generate-resume.js               astro build
 resume-export-pdf.mjs                   ↓
-    ↓                         src/pages/[...slug].astro
-DOCX / TXT / PDF                reads public/cv/en_devops.yaml
+    ↓                       [...slug].astro
+DOCX / TXT / PDF            reads public/cv/
                                         ↓
                                HomePage.astro renders CV
-```
 
-Страницы читают данные из `public/cv/` (merged artifacts), не из `src/content/cv/` напрямую. Это позволяет избежать дублирования логики merge в Astro.
+public/media/projects/{slug}/{slug_}_{lang}.yaml
+         ↓
+showcase/[...rest].astro
+         ↓
+ProjectPage.astro renders case study
+```
 
 ---
 
-## 8. Компоненты
+## 9. Компоненты
 
 ### Layout.astro
 
-Shared layout — header, footer, мета-теги, OG.
-
 Props:
-- `title` — заголовок страницы
-- `lang` — текущий язык (`en`, `ru`)
-- `section` — секция (`main`, `showcase`) для контекстной навигации
-- `profile` — slug текущего профиля (для lang switcher и dropdown)
-- `description` — мета-описание (опционально)
-- `ogImage` — OG-изображение (опционально)
+- `title`, `lang`, `section`, `profile`
+- `customLangLinks` — переопределяет автоматические ссылки language switcher
 
-Читает `profiles.yml` и `languages.yml` для генерации навигации. Если `profiles.yml` отсутствует — dropdown не отображается.
+**Showcase и case study страницы обязаны передавать `customLangLinks`**, иначе переключатель языка ведёт на CV-роуты.
 
-### HomePage.astro
+### ProjectPage.astro
 
-Основной CV-рендерер. Принимает данные через props.
-
-Props:
-- `lang` — язык
-- `data` — объект CV из merged YAML
-- `pdfUrl`, `docxUrl`, `txtUrl` — ссылки на скачивание
-- `profile` — передаётся в Layout
-- `t` — объект с переведёнными строками
+Props: `data`, `showcaseHref`, `langLinks`, `lang`
 
 ### ProjectCard.astro
 
-Карточка проекта. Поддерживает два режима:
-- Обычная карточка (`archived: false`)
-- Сворачиваемая архивная карточка (`archived: true`) с toggle
+Два режима: обычная карточка и сворачиваемая архивная.
+
+### Блоки (`blocks/`)
+
+`TextBlock.astro`, `ImageBlock.astro`, `DividerBlock.astro` — используются в `ProjectPage`.
 
 ---
 
-## 9. Роутинг
+## 10. Роутинг
 
 | URL | Файл | Данные |
 |---|---|---|
 | `/` | `index.astro` | `public/cv/{defaultLang}.yaml` |
-| `/ru` | `[...slug].astro` | `public/cv/ru.yaml` |
-| `/devops` | `[...slug].astro` | `public/cv/en_devops.yaml` |
-| `/devops/ru` | `[...slug].astro` | `public/cv/ru_devops.yaml` |
-| `/gamedev` | `[...slug].astro` | `public/cv/en_gamedev.yaml` |
+| `/en` | `[...slug].astro` | `public/cv/en.yaml` |
+| `/devops` | `[...slug].astro` | `public/cv/{defaultLang}_devops.yaml` |
+| `/devops/en` | `[...slug].astro` | `public/cv/en_devops.yaml` |
 | `/showcase` | `showcase/index.astro` | `projects.yaml` |
+| `/showcase/en` | `showcase/[...rest].astro` | kind=list |
+| `/showcase/{slug}` | `showcase/[...rest].astro` | case study, default lang |
+| `/showcase/{slug}/en` | `showcase/[...rest].astro` | case study, en |
 | `/changelog` | `changelog.astro` | `changelog.yaml` |
-
-`getStaticPaths` в `[...slug].astro` генерирует все комбинации профиль × язык, пропуская default profile + default lang (это обрабатывает `index.astro`).
-
-### buildHref helper
-
-```ts
-function buildHref(profileSlug: string, langId: string): string {
-  const segments = [];
-  if (profileSlug) segments.push(profileSlug);
-  if (langId !== defaultLang) segments.push(langId);
-  return `${base}/${segments.join('/')}`;
-}
-```
-
-Используется в Layout для построения ссылок переключателя языков и dropdown профилей. Lang switcher сохраняет текущий профиль, profile dropdown сохраняет текущий язык.
 
 ---
 
-## 10. Генерация документов
-
-### Build order
+## 11. Генерация документов
 
 ```bash
-npm run cv:build          # 1. merge YAMLs → public/cv/
-npm run resume:generate   # 2. DOCX + TXT for all files in public/cv/
-npm run resume:pdf        # 3. PDF for all files in public/cv/
-astro build               # 4. static site
+npm run build
+# 1. cv:build          → public/cv/ (merged YAMLs)
+# 2. resume:generate   → DOCX + TXT
+# 3. resume:pdf        → PDF via Playwright
+# 4. astro build       → static site
 ```
 
-### Именование файлов
+Именование: `resume_{lang}[_{spec}].{ext}`
 
 | Профиль | Язык | Файл |
 |---|---|---|
-| default | en | `resume_en.pdf` |
 | default | ru | `resume_ru.pdf` |
 | devops | en | `resume_en_devops.pdf` |
-| devops | ru | `resume_ru_devops.pdf` |
-| gamedev | en | `resume_en_gamedev.pdf` |
+| gamedev | ru | `resume_ru_gamedev.docx` |
 
-Формат: `resume_{lang}[_{spec}].{ext}`
+---
 
-### Ссылки на скачивание
+## 12. LLM-контекст
 
-Формируются в `index.astro` и `[...slug].astro`:
+Для работы с проектом через AI-инструменты (Claude, ChatGPT, Cursor) используйте файл `docs/llm-context.md`.
 
-```js
-const specSuffix = profileData.spec ? `_${profileData.spec}` : '';
-const pdfUrl = `${base}/downloads/resume_${langId}${specSuffix}.pdf`;
-```
-
-Страница `/devops` предлагает `resume_en_devops.pdf`. Страница `/` предлагает `resume_en.pdf`.
-
-### Поддерживаемые форматы
-
-- **PDF** — через Playwright + HTML-шаблон. Двухколоночный A4-макет.
-- **DOCX** — через docx.js. Структурированный документ со стилями.
-- **TXT** — plain text с разделителями секций.
+Скормите его нейросети перед любыми правками в проекте. Он содержит:
+- Полную архитектуру, роутинг и дерево файлов
+- Правила работы с BASE_URL
+- Частые ошибки и как их избежать
+- Промпт для генерации CV YAML из резюме
+- Инструкции по добавлению языков, профилей, кейс стади

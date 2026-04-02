@@ -54,9 +54,16 @@ projects = [...projects].sort((a, b) => {
 });
 
 const projectSlugsWithPages = new Set(getSlugsWithYaml(langIds));
+
+const showcaseLangLinks = allLangs.map(l => ({
+  id:     l.id,
+  label:  l.label,
+  href:   l.id === defaultLang ? `${base}/showcase` : `${base}/showcase/${l.id}`,
+  active: l.id === defaultLang,
+}));
 ---
 
-<Layout title={t('showcase.page_title')} lang={defaultLang} section="showcase" profile="">
+<Layout title={t('showcase.page_title')} lang={defaultLang} section="showcase" profile="" customLangLinks={showcaseLangLinks}>
   <section class="container">
     <header class="showcase__header">
       <!-- <h1>{t('showcase.title')}</h1> -->
