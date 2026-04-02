@@ -327,7 +327,7 @@ docs/
 |---|---|
 | [INFO.md](docs/INFO.md) | YAML field reference, routing, i18n, profiles, case studies |
 | [ENGINEERING.md](docs/ENGINEERING.md) | Architecture decisions, system design, trade-offs |
-| [llm-context.md](docs/llm-context.md) | Full project context for AI tools (Claude, ChatGPT, Cursor) |
+| [`LLM-CONTEXT.md`](docs/LLM-CONTEXT.md) | Full project context for AI tools (Claude, ChatGPT, Cursor) |
 | [BKG_INFO.md](docs/BKG_INFO.md) | AnimatedBackground component docs |
 
 ---
