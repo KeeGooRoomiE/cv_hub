@@ -9,7 +9,6 @@
 [![Lighthouse SEO](https://img.shields.io/badge/Lighthouse-SEO%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomii.github.io/cv_hub/)
 [![Last Commit](https://img.shields.io/github/last-commit/KeeGooRoomiE/cv_hub?color=blue)](https://github.com/KeeGooRoomiE/cv_hub/commits/main)
 [![Stars](https://img.shields.io/github/stars/KeeGooRoomiE/cv_hub?style=social)](https://github.com/KeeGooRoomiE/cv_hub/stargazers)
-[![Visitors](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKeeGooRoomiE%2Fcv_hub&count_bg=%2379C83D&title_bg=%23555555&title=visitors&edge_flat=false)](https://hits.seeyoufarm.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KeeGooRoomiE/cv_hub/blob/main/CONTRIBUTING.md)
 
 **Your personal site, CV, and project portfolio — from one YAML file.**
@@ -30,7 +29,7 @@ npm install && npm run dev
 
 Open `http://localhost:4321`. Edit `src/content/cv/en.yaml`. Push — site deploys automatically.
 
-> Already have a resume? Paste it into Claude or ChatGPT with the prompt from [`docs/llm-context.md`](docs/llm-context.md) and get ready YAML in seconds.
+> Already have a resume? Paste it into Claude or ChatGPT with the prompt from [`docs/LLM-CONTEXT.md`](docs/LLM-CONTEXT.md) and get ready YAML in seconds.
 
 ---
 
@@ -62,51 +61,6 @@ You probably maintain:
 They all drift out of sync.
 
 CV Hub replaces all of them with a single YAML file and a deterministic pipeline. Edit once — everything updates. Same source generates your DevOps CV, your GameDev CV, and your portfolio site simultaneously.
-
-Forked and used by engineers and designers across different fields.
-
----
-
----
-
-## Quick start
-
-From zero to live site in under 5 minutes.
-
-### 1. Fork the repository
-
-Click **Fork** in the top right corner of the repository page on GitHub.
-
-### 2. Clone to your local machine
-
-```bash
-git clone https://github.com/YOUR_ACCOUNT/cv_hub.git
-cd cv_hub
-```
-
-### 3. Install dependencies
-
-```bash
-npm install
-npx playwright install chromium --with-deps
-```
-
-### 4. Run locally
-
-```bash
-npm run dev
-```
-
-The site will be available at `http://localhost:4321`
-
-Pages:
-- `/` — main CV page (default language)
-- `/en` — CV in English (or any other configured language)
-- `/devops` — DevOps profile (if configured)
-- `/devops/en` — DevOps profile in English
-- `/showcase` — projects showcase
-- `/showcase/{slug}` — case study page (if YAML exists)
-- `/changelog` — version history
 
 ---
 
@@ -381,7 +335,7 @@ docs/
 ## ⭐ If this is useful
 
 ```
-⭐ Star the repo — it helps others find it
+⭐ Star this repo if you want to stop rewriting your resume every time you apply
 🍴 Fork it — your site will be live in minutes
 🐛 Found a bug or have an idea? Open an issue
 ```
