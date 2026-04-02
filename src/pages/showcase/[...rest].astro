@@ -192,60 +192,21 @@ const langLinks = kind === 'project'
 {kind === 'list' ? (
   <Layout title={t('showcase.page_title')} lang={lang} section="showcase" profile="" customLangLinks={showcaseLangLinks}>
     <section class="container">
-      <header class="showcase__header">
-        <h1>{t('showcase.title')}</h1>
-      </header>
-
       {projects.length === 0 && (
         <article class="card"><p class="muted">{t('showcase.empty')}</p></article>
       )}
 
-      {featured.length > 0 && (
-        <div class="showcase__section">
-          <h2 class="showcase__section-title">{t('showcase.featured')}</h2>
-          <div class="grid">
-            {featured.map((p: any) => (
-              <ProjectCard
-                project={p}
-                lang={lang}
-                hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
-                base={base}
-                defaultLang={defaultLang}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {regular.length > 0 && (
-        <div class="showcase__section showcase__section--regular">
-          <div class="grid">
-            {regular.map((p: any) => (
-              <ProjectCard
-                project={p}
-                lang={lang}
-                hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
-                base={base}
-                defaultLang={defaultLang}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {archived.length > 0 && (
-        <div class="showcase__section showcase__section--archive">
-          {archived.map((p: any) => (
-            <ProjectCard
-              project={p}
-              lang={lang}
-              hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
-              base={base}
-              defaultLang={defaultLang}
-            />
-          ))}
-        </div>
-      )}
+      <div class="grid">
+        {projects.map((p: any) => (
+          <ProjectCard
+            project={p}
+            lang={lang}
+            hasCasePage={projectSlugsWithPages.has(p.slug ?? '')}
+            base={base}
+            defaultLang={defaultLang}
+          />
+        ))}
+      </div>
     </section>
   </Layout>
 ) : (

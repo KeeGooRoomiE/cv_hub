@@ -12,6 +12,8 @@ changelog:
         text: "Project card links now respect BASE_URL — no more hardcoded /cv_hub/ prefix required in YAML"
       - type: fixed
         text: "ProjectPage mobile layout — horizontal padding now correctly applied on small screens"
+      - type: fixed
+        text: "Showcase slug setup for other languages was incorrect for projects with flags archived and featured"  
   - version: "1.5.0"
     date: "2026-03-31"
     changes:
