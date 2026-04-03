@@ -38,11 +38,7 @@ blocks:
 
   - type: divider
 
-  - type: text
-    title: "Results"
-    bullets:
-      - 'The transfer flow became clear and predictable — suitable even for users with low digital literacy'
-      - 'Improved transparency through clear fee visibility'
+  
 
   - type: divider
 
@@ -80,6 +76,12 @@ blocks:
   - type: image
     src: /media/projects/unitymt/ds2.png
     alt: "Design system"
+
+  - type: text
+    title: "Results"
+    bullets:
+      - 'The transfer flow became clear and predictable — suitable even for users with low digital literacy'
+      - 'Improved transparency through clear fee visibility'
    
   - type: text
     title: "Thanks for watching!"

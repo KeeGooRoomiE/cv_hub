@@ -39,16 +39,6 @@ blocks:
 
   - type: divider
 
-  - type: text
-    title: "Results"
-    bullets:
-      - 'Established a complete user journey from first screen to confirmed booking'
-      - 'Simplified selection of specialists and therapy types through structured information'
-      - 'The interface is perceived as calm and safe'
-      - 'Delivered as a commercial project within agreed timelines'
-
-  - type: divider
-
   - type: image
     title: "Onboarding Screens"
     src: /media/projects/vipsy/starting_screens.png
@@ -87,6 +77,15 @@ blocks:
     subtitle: "All purchased services are split into active and archived. From active services, users can book a session if time wasn’t selected during purchase. Rescheduling, cancellation, and subscription activation are available. All session management is centralized in one place."
     src: /media/projects/vipsy/serv.png
     alt: "My services"
+
+
+  - type: text
+    title: "Results"
+    bullets:
+      - 'Established a complete user journey from first screen to confirmed booking'
+      - 'Simplified selection of specialists and therapy types through structured information'
+      - 'The interface is perceived as calm and safe'
+      - 'Delivered as a commercial project within agreed timelines'
    
   - type: text
     title: "Thanks for watching!"

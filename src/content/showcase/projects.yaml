@@ -4,7 +4,7 @@ projects:
     name: Vipsy
     role: Healthcare
     year: "2025"
-    description: Vipsy — мобильное приложение для подбора психолога и направления терапии. Продукт помогает пользователю не только найти специалиста, но и разобраться, какое направление ему подходит.
+    description: "Мобильное приложение для подбора психолога: от выбора направления терапии до записи к специалисту и оплаты."
     theme: blue
     media:
     - type: image
@@ -21,7 +21,7 @@ projects:
     name: Белгородсоцбанк
     role: Fintech
     year: "2025"
-    description: "Белгородсоцбанк — региональный банк с 30-летней историей, обслуживающий физических и юридических лиц."
+    description: "Редизайн сайта регионального банка: новая структура, навигация и визуальный язык с разделением аудиторий по теме оформления."
     theme: cyan
     media:
     - type: image
@@ -38,7 +38,7 @@ projects:
     name: Unity Money Transfer
     role: Fintech
     year: "2024"
-    description: "Unity Money Transfer — это веб-платформа для быстрых и безопасных денежных переводов между Нидерландами и рядом стран Африки."
+    description: "Веб-платформа для международных денежных переводов с простым флоу для аудитории с разным уровнем цифровой грамотности."
     theme: blue
     media:
     - type: image
@@ -49,3 +49,23 @@ projects:
       - label: Смотреть кейс
         url: /showcase/unitymt/ru
         type: product
+
+  - slug: elitesamui
+    order: 4
+    name: Elite Samui
+    role: Finance
+    year: "2024"
+    description: "Сайт премиальной недвижимости на острове Самуи: логотип, сценарии покупки, аренды и структура под международного покупателя.​​​​​​​​​​​​​​​​"
+    theme: blue
+    media:
+    - type: image
+      src: /media/projects/elitesamui/cover.png
+      alt: "Unity Money Transfer"
+      featured: true
+    links:
+      - label: Смотреть кейс
+        url: /showcase/elitesamui/ru
+        type: product
+
+       
+

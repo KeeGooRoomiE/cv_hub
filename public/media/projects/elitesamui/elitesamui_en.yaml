@@ -1,0 +1,106 @@
+# --- /cv_hub/showcase/vipsy/ru
+
+title: "Elite Samui"
+blocks:
+  - type: image
+    src: /media/projects/elitesamui/cover.png
+    alt: "Screenshot of the main screen"
+
+  - type: text
+    title: "About the Project"
+    body: |
+      Elite Samui is a website for a premium villa rental and sales service on the island of Samui, Thailand. The main goal is to present properties as a desirable and attainable lifestyle product and to simplify the search and booking/purchase process for an international audience.
+
+  - type: text
+    links:
+      - label: Behance
+        url: "https://www.behance.net/gallery/223476257/Elite-Samui-Responsive-Web-Design"
+  - type: divider
+
+# ── Text: title + subtitle + bullets ───────────────────────────
+  - type: text
+    title: "Challenges"
+    bullets:
+      - "Lack of brand identity"
+      - 'Audience — international buyers making high-value decisions remotely: the website must replace an in-person visit and build trust'
+      - 'Multiple types of offerings — villas for sale, rental, land plots — need clear structure for fast discovery'
+      - 'Large number of properties with different parameters (location, price, size, amenities)'
+      - 'The ultimate goal is not an online purchase but contact with the team: the interface must guide users to this action'
+  
+  - type: divider
+
+  - type: text
+    title: "Solution"
+    bullets:
+      - 'Designed the logo from scratch: created brand visual identity that conveys premium quality and integrates with overall site design'    
+      - 'Separated products by type — villas for sale, rental, land — with dedicated catalogs for each'
+      - 'Developed a minimalist visual language emphasizing photography and space — without clutter'
+      - 'Added clear CTAs for booking and inquiries'
+
+  - type: divider
+
+  - type: text
+    title: "Website Structure"
+    bullets:
+      - 'Home'    
+      - 'Villas for Sale'
+      - 'Villas for Rent'
+      - 'Villa Card (gallery, description, amenities, location, price)'
+      - 'Land for Sale'
+      - 'FAQ'
+      - 'Contact Information'
+
+  - type: image
+    title: "Home Page"
+    src: /media/projects/elitesamui/main.png
+    alt: "Home page"
+    
+  - type: image
+    title: "Desktop and Mobile Versions"
+    src: /media/projects/elitesamui/versions.png
+    alt: "Desktop and mobile versions"
+
+  - type: image
+    title: "Villas for Sale"
+    src: /media/projects/elitesamui/sell.png
+    alt: "Villas for Sale"
+
+  - type: image
+    title: "Villas for Rent"
+    src: /media/projects/elitesamui/rent.png
+    alt: "Villas for Rent"
+
+  # ── Picture with title and text on top ──────────────────────────────
+  - type: image
+    title: "Project Style"
+    subtitle: "A clean and restrained color palette was chosen. It reflects the premium level of the villas — subtle yet conveying status. The project uses concise and visually expressive fonts carefully selected to maintain simplicity and aesthetics."
+    src: /media/projects/elitesamui/ds.png
+    alt: "Project style"
+
+  - type: image
+    title: "Mobile Screens"
+    src: /media/projects/elitesamui/mobile.png
+    alt: "Mobile screens"
+
+  - type: text
+    title: "Results"
+    bullets:
+      - 'Built the website from scratch: from architecture and research to final UI'    
+      - 'Increased visibility and appeal of properties through visual presentation'
+      - 'Simplified the process of searching and selecting villas for sale and rent'
+      - 'Site structure optimized to drive contact — the key conversion action for property sales'
+   
+  - type: text
+    title: "Thanks for watching!"
+
+  - type: divider
+
+  - type: text
+    title: "Contacts"
+    links:
+      - label: Email
+        url: mailto:vkovalikova243@gmail.com
+      - label: LinkedIn
+        url: https://www.linkedin.com/in/valeria-kovalikova/
+      - label: Telegram
+        url: https://t.me/kennusk

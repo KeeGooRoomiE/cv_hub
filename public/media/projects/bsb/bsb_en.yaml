@@ -52,15 +52,6 @@ blocks:
 
   - type: divider
 
-  - type: text
-    title: "Results"
-    bullets:
-      - Visual language aligned with expectations of a financial product
-      - Reduced user path to key actions through simplified structure
-      - Delivered within timeline without quality loss during handoff
-
-  - type: divider
-
   - type: image
     title: "Main Pages (Individuals & Businesses)"
     subtitle: "Introduced visual segmentation by audience: light theme for individuals and general sections, dark theme for business users. This allows users to instantly identify the relevant section without extra cognitive load."
@@ -100,6 +91,19 @@ blocks:
     title: "Loans for Individuals"
     src: /media/projects/bsb/mbcredit.png
     alt: "Loans for individuals"
+
+
+
+  - type: text
+    title: "Results"
+    bullets:
+      - Visual language aligned with expectations of a financial product
+      - Reduced user path to key actions through simplified structure
+      - Delivered within timeline without quality loss during handoff
+
+  - type: text
+    title: " "
+  # - type: divider
 
   - type: text
     title: "Thanks for watching!"
