@@ -123,10 +123,10 @@ projects:
     platforms: [Telegram]
     tags: [python, aiogram, sqlite, fsm, support, tickets]
     metrics:
-      - label: Категорий
-        value: "5 тем, подтемы"
-      - label: Функции
-        value: "Тикеты, рейтинг"
+      - label: Система
+        value: "Тикеты + рейтинг"
+      - label: Роли
+        value: "Юзер + админ"
       - label: Тип
         value: "Заказной"
     stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, FSM]
