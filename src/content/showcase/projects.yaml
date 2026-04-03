@@ -137,7 +137,7 @@ projects:
 
   - slug: philosophical-library
     order: 6
-    name: Философская библиотека
+    name: Философская Библиотека
     role: Контент-менеджер / SMM
     year: "2023"
     description: Telegram-канал с книгами по философии. Поиск книг в интернете, редактура постов через AI, публикация.
@@ -154,6 +154,11 @@ projects:
       - label: Telegram
         url: https://t.me/Philosophical_Library
         type: demo
+    media:
+      - type: image
+        src: /media/projects/philosophical-library/cover.jpg
+        alt: "Философская Библиотека"
+        featured: true
 
   - slug: pbtc-russ
     order: 7

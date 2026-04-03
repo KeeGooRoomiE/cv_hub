@@ -1,4 +1,4 @@
-title: "Философская библиотека"
+title: "Философская Библиотека"
 role: "Контент-менеджер / SMM"
 year: "2023"
 tagline: "Telegram-канал с книгами по философии."
@@ -11,6 +11,13 @@ links:
     url: https://t.me/Philosophical_Library
 
 blocks:
+
+  - type: image
+    src: /media/projects/philosophical-library/cover.jpg
+    alt: "Философская Библиотека"
+    featured: true
+
+  - type: divider
 
   - type: text
     title: "О канале"
