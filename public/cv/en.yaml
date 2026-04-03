@@ -11,6 +11,16 @@ summary: >
 contacts:
   - label: GitHub
     url: https://github.com/fedorabakumets
+  - label: telegram-bot-builder
+    url: https://github.com/fedorabakumets/telegram-bot-builder
+  - label: game-bot
+    url: https://github.com/fedorabakumets/game-bot
+  - label: fluffy-computing-machine
+    url: https://github.com/fedorabakumets/fluffy-computing-machine
+  - label: sheets-monitor
+    url: https://github.com/fedorabakumets/sheets-monitor
+  - label: buxbot
+    url: https://github.com/fedorabakumets/buxbot
   - label: Telegram (preferred)
     url: https://t.me/Xraz_official
   - label: Personal channel
