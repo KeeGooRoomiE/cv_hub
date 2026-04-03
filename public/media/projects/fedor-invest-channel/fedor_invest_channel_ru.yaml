@@ -1,0 +1,45 @@
+title: "FEDOR INVEST CHANNEL"
+role: "Контент-менеджер / SMM"
+year: "2021"
+tagline: "Мониторинг сайтов для заработка — буксы, лотереи, биржи, форумы."
+
+platforms: [VKontakte]
+stack: [Контент, SMM, ВКонтакте]
+
+links:
+  - label: VK
+    url: https://vk.com/fedor_invest_channel
+
+blocks:
+
+  - type: image
+    src: /media/projects/fedor-invest-channel/cover.jpg
+    alt: "FEDOR INVEST CHANNEL"
+    featured: true
+
+  - type: divider
+
+  - type: text
+    title: "О канале"
+    body: |
+      ВКонтакте канал с мониторингом заработка в интернете.
+
+      Отслеживал актуальные лотереи, буксы и биржи лайков,
+      публиковал обзоры и результаты.
+
+  - type: divider
+
+  - type: text
+    title: "Статистика"
+    bullets:
+      - 399 подписчиков
+      - Регулярные публикации с 2021 года
+
+  - type: divider
+
+  - type: text
+    title: "Что делал"
+    bullets:
+      - Мониторинг лотерей, буксов и бирж лайков
+      - Публикация обзоров и результатов
+      - Ведение сообщества ВКонтакте

@@ -1,0 +1,46 @@
+title: "Политика закулисья"
+role: "Контент-менеджер / SMM"
+year: "2022"
+tagline: "Telegram-канал с политическим архивом. Упоминания в материалах с сотнями тысяч просмотров."
+
+platforms: [Telegram]
+stack: [Контент, Telegram, Политика]
+
+links:
+  - label: Telegram
+    url: https://t.me/pbtc_russ
+
+blocks:
+
+  - type: image
+    src: /media/projects/pbtc-russ/cover.jpg
+    alt: "Политика закулисья"
+    featured: true
+
+  - type: divider
+
+  - type: text
+    title: "О канале"
+    body: |
+      Telegram-канал с архивом политических материалов.
+
+      Собирал и публиковал политический контент, документировал события.
+      Канал получил упоминания в материалах с сотнями тысяч просмотров.
+
+  - type: divider
+
+  - type: text
+    title: "Статистика"
+    bullets:
+      - 76 подписчиков
+      - Упоминания в материалах с сотнями тысяч просмотров
+      - Архив политических событий
+
+  - type: divider
+
+  - type: text
+    title: "Что делал"
+    bullets:
+      - Сбор и публикация политических материалов
+      - Ведение архива событий
+      - Мониторинг источников в Telegram

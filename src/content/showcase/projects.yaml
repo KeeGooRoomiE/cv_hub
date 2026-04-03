@@ -2,809 +2,266 @@ projects:
   - slug: cv-hub
     order: 1
     name: CV Hub
-    role: Author / Engineer
+    role: Fullstack-разработчик (vibe coding)
     year: "2026"
-    description: Data-driven personal CV platform built with Astro and YAML as a single source of truth. Replaces static resumes and no-code builders with a version-controlled, extensible solution.
+    description: Резюме как код. YAML-driven платформа для CV с автодеплоем, мультиязычностью и специализированными профилями. Форк оригинального проекта, кастомизированный под себя.
     theme: blue
     featured: true
     platforms: [Web, GitHub Pages]
-    tags: [astro, yaml, automation, ci-cd, open-source]
+    tags: [astro, yaml, typescript, github-actions, open-source]
     metrics:
-      - label: Open Source
-        value: "Free to everyone"
-      - label: Deployment
+      - label: Деплой
         value: "GitHub Pages"
-      - label: You Are Here
-        value: "Live Service"
+      - label: Форматы
+        value: "PDF, DOCX, TXT"
+      - label: Вы здесь
+        value: "Live"
     stack: [Astro, TypeScript, YAML, GitHub Actions, CSS]
     links:
       - label: GitHub
-        url: https://github.com/KeeGooRoomiE/cv_hub
+        url: https://github.com/fedorabakumets/cv_hub
         type: repo
-      - label: Changelog
-        url: /changelog
-        type: article
-      - label: Deep Dive
-        url: /showcase/cv-hub
-        type: product
-
-  - slug: steam-deck-keyboard
-    order: 2
-    name: Steam Deck Custom Keyboard
-    role: Creator / Maintainer
-    year: "2025"
-    description: Customizable Steam Deck keyboard theme template with preset system and runtime color configuration via CSS Loader UI.
-    theme: cyan
-    featured: true
-    platforms: [SteamOS, Linux]
-    tags: [open-source, steam-deck, ui, theming, css]
-    stack: [CSS, JSON, Decky Loader]
-    metrics:
-      - label: Installs
-        value: "17K+"
-      - label: DeckThemes Rating
-        value: "60⭐"
-    links:
-      - label: Github
-        url: https://github.com/KeeGooRoomiE/Steam-Deck-Keyboard-CSS-Loader-Template
-        type: repo
-      - label: DeckThemes
-        url: https://deckthemes.com/themes/view?themeId=0c5d6c86-ef3e-4af7-a041-34731a51fe7f
-
-  - slug: sand-balls
-    order: 3
-    name: Sand Balls
-    role: Level & Systems Designer
-    year: "2020"
-    description: Core gameplay systems, balancing and performance optimization for a top-chart arcade mobile game with massive global audience.
-    theme: emerald
-    featured: true
-    platforms: [iOS, Android]
-    tags: [unity, mobile, gameplay, production, casual]
-    stack: [Unity, C#, Mobile Optimization]
-    metrics:
-      - label: Downloads
-        value: "100M+"
-      - label: Store Rank
-        value: "Top-3 Arcade"
-    links:
-      - label: App Store
-        url: https://apps.apple.com/app/sand-balls/id1483631996
-        type: store
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.water.balls
-        type: store
-    media:
-      - type: image
-        src: /media/projects/sand-balls/cover.png
-        alt: "Sand Balls gameplay screenshot"
-        featured: true
-
-  - slug: bhop-jump
-    order: 4
-    name: Bhop Jump
-    role: Gameplay & Multiplayer Engineer
-    year: "2017"
-    description: Competitive mobile parkour game inspired by bhop mechanics, featuring skill-based movement and real-time multiplayer modes.
-    theme: blue
-    featured: true
-    platforms: [iOS, Android]
-    tags: [unity, mobile, multiplayer, arcade]
-    stack: [Unity, C#]
-    metrics:
-      - label: Revenue
-        value: "$160K+ (Q1 2017)"
-      - label: Downloads
-        value: "100K+"
-    links:
-      - label: App Store
-        url: https://apps.apple.com/app/bhop-jump/id1227774947
-        type: store
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.dgs.bhop
-        type: store
-    media:
-      - type: image
-        src: /media/projects/bhop-jump/01.jpg
-        alt: "Bhop Jump gameplay screenshot"
-        featured: true
-
-  - slug: s-s-platformer
-    order: 5
-    featured: true
-    name: "S+S"
-    role: Game Developer
-    year: "2024"
-    description: Mario-style web platformer commissioned by Sundukovy Sisters interior design studio as a birthday gift to the founders. Each level reflects a different era of the studio through branded interiors, custom bosses drawn in pokémon style, and a companion character with autonomous movement logic. Built in 3 weeks with PC and mobile support. Played by the whole team at the founders' corporate birthday party.
-    theme: blue
-    platforms: [Web]
-    tags: [gamemaker, pixel-art, platformer, branded, web]
-    stack: [GameMaker Studio]
-    metrics:
-      - label: Delivery
-        value: "3 weeks"
-      - label: Client
-        value: "Forbes-featured studio"
-      - label: Played at
-        value: "Corporate event"
-    links:
-      - label: Play Game
-        url: https://sundukovy.com/game
+      - label: Live Demo
+        url: https://fedorabakumets.github.io/cv_hub/
         type: demo
     media:
       - type: image
-        src: /media/projects/s-s-platformer/cover.png
-        alt: "S+S platformer screenshot"
+        src: /media/projects/cv-hub/cover.png
+        alt: "CV Hub"
         featured: true
 
-  - slug: lana-and-ronen
+  - slug: telegram-bot-builder
+    order: 1
+    name: Telegram Bot Builder
+    role: Fullstack-разработчик (vibe coding)
+    year: "2024"
+    description: Визуальный no-code конструктор Telegram-ботов с drag-and-drop интерфейсом. Пользователь перетаскивает узлы на холст — система генерирует готовый Python-код на aiogram.
+    theme: blue
+    featured: true
+    platforms: [Web]
+    tags: [python, react, typescript, telegram, no-code, open-source]
+    metrics:
+      - label: GitHub Stars
+        value: "13"
+      - label: Генерация кода
+        value: "Python + aiogram"
+      - label: Деплой
+        value: "Railway"
+    stack: [React, TypeScript, Express.js, Node.js, PostgreSQL, Drizzle, Python, Jinja2, aiogram]
+    links:
+      - label: GitHub
+        url: https://github.com/fedorabakumets/telegram-bot-builder
+        type: repo
+      - label: Deploy on Railway
+        url: https://railway.com/deploy/aware-encouragement
+        type: demo
+    media:
+      - type: image
+        src: /media/projects/telegram-bot-builder/cover.jpg
+        alt: "Telegram Bot Builder"
+        featured: true
+
+  - slug: sheets-monitor
+    order: 2
+    name: Sheets Monitor
+    role: Разработчик (vibe coding)
+    year: "2024"
+    description: Веб-приложение мониторинга сайтов через Google Sheets. Работает без сервера и бесплатно — данные хранятся прямо в таблице.
+    theme: emerald
+    featured: true
+    platforms: [Web]
+    tags: [javascript, google-sheets, monitoring, no-server, open-source]
+    metrics:
+      - label: Сервер
+        value: "Не нужен"
+      - label: Стоимость
+        value: "Бесплатно"
+      - label: Хранилище
+        value: "Google Sheets"
+    stack: [HTML, CSS, JavaScript, Google Sheets API, Google Apps Script]
+    links:
+      - label: Demo
+        url: https://fedorabakumets.github.io/sheets-monitor/
+        type: demo
+      - label: GitHub
+        url: https://github.com/fedorabakumets/sheets-monitor
+        type: repo
+    media:
+      - type: image
+        src: /media/projects/sheets-monitor/cover.jpg
+        alt: "Sheets Monitor"
+        featured: true
+
+  - slug: buxbot
+    order: 3
+    name: ScriptMaster (buxbot)
+    role: Разработчик (vibe coding)
+    year: "2024"
+    description: Система автоматизации веб-задач с GUI на PyQt5, Telegram-ботом и распознаванием капчи. Автоматизирует работу с буксами — SocPublic, SEO-Fast, ProfitCentr.
+    theme: cyan
+    featured: true
+    platforms: [Windows]
+    tags: [python, pyqt5, selenium, automation, telegram, captcha, open-source]
+    metrics:
+      - label: Методов капчи
+        value: "17"
+      - label: Управление
+        value: "GUI + Telegram"
+      - label: Скриптов
+        value: "3+"
+    stack: [Python, PyQt5, Selenium, OpenCV, EasyOCR, Tesseract, pyTelegramBotAPI]
+    links:
+      - label: GitHub
+        url: https://github.com/fedorabakumets/buxbot
+        type: repo
+    media:
+      - type: image
+        src: /media/projects/buxbot/cover.jpg
+        alt: "ScriptMaster GUI"
+        featured: true
+
+  - slug: game-bot
+    order: 4
+    name: game-bot
+    role: Разработчик Telegram-ботов (vibe coding)
+    year: "2024"
+    description: Заказной Telegram-бот с игрой «Мины», кубиком, переводами между пользователями, промокодами и админ-панелью.
+    theme: magenta
+    featured: true
+    platforms: [Telegram]
+    tags: [python, aiogram, sqlite, pytest, fsm, dependency-injection]
+    metrics:
+      - label: Игры
+        value: "Мины, кубик"
+      - label: Функции
+        value: "Переводы, промокоды"
+      - label: Тип
+        value: "Заказной"
+    stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, pytest, FSM, Dependency Injection]
+    links:
+      - label: GitHub
+        url: https://github.com/fedorabakumets/game-bot
+        type: repo
+
+  - slug: fluffy-computing-machine
+    order: 5
+    name: fluffy-computing-machine
+    role: Разработчик Telegram-ботов (vibe coding)
+    year: "2024"
+    description: Заказной бот техподдержки для VPN-сервиса. Двухуровневые категории обращений, система тикетов, рейтинг администраторов, мгновенные уведомления.
+    theme: cyan
+    featured: true
+    platforms: [Telegram]
+    tags: [python, aiogram, sqlite, fsm, support, tickets]
+    metrics:
+      - label: Система
+        value: "Тикеты + рейтинг"
+      - label: Роли
+        value: "Юзер + админ"
+      - label: Тип
+        value: "Заказной"
+    stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, FSM]
+    links:
+      - label: GitHub
+        url: https://github.com/fedorabakumets/fluffy-computing-machine
+        type: repo
+
+  - slug: philosophical-library
     order: 6
-    name: Lana & Ronen
-    role: Gameplay Developer & Level Designer
-    year: "2019"
-    description: Match-3 mobile game with over 200 handcrafted levels, dynamic animated backgrounds and progression-based gameplay systems. Made for YouTuber Lana Meinart.
+    name: Философская Библиотека
+    role: Контент-менеджер / SMM
+    year: "2023"
+    description: Telegram-канал с книгами по философии. Поиск книг в интернете, редактура постов через AI, публикация.
+    theme: blue
+    featured: false
+    platforms: [Telegram]
+    tags: [smm, content, telegram, philosophy]
+    metrics:
+      - label: Подписчиков
+        value: "335"
+      - label: Тематика
+        value: "Философия"
+    links:
+      - label: Telegram
+        url: https://t.me/Philosophical_Library
+        type: demo
+    media:
+      - type: image
+        src: /media/projects/philosophical-library/cover.jpg
+        alt: "Философская Библиотека"
+        featured: true
+
+  - slug: pbtc-russ
+    order: 7
+    name: Политика закулисья
+    role: Контент-менеджер / SMM
+    year: "2022"
+    description: Telegram-канал с политическим архивом. Упоминания в материалах с сотнями тысяч просмотров.
+    theme: cyan
+    featured: false
+    platforms: [Telegram]
+    tags: [smm, content, telegram, politics]
+    metrics:
+      - label: Подписчиков
+        value: "76"
+      - label: Охват
+        value: "100K+ просмотров"
+    links:
+      - label: Telegram
+        url: https://t.me/pbtc_russ
+        type: demo
+    media:
+      - type: image
+        src: /media/projects/pbtc-russ/cover.jpg
+        alt: "Политика закулисья"
+        featured: true
+
+  - slug: fedor-invest-channel
+    order: 8
+    name: FEDOR INVEST CHANNEL
+    role: Контент-менеджер / SMM
+    year: "2021"
+    description: ВКонтакте канал с мониторингом сайтов для заработка — буксы, быстрые лотереи, социальные биржи, форумы.
+    theme: blue
+    featured: false
+    platforms: [VKontakte]
+    tags: [smm, content, vk]
+    metrics:
+      - label: Подписчиков
+        value: "399"
+      - label: Тематика
+        value: "Буксы, лотереи, биржи"
+    links:
+      - label: VK
+        url: https://vk.com/fedor_invest_channel
+        type: demo
+    media:
+      - type: image
+        src: /media/projects/fedor-invest-channel/cover.jpg
+        alt: "FEDOR INVEST CHANNEL"
+        featured: true
+
+  - slug: tiktok-fedor
+    order: 9
+    name: TikTok @fedor.abakumets
+    role: Контент-менеджер / SMM
+    year: "2020"
+    description: Политический контент — поиск материалов в Telegram и других источниках, публикация фото и видео. Аккаунт удалён.
     theme: magenta
     featured: false
-    platforms: [Android, iOS]
-    tags: [unity, mobile, casual, level-design, match3]
-    stack: [Unity, Firebase]
+    platforms: [TikTok]
+    tags: [smm, content, tiktok, politics]
     metrics:
-      - label: Downloads
-        value: "1M+"
-      - label: Levels
-        value: "200+"
-    media:
-      - type: image
-        src: /media/projects/lana-and-ronen/cover.png
-        alt: "Lana & Ronen gameplay screenshot"
-        featured: true
+      - label: Подписчиков
+        value: "33.3K"
+      - label: Лайков
+        value: "563.6K"
     links:
-      - label: APKPure
-        url: https://apkpure.com/lana-ronen/com.mkmx.lanam3
-        type: store
-
-  - slug: wings-gms-online
-    order: 7
-    name: Wings GMS Online
-    role: Gameplay & Multiplayer Systems Engineer
-    year: "2022"
-    description: Real-time multiplayer aerial combat prototype with fake-3D perspective, orbital AI behavior and Node.js + Socket.io backend architecture.
-    theme: cyan
-    platforms: [Web]
-    tags: [gamemaker, multiplayer, realtime, prototype, open-source]
-    stack: [GameMaker, Node.js, Socket.io]
-    metrics:
-      - label: AI System
-        value: "Orbital AI"
-      - label: Camera
-        value: "Dynamic Camera"
-      - label: Lighting
-        value: "Day/Night"
-    links:
-      - label: Github
-        url: https://github.com/KeeGooRoomiE/WingsGMSOnline-MINDPLAYS-
-        type: repo
-    media:
-      - type: image
-        src: /media/projects/wings/cover.gif
-        alt: "Wings gameplay screenshot"
-        featured: true
-
-  - slug: afc-capital
-    order: 8
-    name: "AFC Capital Partners"
-    role: Frontend Developer
-    year: "2023"
-    description: Corporate website for AFC Capital Partners, an infrastructure investment platform focused on sustainable capital mobilisation and ESG-driven projects across Africa.
-    theme: blue
-    platforms: [Web]
-    tags: [frontend, enterprise, finance, angular]
-    stack: [Angular, TypeScript, Tailwind CSS]
-    metrics:
-      - label: Sector
-        value: "Infrastructure Finance"
-      - label: Region
-        value: "Pan-African"
-    links:
-      - label: Website
-        url: https://www.afccapital.org/
-        type: demo
-      - label: Case Study
-        url: https://aznresearch.com/en/work/afc-capital
+      - label: Web Archive
+        url: https://web.archive.org/web/*/https://www.tiktok.com/@fedor.abakumets*
         type: article
-
-  - slug: apple-watch-diceroll
-    order: 9
-    name: Apple Watch DiceRoll
-    role: Swift / WatchOS Developer
-    year: "2024"
-    description: Minimalistic Apple Watch dice application built with SwiftUI, focused on fast interaction and clean watch-first UX.
-    theme: cyan
-    archived: true
-    platforms: [watchOS]
-    tags: [swift, watchos, open-source, utility]
-    stack: [Swift, SwiftUI]
-    metrics:
-      - label: Platform
-        value: "watchOS"
-      - label: Status
-        value: "Open Source"
-    links:
-      - label: Github
-        url: https://github.com/KeeGooRoomiE/AppleWatch_DiceRoll
-        type: repo
-
-  - slug: africa-finance-corporation
-    order: 10
-    archived: true
-    name: "Africa Finance Corporation"
-    role: Frontend Developer
-    year: "2023"
-    description: Frontend implementation for the Africa Finance Corporation website, a pan-African multilateral financial institution driving large-scale infrastructure projects across energy, transport and industrial sectors.
-    theme: emerald
-    platforms: [Web]
-    tags: [frontend, enterprise, govtech, finance, angular]
-    stack: [Angular, TypeScript, Tailwind CSS]
-    metrics:
-      - label: AUM
-        value: "$10B+ portfolio"
-      - label: Members
-        value: "47 countries"
-    links:
-      - label: Website
-        url: https://www.africafc.org/
-        type: demo
-      - label: Case Study
-        url: https://aznresearch.com/en/work/afc
-        type: article
-
-  - slug: amaka-studio
-    order: 11
-    archived: true
-    name: "Amaka Studio"
-    role: Frontend Developer
-    year: "2023"
-    description: Corporate website for a creative digital studio connecting brands with design and content teams. Focused on responsive UI architecture and performance-driven frontend implementation.
-    theme: emerald
-    platforms: [Web]
-    tags: [frontend, corporate, web, angular]
-    stack: [Angular, TypeScript, Tailwind CSS]
-    metrics:
-      - label: Type
-        value: "Creative Agency"
-      - label: Stack
-        value: "Angular + Tailwind"
-    links:
-      - label: Website
-        url: https://amaka.studio/
-        type: demo
-
-  - slug: thelo-db
-    order: 12
-    archived: true
-    name: "Thelo DB Engineering"
-    role: Frontend Developer
-    year: "2023"
-    description: Corporate engineering and consulting website for DB Engineering Consulting, supporting infrastructure and railway projects with structured enterprise UI components.
-    theme: blue
-    platforms: [Web]
-    tags: [frontend, enterprise, infrastructure, angular]
-    stack: [Angular, TypeScript, Tailwind CSS]
-    metrics:
-      - label: Sector
-        value: "Railway Engineering"
-      - label: Scope
-        value: "Enterprise"
-    links:
-      - label: Website
-        url: https://db-engineering-consulting.com/en/
-        type: demo
-
-  - slug: thelo-rs
-    order: 13
-    archived: true
-    name: "Thelo Group"
-    role: Frontend Developer
-    year: "2023"
-    description: Corporate website for Thelo Group, an African transport and logistics infrastructure company operating across rail, port and corridor development projects.
-    theme: cyan
-    platforms: [Web]
-    tags: [frontend, infrastructure, enterprise, angular]
-    stack: [Angular, TypeScript, Tailwind CSS]
-    metrics:
-      - label: Sector
-        value: "Transport & Logistics"
-      - label: Region
-        value: "Africa"
-    links:
-      - label: Website
-        url: https://thelo.africa/
-        type: demo
-
-  - slug: timberman-mp
-    order: 14
-    archived: true
-    name: Timberman Multiplayer
-    role: Gameplay & Network Engineer
-    year: "2022"
-    description: Two-player real-time Timberman-style arcade game built in GameMaker with custom Node.js + Socket.io multiplayer backend.
-    platforms: [Web, Windows]
-    tags: [gamemaker, multiplayer, arcade, open-source]
-    stack: [GameMaker, Node.js, Socket.io]
-    metrics:
-      - label: Players
-        value: "2P Online"
-      - label: Status
-        value: "Open Source"
-    links:
-      - label: Github
-        url: https://github.com/KeeGooRoomiE/timbermanMPGMS
-        type: repo
     media:
       - type: image
-        src: /media/projects/timberman/cover.gif
-        alt: "Timberman multiplayer gameplay"
-        featured: true
-
-  - slug: aniplanes
-    order: 15
-    archived: true
-    name: AniPlanes
-    role: Unity Game Developer
-    year: "2022"
-    description: Animal-themed airplane racer with AI opponents, focused on fast arcade flight feel and progression-driven gameplay.
-    theme: magenta
-    platforms: [Android, iOS]
-    tags: [unity, mobile, arcade, racing]
-    stack: [Unity, C#]
-    links:
-      - label: APKPure
-        url: https://apkpure.com/aniplanes/com.ani.planes
-        type: store
-    media:
-      - type: image
-        src: /media/projects/aniplanes/cover.png
-        alt: "AniPlanes gameplay screenshot"
-        featured: true
-
-  - slug: gunfire
-    order: 16
-    archived: true
-    name: GunFire
-    role: Gameplay Engineer
-    year: "2021"
-    description: Fast-paced arcade shooter prototype focused on weapon systems, enemy waves and responsive combat feel.
-    theme: cyan
-    platforms: [Windows, Android, iOS]
-    tags: [gamemaker, shooter, arcade, multiplayer]
-    stack: [GameMaker, Node.js]
-    metrics:
-      - label: Multiplayer
-        value: "Online PvP"
-      - label: Tools
-        value: "Level Editor"
-    links:
-      - label: Trashbox
-        url: https://trashbox.ru/link/cs2d-for-android-gunfire
-        type: store
-    media:
-      - type: image
-        src: /media/projects/gunfire/cover.jpg
-        alt: "GunFire gameplay screenshot"
-        featured: true
-
-  - slug: dodge-agent
-    order: 17
-    archived: true
-    name: Dodge Agent
-    role: Gameplay & Level Designer
-    year: "2021"
-    description: Hyper-casual timing game where a ninja jumps between platforms while dodging laser traps.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, action]
-    stack: [Unity, C#]
-    links:
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.weave.dodgeagent
-        type: store
-    media:
-      - type: image
-        src: /media/projects/dodge-agent/cover.jpg
-        alt: "Dodge Agent gameplay"
-        featured: true
-
-  - slug: pop-them-all
-    order: 18
-    archived: true
-    name: Pop Them All
-    role: Gameplay & Level Designer
-    year: "2021"
-    description: Hyper-casual pop-it style game where players clear tactile boards to unlock new patterns and visual sets.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, casual]
-    stack: [Unity, C#]
-    links:
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.weaveGames.popthemall
-        type: store
-    media:
-      - type: image
-        src: /media/projects/pop-them-all/cover.png
-        alt: "Pop Them All gameplay"
-        featured: true
-
-  - slug: hole-run
-    order: 19
-    archived: true
-    name: Hole Run
-    role: Gameplay & Level Designer
-    year: "2021"
-    description: Hyper-casual runner where a moving hole collects falling blocks and later builds structures from gathered pieces.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, runner]
-    stack: [Unity, C#]
-    links:
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.sketchteam.ColorBallSketch
-        type: store
-    media:
-      - type: image
-        src: /media/projects/hole-run/cover.png
-        alt: "Hole Run gameplay"
-        featured: true
-
-  - slug: personality-shift
-    order: 20
-    archived: true
-    name: Personality Shift
-    role: Gameplay & Level Designer
-    year: "2021"
-    description: Hyper-casual runner for a female audience featuring outfit-based transformation segments inspired by shape-shifting mechanics.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, runner]
-    stack: [Unity, C#]
-    media:
-      - type: image
-        src: /media/projects/personality-shift/cover.png
-        alt: "Personality Shift gameplay"
-        featured: true
-
-  - slug: flower-king
-    order: 21
-    archived: true
-    name: "Flower King: Collect and Grow"
-    role: Level Designer
-    year: "2020"
-    description: Casual match-3 puzzle game with handcrafted levels and relaxing visual progression built in Unity.
-    theme: emerald
-    platforms: [Android, iOS]
-    tags: [unity, mobile, casual, match3, level-design]
-    stack: [Unity, C#]
-    metrics:
-      - label: Downloads
-        value: "50K+"
-    links:
-      - label: App Store
-        url: https://apps.apple.com/app/flower-king-collect-and-grow/id1519456312
-        type: store
-      - label: APKPure
-        url: https://apkpure.com/flower-king-collect-and-grow/com.flower.king.game
-        type: store
-    media:
-      - type: image
-        src: /media/projects/flower-king/cover.png
-        alt: "Flower King: Collect and Grow gameplay"
-        featured: true
-
-  - slug: park-them-all
-    order: 22
-    archived: true
-    name: Park Them All
-    role: Gameplay & Level Designer
-    year: "2020"
-    description: Hyper-casual parking simulator where players place cars into correct spots under increasing level complexity.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, simulation]
-    stack: [Unity, C#]
-    media:
-      - type: image
-        src: /media/projects/park-them-all/cover.png
-        alt: "Park Them All gameplay"
-        featured: true
-
-  - slug: candy-merge
-    order: 23
-    archived: true
-    name: Candy Merge
-    role: Gameplay & Level Designer
-    year: "2020"
-    description: Hyper-casual match-3 game combined with 2048-style merge mechanics and progressive puzzle difficulty.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, casual, match3]
-    stack: [Unity, C#]
-    links:
-      - label: Google Play
-        url: https://play.google.com/store/search?q=Candy%20Merge&c=apps
-        type: store
-    media:
-      - type: image
-        src: /media/projects/candy-merge/cover.jpg
-        alt: "Candy Merge gameplay"
-        featured: true
-
-  - slug: break-stack-tower
-    order: 24
-    archived: true
-    name: "Break Stack Tower"
-    role: Gameplay & Level Designer
-    year: "2020"
-    description: Arcade hyper-casual tower breaking game with physics-based destruction mechanics and level progression.
-    platforms: [Android]
-    tags: [unity, mobile, hyper-casual, arcade]
-    stack: [Unity, C#]
-    metrics:
-      - label: Downloads
-        value: "50K+"
-    links:
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.towerbreak.app
-        type: store
-
-  - slug: wonder-blast-alice-friends
-    order: 25
-    archived: true
-    name: "Wonder Blast – Alice & Friends"
-    role: Level Designer
-    year: "2020"
-    description: Alice in Wonderland themed cube‑match puzzle game built in Unity with large-scale level progression and puzzle balancing.
-    theme: auto
-    platforms: [iOS, Android]
-    tags: [unity, mobile, puzzle, match3, level-design]
-    stack: [Unity, C#]
-    metrics:
-      - label: Levels Designed
-        value: "1500+"
-      - label: Total Levels
-        value: "2500 (incl. unreleased)"
-    links:
-      - label: APKPure
-        url: https://apkpure.com/wonder-blast/com.popside.alice
-        type: store
-    media:
-      - type: image
-        src: /media/projects/wonder-blast/cover.png
-        alt: "Wonder Blast gameplay"
-        featured: true
-
-  - slug: solitaire-resort
-    order: 26
-    archived: true
-    name: "Solitaire Resort"
-    role: Level Designer & Game Balance Designer
-    year: "2020"
-    description: Mobile Tripeaks solitaire puzzle game featuring island progression, economy tuning and long-form level balancing.
-    theme: auto
-    platforms: [iOS, Android]
-    tags: [unity, mobile, solitaire, puzzle, level-design]
-    stack: [Unity, C#]
-    metrics:
-      - label: Levels Designed
-        value: "500+"
-    media:
-      - type: image
-        src: /media/projects/solitaire-resort/cover.png
-        alt: "Solitaire Resort gameplay"
-        featured: true
-
-  - slug: cookie-crush
-    order: 27
-    archived: true
-    name: "Cookie Crush"
-    role: Level Designer
-    year: "2020"
-    description: Match-3 candy puzzle game where I designed and balanced level progression, including proposing and prototyping new mechanics.
-    theme: auto
-    platforms: [Android]
-    tags: [unity, mobile, puzzle, match3, level-design]
-    stack: [Unity, C#]
-    metrics:
-      - label: Levels Designed
-        value: "300+"
-    links:
-      - label: APKPure
-        url: https://apkpure.net/cookie-crush-candy-match-3/com.guuby.candy
-        type: store
-
-  - slug: helens-quiz
-    order: 28
-    archived: true
-    name: Helens Quiz
-    role: Gameplay & UI Designer
-    year: "2019"
-    description: Match-3 puzzle game with over 300 crafted levels, dynamic backgrounds and level progression systems built in Unity.
-    theme: magenta
-    platforms: [Android, iOS]
-    tags: [unity, mobile, casual, match3, level-design]
-    stack: [Unity, C#]
-    metrics:
-      - label: Downloads
-        value: "50K+"
-      - label: Levels
-        value: "300+"
-    links:
-      - label: APKPure
-        url: https://apkpure.com/helen-s-quiz/com.mkmx.helenq
-        type: store
-    media:
-      - type: image
-        src: /media/projects/helens-quiz/cover.png
-        alt: "Helens Quiz gameplay screenshot"
-        featured: true
-
-  - slug: westland
-    order: 29
-    archived: true
-    name: Westland
-    role: Gameplay Developer
-    year: "2019"
-    description: Isometric pixel-art top-down zombie shooter set in a brutal Wild West world, featuring heavy gore and fast-paced combat arenas.
-    theme: cyan
-    platforms: [Windows]
-    tags: [gamemaker, shooter, pixel-art, prototype]
-    stack: [GameMaker]
-    metrics:
-      - label: Type
-        value: "Personal Project"
-      - label: Status
-        value: "Prototype"
-    media:
-      - type: image
-        src: /media/projects/westland/cover.jpg
-        alt: "Westland gameplay screenshot"
-        featured: true
-
-  - slug: kalina-malina-delivery
-    order: 30
-    archived: true
-    name: "Калина‑Малина: доставка еды"
-    role: Mobile App Developer
-    year: "2018"
-    description: Mobile food and grocery delivery app with ordering, product catalog and loyalty system built in Unity.
-    theme: cyan
-    platforms: [Android, iOS]
-    tags: [unity, mobile, ecommerce, delivery]
-    stack: [Unity, C#]
-    metrics:
-      - label: Downloads
-        value: "100K+"
-    links:
-      - label: App Store
-        url: https://apps.apple.com/app/калина-малина-доставка-еды/id1597124884
-        type: store
-      - label: Google Play
-        url: https://play.google.com/store/apps/details?id=com.getmeback.kalinamalina
-        type: store
-    media:
-      - type: image
-        src: /media/projects/kalina-malina/cover.png
-        alt: "Калина‑Малина delivery app interface"
-        featured: true
-
-  - slug: transport-railroad-crossing
-    order: 31
-    archived: true
-    name: Transport Railroad Crossing
-    role: Gameplay Designer & Developer
-    year: "2018"
-    description: Crossy Road–style arcade game featuring dynamic traffic logic and railway crossing systems with train-triggered vehicle stopping behavior.
-    platforms: [Android]
-    tags: [gamemaker, mobile, arcade, casual]
-    stack: [GameMaker]
-    metrics:
-      - label: Type
-        value: "Personal Project"
-    media:
-      - type: image
-        src: /media/projects/transport-railroad-crossing/cover.jpeg
-        alt: "Transport Railroad Crossing gameplay"
-        featured: true
-
-  - slug: filtap
-    order: 32
-    archived: true
-    name: "Filtap!"
-    role: Game Developer
-    year: "2018"
-    description: Single-mechanic mobile puzzle built in GameMaker Studio, released on Android.
-    theme: emerald
-    platforms: [Android]
-    stack: [GameMaker Studio]
-    links:
-      - label: APKTurbo
-        url: https://www.apkturbo.com/games/filtap/com.zef.filtap/
-        type: store
-    media:
-      - type: image
-        src: /media/projects/filtap/cover.jpg
-        alt: "Filtap! cover"
-        featured: true
-
-  - slug: box-keeper
-    order: 33
-    archived: true
-    name: Box Keeper
-    role: Game Developer
-    year: "2018"
-    description: Mobile roguelike built in GameMaker Studio with a focused core loop and replayable runs. Shipped primarily for iOS with an Android build.
-    theme: magenta
-    platforms: [iOS, Android]
-    tags: [gamemaker, mobile, roguelike, puzzle]
-    stack: [GameMaker Studio]
-    links:
-      - label: APKTurbo
-        url: https://www.apkturbo.com/games/box-keeper/com.dgs.bkeep/
-        type: store
-      - label: App Store
-        url: https://apps.apple.com/us/search?term=Box%20Keeper
-        type: store
-    media:
-      - type: image
-        src: /media/projects/box-keeper/cover.png
-        alt: "Box Keeper cover"
-        featured: true
-
-  - slug: wrap
-    order: 34
-    archived: true
-    name: "Wrap!"
-    role: Game Developer
-    year: "2017"
-    description: Minimal one-mechanic puzzle built in GameMaker Studio, shipped on Android and iOS.
-    theme: blue
-    platforms: [Android, iOS]
-    stack: [GameMaker Studio]
-    media:
-      - type: image
-        src: /media/projects/wrap/cover.jpg
-        alt: "Wrap! cover"
-        featured: true
-
-  - slug: recolor
-    order: 35
-    archived: true
-    name: Recolor
-    role: Game Developer
-    year: "2017"
-    description: Minimal one-mechanic puzzle built in GameMaker Studio, shipped on Android and iOS.
-    theme: blue
-    platforms: [Android, iOS]
-    stack: [GameMaker Studio]
-    media:
-      - type: image
-        src: /media/projects/recolor/cover.jpg
-        alt: "Recolor cover"
-        featured: true
-
-  - slug: make-it-work
-    order: 36
-    archived: true
-    name: "Make It Work!"
-    role: Game Developer
-    year: "2016"
-    description: Small vector-driven Game Maker Studio clicker with focus on early mobile platforms.
-    theme: magenta
-    platforms: [iOS, Android, Amazon]
-    tags: [gamemaker, mobile, clicker, casual]
-    stack: [GameMaker Studio]
-    links:
-      - label: Amazon Appstore
-        url: https://www.amazon.co.jp/DragonGameStudios-Make-it-Work/dp/B07CK73BXC
-        type: store
-      - label: APKTurbo
-        url: https://www.apkturbo.com/games/make-it-work/com.dgs.miwfull/
-        type: store
-    media:
-      - type: image
-        src: /media/projects/make-it-work/cover.jpg
-        alt: "Make It Work! clicker gameplay"
+        src: /media/projects/tiktok-fedor/cover.jpg
+        alt: "TikTok @fedor.abakumets"
         featured: true
