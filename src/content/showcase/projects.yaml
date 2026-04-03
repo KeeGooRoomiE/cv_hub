@@ -134,3 +134,80 @@ projects:
       - label: GitHub
         url: https://github.com/fedorabakumets/fluffy-computing-machine
         type: repo
+
+  - slug: philosophical-library
+    order: 6
+    name: Философская библиотека
+    role: Контент-менеджер / SMM
+    year: "2023"
+    description: Telegram-канал с книгами по философии. Поиск книг в интернете, редактура постов через AI, публикация.
+    theme: blue
+    featured: false
+    platforms: [Telegram]
+    tags: [smm, content, telegram, philosophy]
+    metrics:
+      - label: Подписчиков
+        value: "335"
+      - label: Тематика
+        value: "Философия"
+    links:
+      - label: Telegram
+        url: https://t.me/Philosophical_Library
+        type: demo
+
+  - slug: pbtc-russ
+    order: 7
+    name: Политический архив
+    role: Контент-менеджер / SMM
+    year: "2022"
+    description: Telegram-канал с политическим архивом. Упоминания в материалах с сотнями тысяч просмотров.
+    theme: cyan
+    featured: false
+    platforms: [Telegram]
+    tags: [smm, content, telegram, politics]
+    metrics:
+      - label: Подписчиков
+        value: "76"
+      - label: Охват
+        value: "100K+ просмотров"
+    links:
+      - label: Telegram
+        url: https://t.me/pbtc_russ
+        type: demo
+
+  - slug: fedor-invest-channel
+    order: 8
+    name: VK — мониторинг сервисов
+    role: Контент-менеджер / SMM
+    year: "2021"
+    description: ВКонтакте канал с мониторингом лотерей, буксов и бирж лайков.
+    theme: blue
+    featured: false
+    platforms: [VKontakte]
+    tags: [smm, content, vk]
+    metrics:
+      - label: Подписчиков
+        value: "399"
+      - label: Тематика
+        value: "Буксы, лотереи"
+    links:
+      - label: VK
+        url: https://vk.com/fedor_invest_channel
+        type: demo
+
+  - slug: tiktok-fedor
+    order: 9
+    name: TikTok @fedor.abakumets
+    role: Контент-менеджер / SMM
+    year: "2020"
+    description: Политический контент — поиск материалов в Telegram и других источниках, публикация фото и видео. Аккаунт удалён.
+    theme: magenta
+    featured: false
+    archived: true
+    platforms: [TikTok]
+    tags: [smm, content, tiktok, politics]
+    metrics:
+      - label: Подписчиков
+        value: "33K"
+      - label: Лайков
+        value: "633K"
