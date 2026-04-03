@@ -111,3 +111,26 @@ projects:
       - label: GitHub
         url: https://github.com/fedorabakumets/game-bot
         type: repo
+
+  - slug: fluffy-computing-machine
+    order: 5
+    name: fluffy-computing-machine
+    role: Разработчик Telegram-ботов (vibe coding)
+    year: "2024"
+    description: Заказной бот техподдержки для VPN-сервиса. Двухуровневые категории обращений, система тикетов, рейтинг администраторов, мгновенные уведомления.
+    theme: cyan
+    featured: true
+    platforms: [Telegram]
+    tags: [python, aiogram, sqlite, fsm, support, tickets]
+    metrics:
+      - label: Категорий
+        value: "5 тем, подтемы"
+      - label: Функции
+        value: "Тикеты, рейтинг"
+      - label: Тип
+        value: "Заказной"
+    stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, FSM]
+    links:
+      - label: GitHub
+        url: https://github.com/fedorabakumets/fluffy-computing-machine
+        type: repo
