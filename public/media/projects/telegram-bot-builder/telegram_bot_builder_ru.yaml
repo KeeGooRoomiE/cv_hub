@@ -12,6 +12,13 @@ links:
 
 blocks:
 
+  - type: image
+    src: /media/projects/telegram-bot-builder/cover.jpg
+    alt: "Telegram Bot Builder — редактор"
+    featured: true
+
+  - type: divider
+
   - type: text
     title: "Обзор"
     body: |

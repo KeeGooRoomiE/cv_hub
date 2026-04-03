@@ -21,6 +21,11 @@ projects:
       - label: GitHub
         url: https://github.com/fedorabakumets/telegram-bot-builder
         type: repo
+    media:
+      - type: image
+        src: /media/projects/telegram-bot-builder/cover.jpg
+        alt: "Telegram Bot Builder"
+        featured: true
 
   - slug: cv-hub
     order: 1
