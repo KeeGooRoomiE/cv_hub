@@ -9,6 +9,8 @@ stack: [HTML, CSS, JavaScript, Google Sheets API, Google Apps Script]
 links:
   - label: Demo
     url: https://fedorabakumets.github.io/sheets-monitor/
+  - label: GitHub
+    url: https://github.com/fedorabakumets/sheets-monitor
 
 blocks:
 

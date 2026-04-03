@@ -49,6 +49,9 @@ projects:
       - label: Demo
         url: https://fedorabakumets.github.io/sheets-monitor/
         type: demo
+      - label: GitHub
+        url: https://github.com/fedorabakumets/sheets-monitor
+        type: repo
     media:
       - type: image
         src: /media/projects/sheets-monitor/cover.jpg
