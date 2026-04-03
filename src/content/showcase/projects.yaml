@@ -218,7 +218,6 @@ projects:
     description: Политический контент — поиск материалов в Telegram и других источниках, публикация фото и видео. Аккаунт удалён.
     theme: magenta
     featured: false
-    archived: true
     platforms: [TikTok]
     tags: [smm, content, tiktok, politics]
     metrics:
