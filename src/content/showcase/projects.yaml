@@ -88,3 +88,26 @@ projects:
         src: /media/projects/buxbot/cover.jpg
         alt: "ScriptMaster GUI"
         featured: true
+
+  - slug: game-bot
+    order: 4
+    name: game-bot
+    role: Разработчик Telegram-ботов (vibe coding)
+    year: "2024"
+    description: Заказной Telegram-бот с игрой «Мины», кубиком, переводами между пользователями, промокодами и админ-панелью. 454 теста (pytest), 100% покрытие handlers.
+    theme: magenta
+    featured: true
+    platforms: [Telegram]
+    tags: [python, aiogram, sqlite, pytest, fsm, dependency-injection]
+    metrics:
+      - label: Тестов
+        value: "454 (pytest)"
+      - label: Покрытие
+        value: "100% handlers"
+      - label: Тип
+        value: "Заказной"
+    stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, pytest, FSM, Dependency Injection]
+    links:
+      - label: GitHub
+        url: https://github.com/fedorabakumets/game-bot
+        type: repo
