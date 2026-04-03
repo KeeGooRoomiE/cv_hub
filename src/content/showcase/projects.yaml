@@ -223,9 +223,9 @@ projects:
     tags: [smm, content, tiktok, politics]
     metrics:
       - label: Подписчиков
-        value: "33K"
+        value: "33.3K"
       - label: Лайков
-        value: "633K"
+        value: "563.6K"
     links:
       - label: Web Archive
         url: https://web.archive.org/web/*/https://www.tiktok.com/@fedor.abakumets*
