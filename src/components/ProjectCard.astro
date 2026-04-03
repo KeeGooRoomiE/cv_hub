@@ -98,7 +98,7 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
               class="media__el"
               src={withBase(featuredMedia.src)}
               alt={featuredMedia.alt ?? ''}
-              loading="lazy"
+              loading="eager"
               onerror="this.closest('.media')?.remove();"
             />
           )}
@@ -251,7 +251,7 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
             class="media__el"
             src={withBase(featuredMedia.src)}
             alt={featuredMedia.alt ?? ''}
-            loading="lazy"
+            loading="eager"
             onerror="this.closest('.media')?.remove();"
           />
         )}
