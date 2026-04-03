@@ -116,4 +116,14 @@
   @media (prefers-reduced-motion: reduce) {
     .orb { animation: none; }
   }
+
+  /* ── Disable orbs on small screens ── */
+  @media (max-width: 768px) {
+    .orb,
+    .noise {
+      animation: none !important; 
+      filter: none !important;    
+      opacity: 0 !important;      
+    }
+  }
 </style>
