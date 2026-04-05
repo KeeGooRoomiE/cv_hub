@@ -1,0 +1,73 @@
+name: Fedor Abakumets
+title: Fullstack Developer (vibe coding)
+
+summary: >
+  Fullstack developer from Saint Petersburg, 21 years old. I build web apps from idea to deployment —
+  React + TypeScript on the frontend, Express.js + PostgreSQL on the backend.
+  Working via vibe coding with Kiro, Codex and Qwen — shipping fast.
+
+contacts:
+  - label: GitHub
+    url: https://github.com/fedorabakumets
+  - label: Telegram (preferred)
+    url: https://t.me/Xraz_official
+  - label: Email
+    url: mailto:fedor.abakumets@yandex.ru
+
+achievements:
+  - Telegram Bot Builder — full stack (React + TypeScript + Express.js + PostgreSQL), visual no-code builder (13 GitHub stars)
+  - Sheets Monitor — serverless website monitoring web app via Google Sheets, free to run
+  - ScriptMaster — automation system with GUI (PyQt5) and Telegram bot
+
+skills:
+  - group: Frontend
+    items: [React, TypeScript, HTML, CSS]
+
+  - group: Backend
+    items: [Express.js, Node.js, REST API, WebSocket]
+
+  - group: Databases
+    items: [PostgreSQL, Drizzle ORM, SQLite, Google Sheets API]
+
+  - group: Python
+    items: [Python, PyQt5, Selenium, Requests, Jinja2]
+
+  - group: Tools
+    items: [Git, GitHub, Railway, Google Apps Script, Kiro, OpenAI Codex, Qwen]
+
+  - group: Languages (spoken)
+    items: [Russian — Native, English — Basic]
+
+experience:
+  - company: Telegram Bot Builder (personal project)
+    role: Fullstack Developer (vibe coding)
+    period: 2024 — present
+    description:
+      - Built the full stack — React + TypeScript frontend, Express.js backend, PostgreSQL + Drizzle ORM
+      - Visual drag-and-drop editor, TypeScript + Jinja2 generate ready-to-run Python code (aiogram)
+      - Bot can be launched directly in the browser tab — no local setup needed
+      - Supports media, keyboards, conditional logic, JSON config, analytics and Railway deployment
+    stack: [React, TypeScript, Express.js, Node.js, PostgreSQL, Drizzle, Python, Jinja2, aiogram, Railway]
+
+  - company: Personal projects
+    role: Developer (vibe coding)
+    period: 2023 — present
+    description:
+      - Sheets Monitor — serverless website monitoring web app via Google Sheets
+      - ScriptMaster — automation system with GUI (PyQt5), Telegram bot and captcha recognition (17 methods)
+    stack: [Python, PyQt5, Selenium, OpenCV, EasyOCR, HTML, CSS, JavaScript, Google Sheets API, Google Apps Script]
+
+education:
+  - institution: St. Petersburg College "Primorsky"
+    degree: Digital Information Processing Specialist
+    period: "2022 — 2025"
+
+  - institution: Self-education
+    degree: Python, automation, web development
+    period: "2023 — present"
+
+languages:
+  - language: Russian
+    level: Native
+  - language: English
+    level: Basic

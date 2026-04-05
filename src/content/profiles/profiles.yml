@@ -3,11 +3,15 @@ profiles:
     label: "Generalist"
     slug: ""
     spec: null
-  - id: devops
-    label: "DevOps"
-    slug: "devops"
-    spec: devops
-  - id: gamedev
-    label: "Game Developer"
-    slug: "gamedev"
-    spec: gamedev
+  - id: bots
+    label: "Telegram Bots"
+    slug: "bots"
+    spec: bots
+  - id: fullstack
+    label: "Fullstack"
+    slug: "fullstack"
+    spec: fullstack
+  - id: smm
+    label: "SMM"
+    slug: "smm"
+    spec: smm

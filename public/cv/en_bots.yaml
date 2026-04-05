@@ -1,0 +1,74 @@
+name: Fedor Abakumets
+title: Telegram Bot Developer (vibe coding)
+
+summary: >
+  Telegram bot developer from Saint Petersburg, 21 years old. I build bots on commission and for myself —
+  from simple commands to complex systems with FSM, DI, tests and deployment.
+  Working via vibe coding with Kiro, Codex and Qwen — fast and lean.
+
+contacts:
+  - label: GitHub
+    url: https://github.com/fedorabakumets
+  - label: Telegram (preferred)
+    url: https://t.me/Xraz_official
+  - label: Email
+    url: mailto:fedor.abakumets@yandex.ru
+
+achievements:
+  - Telegram Bot Builder — visual no-code Telegram bot builder with drag-and-drop and Python code generation (13 GitHub stars)
+  - game-bot — bot with Minesweeper, dice, user transfers, promo codes and admin panel; 454 tests (pytest), 100% handler coverage
+  - fluffy-computing-machine — support bot for a VPN service with ticket system and admin rating
+
+skills:
+  - group: Frameworks & libraries
+    items: [aiogram, pyTelegramBotAPI, Jinja2]
+
+  - group: Architecture
+    items: [FSM, Dependency Injection, ServiceFactory, middleware]
+
+  - group: Databases
+    items: [SQLite, aiosqlite, PostgreSQL, Drizzle ORM]
+
+  - group: Testing
+    items: [pytest, Pydantic]
+
+  - group: Tools
+    items: [Git, GitHub, Railway, Kiro, OpenAI Codex, Qwen]
+
+  - group: Languages (spoken)
+    items: [Russian — Native, English — Basic]
+
+experience:
+  - company: Telegram Bot Builder (personal project)
+    role: Telegram Bot Developer (vibe coding)
+    period: 2024 — present
+    description:
+      - Visual no-code Telegram bot builder — user drags nodes onto a canvas, TypeScript + Jinja2 generate ready-to-run Python code (aiogram)
+      - Code can be copied or the bot launched directly in the browser tab — no local setup needed
+      - Supports media, keyboards, conditional logic, JSON config, analytics and Railway deployment
+    stack: [Python, aiogram, Jinja2, TypeScript, React, PostgreSQL, Drizzle, Railway]
+
+  - company: Freelance projects
+    role: Telegram Bot Developer (vibe coding)
+    period: 2024 — present
+    description:
+      - game-bot — bot with Minesweeper, dice, user-to-user transfers, promo codes and admin panel
+      - Full architecture with DI (ServiceFactory), SQLite, FSM, middleware — 454 tests (pytest), 100% handler coverage
+      - fluffy-computing-machine — support bot for a VPN service with ticket system, request categories and admin rating
+      - Both projects built from scratch for specific client requirements
+    stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, pytest, FSM, Dependency Injection]
+
+education:
+  - institution: St. Petersburg College "Primorsky"
+    degree: Digital Information Processing Specialist
+    period: "2022 — 2025"
+
+  - institution: Self-education
+    degree: Python, Telegram bots, automation
+    period: "2023 — present"
+
+languages:
+  - language: Russian
+    level: Native
+  - language: English
+    level: Basic

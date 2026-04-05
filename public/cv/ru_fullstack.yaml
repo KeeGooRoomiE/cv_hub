@@ -1,0 +1,73 @@
+name: Абакумец Фёдор Александрович
+title: Fullstack-разработчик (vibe coding)
+
+summary: >
+  Fullstack-разработчик из Санкт-Петербурга, 21 год. Строю веб-приложения от идеи до деплоя —
+  React + TypeScript на фронте, Express.js + PostgreSQL на бэке.
+  Работаю через vibe coding с Kiro, Codex и Qwen — быстро довожу проекты до рабочего состояния.
+
+contacts:
+  - label: GitHub
+    url: https://github.com/fedorabakumets
+  - label: Telegram (предпочтительно)
+    url: https://t.me/Xraz_official
+  - label: Email
+    url: mailto:fedor.abakumets@yandex.ru
+
+achievements:
+  - Telegram Bot Builder — полный стек (React + TypeScript + Express.js + PostgreSQL), визуальный no-code конструктор (13 звёзд на GitHub)
+  - Sheets Monitor — веб-приложение мониторинга сайтов через Google Sheets, без сервера и бесплатно
+  - ScriptMaster — система автоматизации с GUI (PyQt5) и Telegram-ботом
+
+skills:
+  - group: Frontend
+    items: [React, TypeScript, HTML, CSS]
+
+  - group: Backend
+    items: [Express.js, Node.js, REST API, WebSocket]
+
+  - group: Базы данных
+    items: [PostgreSQL, Drizzle ORM, SQLite, Google Sheets API]
+
+  - group: Python
+    items: [Python, PyQt5, Selenium, Requests, Jinja2]
+
+  - group: Инструменты
+    items: [Git, GitHub, Railway, Google Apps Script, Kiro, OpenAI Codex, Qwen]
+
+  - group: Языки
+    items: [Русский — родной, Английский — базовый]
+
+experience:
+  - company: Telegram Bot Builder (собственный проект)
+    role: Fullstack-разработчик (vibe coding)
+    period: 2024 — настоящее время
+    description:
+      - Построил полный стек — React + TypeScript фронтенд, Express.js бэкенд, PostgreSQL + Drizzle ORM
+      - Визуальный редактор с drag-and-drop, TypeScript + Jinja2 генерируют готовый Python-код (aiogram)
+      - Запуск бота прямо в браузере без локальной установки
+      - Поддержка медиа, клавиатур, условной логики, JSON-конфигурации, аналитики и деплоя на Railway
+    stack: [React, TypeScript, Express.js, Node.js, PostgreSQL, Drizzle, Python, Jinja2, aiogram, Railway]
+
+  - company: Личные проекты
+    role: Разработчик (vibe coding)
+    period: 2023 — настоящее время
+    description:
+      - Sheets Monitor — веб-приложение мониторинга сайтов через Google Sheets, работает без сервера
+      - ScriptMaster — система автоматизации с GUI (PyQt5), Telegram-ботом и распознаванием капчи (17 методов)
+    stack: [Python, PyQt5, Selenium, OpenCV, EasyOCR, HTML, CSS, JavaScript, Google Sheets API, Google Apps Script]
+
+education:
+  - institution: СПб ГБ ПОУ «Техникум «Приморский»
+    degree: Мастер по обработке цифровой информации
+    period: "2022 — 2025"
+
+  - institution: Самообразование
+    degree: Python, автоматизация, веб-разработка
+    period: "2023 — н.в."
+
+languages:
+  - language: Русский
+    level: Родной
+  - language: Английский
+    level: Базовый

@@ -1,0 +1,46 @@
+title: "TikTok @fedor.abakumets"
+role: "Контент-менеджер / SMM"
+year: "2020"
+tagline: "33K подписчиков, 633K лайков. Политический контент."
+
+platforms: [TikTok]
+stack: [Контент, SMM, TikTok]
+
+links:
+  - label: Web Archive
+    url: https://web.archive.org/web/*/https://www.tiktok.com/@fedor.abakumets*
+
+blocks:
+
+  - type: image
+    src: /media/projects/tiktok-fedor/cover.jpg
+    alt: "TikTok @fedor.abakumets"
+    featured: true
+
+  - type: divider
+
+  - type: text
+    title: "О канале"
+    body: |
+      TikTok аккаунт с политическим контентом.
+
+      Курировал материалы из Telegram и других источников,
+      публиковал фото и видео. Аккаунт удалён.
+
+  - type: divider
+
+  - type: text
+    title: "Статистика"
+    bullets:
+      - 33.3K подписчиков
+      - 563.6K лайков
+      - Аккаунт удалён
+
+  - type: divider
+
+  - type: text
+    title: "Что делал"
+    bullets:
+      - Поиск и курирование политического контента из Telegram
+      - Публикация фото и видео материалов
+      - Рост аудитории до 33K подписчиков органически

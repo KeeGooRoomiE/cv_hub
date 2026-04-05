@@ -1,0 +1,74 @@
+name: Абакумец Фёдор Александрович
+title: Разработчик Telegram-ботов (vibe coding)
+
+summary: >
+  Разработчик Telegram-ботов из Санкт-Петербурга, 21 год. Строю ботов под заказ и для себя —
+  от простых команд до сложных систем с FSM, DI, тестами и деплоем.
+  Работаю через vibe coding с Kiro, Codex и Qwen — быстро, без лишнего.
+
+contacts:
+  - label: GitHub
+    url: https://github.com/fedorabakumets
+  - label: Telegram (предпочтительно)
+    url: https://t.me/Xraz_official
+  - label: Email
+    url: mailto:fedor.abakumets@yandex.ru
+
+achievements:
+  - Telegram Bot Builder — визуальный no-code конструктор Telegram-ботов с drag-and-drop, генерацией Python-кода (13 звёзд на GitHub)
+  - game-bot — бот с игрой «Мины», кубиком, переводами, промокодами и админ-панелью; 454 теста (pytest), 100% покрытие handlers
+  - fluffy-computing-machine — бот техподдержки для VPN-сервиса с системой тикетов и рейтингом администраторов
+
+skills:
+  - group: Фреймворки и библиотеки
+    items: [aiogram, pyTelegramBotAPI, Jinja2]
+
+  - group: Архитектура
+    items: [FSM, Dependency Injection, ServiceFactory, middleware]
+
+  - group: Базы данных
+    items: [SQLite, aiosqlite, PostgreSQL, Drizzle ORM]
+
+  - group: Тестирование
+    items: [pytest, Pydantic]
+
+  - group: Инструменты
+    items: [Git, GitHub, Railway, Kiro, OpenAI Codex, Qwen]
+
+  - group: Языки
+    items: [Русский — родной, Английский — базовый]
+
+experience:
+  - company: Telegram Bot Builder (собственный проект)
+    role: Разработчик Telegram-ботов (vibe coding)
+    period: 2024 — настоящее время
+    description:
+      - Визуальный no-code конструктор Telegram-ботов — пользователь перетаскивает узлы, TypeScript + Jinja2 генерируют готовый Python-код (aiogram)
+      - Код можно скопировать или запустить бота прямо в браузере — без локальной установки
+      - Поддержка медиа, клавиатур, условной логики, JSON-конфигурации, аналитики и деплоя на Railway
+    stack: [Python, aiogram, Jinja2, TypeScript, React, PostgreSQL, Drizzle, Railway]
+
+  - company: Проекты по заказу (фриланс)
+    role: Разработчик Telegram-ботов (vibe coding)
+    period: 2024 — настоящее время
+    description:
+      - game-bot — бот с игрой «Мины», кубиком, переводами между пользователями, промокодами и админ-панелью
+      - Полная архитектура с DI (ServiceFactory), SQLite, FSM, middleware — 454 теста (pytest), 100% покрытие handlers
+      - fluffy-computing-machine — бот техподдержки для VPN-сервиса с системой тикетов, категориями обращений и рейтингом администраторов
+      - Оба проекта разработаны под конкретные задачи заказчиков с нуля
+    stack: [Python, aiogram, SQLite, aiosqlite, Pydantic, pytest, FSM, Dependency Injection]
+
+education:
+  - institution: СПб ГБ ПОУ «Техникум «Приморский»
+    degree: Мастер по обработке цифровой информации
+    period: "2022 — 2025"
+
+  - institution: Самообразование
+    degree: Python, Telegram-боты, автоматизация
+    period: "2023 — н.в."
+
+languages:
+  - language: Русский
+    level: Родной
+  - language: Английский
+    level: Базовый

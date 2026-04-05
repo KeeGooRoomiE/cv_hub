@@ -1,0 +1,105 @@
+title: "Telegram Bot Builder"
+role: "Fullstack-разработчик (vibe coding)"
+year: "2024"
+tagline: "Собери Telegram-бота мышкой. Получи готовый Python-код."
+
+platforms: [Web]
+stack: [React, TypeScript, Express.js, Node.js, PostgreSQL, Drizzle ORM, Python, Jinja2, aiogram, Railway]
+
+links:
+  - label: GitHub
+    url: https://github.com/fedorabakumets/telegram-bot-builder
+  - label: Deploy on Railway
+    url: https://railway.com/deploy/aware-encouragement
+
+blocks:
+
+  - type: image
+    src: /media/projects/telegram-bot-builder/cover.jpg
+    alt: "Telegram Bot Builder — редактор"
+    featured: true
+
+  - type: divider
+
+  - type: text
+    title: "Обзор"
+    body: |
+      Telegram Bot Builder — визуальный no-code конструктор Telegram-ботов.
+
+      Идея простая: пользователь перетаскивает узлы на холст, соединяет их стрелками —
+      система генерирует готовый рабочий Python-код на aiogram.
+
+      Никакой локальной установки. Код можно скопировать или запустить бота прямо в браузере.
+
+  - type: divider
+
+  - type: text
+    title: "Проблема"
+    body: |
+      Написать Telegram-бота с нуля — это порог входа.
+
+      Нужно знать Python, aiogram, FSM, понимать структуру хендлеров.
+      Большинство людей с идеей бота останавливаются именно здесь.
+
+      Существующие no-code решения либо слишком ограничены, либо привязывают к платной платформе.
+
+  - type: divider
+
+  - type: text
+    title: "Решение"
+    body: |
+      Визуальный редактор в духе n8n, но заточенный под Telegram.
+
+      Пользователь работает с узлами — команды, сообщения, кнопки, условия, медиа.
+      TypeScript + Jinja2 на бэкенде превращают граф в готовый Python-код (aiogram).
+
+      Результат: рабочий бот без единой строчки кода вручную.
+
+  - type: divider
+
+  - type: text
+    title: "Что построено"
+    bullets:
+      - Drag-and-drop редактор на React + TypeScript
+      - Генерация Python-кода через TypeScript + Jinja2 шаблоны
+      - Запуск бота прямо в браузере — без локальной установки
+      - Поддержка медиа, inline и reply клавиатур
+      - Условная логика между узлами
+      - JSON-конфигурация для экспорта/импорта схем
+      - Аналитика использования
+      - Деплой на Railway в один клик
+
+  - type: divider
+
+  - type: text
+    title: "Стек"
+    body: |
+      Фронтенд: React + TypeScript, drag-and-drop холст
+
+      Бэкенд: Express.js + Node.js, REST API
+
+      База данных: PostgreSQL + Drizzle ORM
+
+      Генерация кода: Jinja2 шаблоны → Python (aiogram)
+
+      Деплой: Railway
+
+  - type: divider
+
+  - type: text
+    title: "Как разрабатывался"
+    body: |
+      Проект построен через vibe coding — с Kiro, OpenAI Codex и Qwen.
+
+      Подход: быстрые итерации, фокус на рабочем результате, минимум лишнего.
+      Весь стек — от идеи до деплоя — один человек.
+
+  - type: divider
+
+  - type: text
+    title: "Результат"
+    bullets:
+      - 13 звёзд на GitHub
+      - Полный цикл от холста до рабочего бота
+      - Работает без локальной установки
+      - Open source — бесплатно для всех

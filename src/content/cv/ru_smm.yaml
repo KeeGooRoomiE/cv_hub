@@ -1,0 +1,62 @@
+name: Абакумец Фёдор Александрович
+title: Контент-менеджер / SMM
+
+summary: >
+  Контент-менеджер из Санкт-Петербурга, 21 год. Веду тематические каналы в Telegram и ВКонтакте —
+  философия, политика, мониторинг сервисов. Умею находить материал, редактировать через AI и выстраивать аудиторию.
+  Был опыт с TikTok — 33K подписчиков, 633K лайков.
+
+contacts:
+  - label: Telegram (предпочтительно)
+    url: https://t.me/Xraz_official
+  - label: Личный канал
+    url: https://t.me/sonofbog
+  - label: VK
+    url: https://vk.com/fedor.abakumets
+  - label: Email
+    url: mailto:fedor.abakumets@yandex.ru
+
+achievements:
+  - TikTok @fedor.abakumets — 33K подписчиков, 633K лайков (аккаунт удалён)
+  - Telegram политический архив (t.me/pbtc_russ) — упоминания в материалах с сотнями тысяч просмотров
+  - Telegram «Философская библиотека» (t.me/Philosophical_Library) — 335 подписчиков
+  - ВКонтакте @fedor_invest_channel — 399 подписчиков
+
+skills:
+  - group: Платформы
+    items: [Telegram, ВКонтакте, TikTok]
+
+  - group: Инструменты
+    items: [AI-редактура, Kiro, OpenAI Codex, Qwen, Excel, Word]
+
+  - group: Направления
+    items: [Контент-менеджмент, SMM, Поиск и курирование материала, Ведение каналов и групп]
+
+  - group: Языки
+    items: [Русский — родной, Английский — базовый]
+
+experience:
+  - company: Социальные сети
+    role: Контент-менеджер / SMM
+    period: 2020 — настоящее время
+    description:
+      - TikTok @fedor.abakumets — курировал политический контент, искал материалы в Telegram и других источниках, публиковал фото и видео — 33K подписчиков, 633K лайков (аккаунт удалён)
+      - Telegram «Философская библиотека» (t.me/Philosophical_Library) — искал книги по философии в интернете, редактировал посты через AI, публиковал — 335 подписчиков
+      - Telegram политический архив (t.me/pbtc_russ) — 76 подписчиков, упоминания в материалах с сотнями тысяч просмотров
+      - ВКонтакте @fedor_invest_channel — 399 подписчиков, мониторинг лотерей, буксов и бирж лайков
+    stack: [Контент, SMM, Telegram, ВКонтакте, TikTok, AI-редактура]
+
+education:
+  - institution: СПб ГБ ПОУ «Техникум «Приморский»
+    degree: Мастер по обработке цифровой информации
+    period: "2022 — 2025"
+
+  - institution: Средняя общеобразовательная школа, Санкт-Петербург
+    degree: Основное общее образование (10 классов)
+    period: "2012 — 2022"
+
+languages:
+  - language: Русский
+    level: Родной
+  - language: Английский
+    level: Базовый

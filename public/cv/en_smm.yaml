@@ -1,0 +1,62 @@
+name: Fedor Abakumets
+title: Content Manager / SMM
+
+summary: >
+  Content manager from Saint Petersburg, 21 years old. Running themed channels on Telegram and VKontakte —
+  philosophy, politics, service monitoring. Good at sourcing material, editing with AI and growing an audience.
+  Had a TikTok presence — 33K followers, 633K likes.
+
+contacts:
+  - label: Telegram (preferred)
+    url: https://t.me/Xraz_official
+  - label: Personal channel
+    url: https://t.me/sonofbog
+  - label: VK
+    url: https://vk.com/fedor.abakumets
+  - label: Email
+    url: mailto:fedor.abakumets@yandex.ru
+
+achievements:
+  - TikTok @fedor.abakumets — 33K followers, 633K likes (account deleted)
+  - Telegram political archive (t.me/pbtc_russ) — mentioned in content with hundreds of thousands of views
+  - Telegram "Philosophical Library" (t.me/Philosophical_Library) — 335 subscribers
+  - VKontakte @fedor_invest_channel — 399 subscribers
+
+skills:
+  - group: Platforms
+    items: [Telegram, VKontakte, TikTok]
+
+  - group: Tools
+    items: [AI editing, Kiro, OpenAI Codex, Qwen, Excel, Word]
+
+  - group: Focus areas
+    items: [Content management, SMM, Content sourcing and curation, Channel and group management]
+
+  - group: Languages (spoken)
+    items: [Russian — Native, English — Basic]
+
+experience:
+  - company: Social media
+    role: Content Manager / SMM
+    period: 2020 — present
+    description:
+      - TikTok @fedor.abakumets — curated political content, sourced material from Telegram and other channels, published photos and videos — 33K followers, 633K likes (account deleted)
+      - Telegram "Philosophical Library" (t.me/Philosophical_Library) — sourced philosophy books online, edited posts with AI, published — 335 subscribers
+      - Telegram political archive (t.me/pbtc_russ) — 76 subscribers, mentioned in content with hundreds of thousands of views
+      - VKontakte @fedor_invest_channel — 399 subscribers, monitoring lotteries, faucets and like exchanges
+    stack: [Content, SMM, Telegram, VKontakte, TikTok, AI editing]
+
+education:
+  - institution: St. Petersburg College "Primorsky"
+    degree: Digital Information Processing Specialist
+    period: "2022 — 2025"
+
+  - institution: Secondary School, Saint Petersburg
+    degree: General Secondary Education (10 grades)
+    period: "2012 — 2022"
+
+languages:
+  - language: Russian
+    level: Native
+  - language: English
+    level: Basic

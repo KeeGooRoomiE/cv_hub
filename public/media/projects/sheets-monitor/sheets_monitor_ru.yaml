@@ -1,0 +1,72 @@
+title: "Sheets Monitor"
+role: "Разработчик (vibe coding)"
+year: "2024"
+tagline: "Мониторинг сайтов через Google Sheets. Без сервера. Бесплатно."
+
+platforms: [Web]
+stack: [HTML, CSS, JavaScript, Google Sheets API, Google Apps Script]
+
+links:
+  - label: Demo
+    url: https://fedorabakumets.github.io/sheets-monitor/
+  - label: GitHub
+    url: https://github.com/fedorabakumets/sheets-monitor
+
+blocks:
+
+  - type: image
+    src: /media/projects/sheets-monitor/cover.jpg
+    alt: "Sheets Monitor — интерфейс"
+    featured: true
+
+  - type: divider
+
+  - type: text
+    title: "Обзор"
+    body: |
+      Sheets Monitor — веб-приложение для мониторинга доступности сайтов.
+
+      Вся логика работает через Google Sheets и Google Apps Script.
+      Никакого сервера, никаких расходов — просто таблица и браузер.
+
+  - type: divider
+
+  - type: text
+    title: "Проблема"
+    body: |
+      Большинство инструментов мониторинга сайтов — платные или требуют сервер.
+
+      Для небольших проектов и личных нужд это избыточно.
+      Нужно что-то простое, бесплатное и без инфраструктуры.
+
+  - type: divider
+
+  - type: text
+    title: "Решение"
+    body: |
+      Google Sheets как база данных и бэкенд одновременно.
+
+      Google Apps Script делает запросы к сайтам по расписанию,
+      записывает статус в таблицу, отправляет уведомления при падении.
+
+      Фронтенд читает данные из таблицы и отображает статусы в реальном времени.
+
+  - type: divider
+
+  - type: text
+    title: "Что построено"
+    bullets:
+      - Мониторинг доступности сайтов по расписанию
+      - Хранение истории статусов в Google Sheets
+      - Уведомления при падении сайта
+      - Веб-интерфейс для просмотра статусов
+      - Полностью бесплатно — работает на бесплатном тарифе Google
+
+  - type: divider
+
+  - type: text
+    title: "Результат"
+    bullets:
+      - Работает без сервера и без затрат
+      - Деплой на GitHub Pages
+      - Open source

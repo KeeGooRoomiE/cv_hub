@@ -1,0 +1,76 @@
+title: "ScriptMaster (buxbot)"
+role: "Разработчик (vibe coding)"
+year: "2024"
+tagline: "Автоматизация буксов с GUI, Telegram-ботом и распознаванием капчи."
+
+platforms: [Windows]
+stack: [Python, PyQt5, Selenium, OpenCV, EasyOCR, Tesseract, pyTelegramBotAPI, Requests, Pillow]
+
+links:
+  - label: GitHub
+    url: https://github.com/fedorabakumets/buxbot
+
+blocks:
+
+  - type: image
+    src: /media/projects/buxbot/cover.jpg
+    alt: "ScriptMaster — GUI интерфейс"
+    featured: true
+
+  - type: divider
+
+  - type: text
+    title: "Обзор"
+    body: |
+      ScriptMaster — универсальная система автоматизации веб-задач.
+
+      GUI на PyQt5 для управления скриптами, встроенный Telegram-бот для удалённого контроля,
+      и мощная система распознавания капчи с 17 методами обработки.
+
+      Автоматизирует работу с буксами: SocPublic, SEO-Fast, ProfitCentr.
+
+  - type: divider
+
+  - type: text
+    title: "Возможности"
+    bullets:
+      - GUI на PyQt5 — запуск/остановка скриптов одним кликом, мониторинг логов в реальном времени
+      - Встроенный редактор кода с подсветкой синтаксиса
+      - Telegram-бот — удалённое управление, мониторинг балансов, уведомления
+      - 17 методов распознавания капчи — OpenCV + PIL алгоритмы, EasyOCR + Tesseract
+      - JSON-конфигурация для каждого скрипта
+      - Система таймеров и статусов процессов
+
+  - type: divider
+
+  - type: text
+    title: "Стек"
+    body: |
+      GUI: PyQt5
+
+      Автоматизация: Selenium, Requests
+
+      Распознавание капчи: OpenCV, PIL, EasyOCR, Tesseract
+
+      Telegram: pyTelegramBotAPI
+
+      Обработка изображений: Pillow
+
+  - type: divider
+
+  - type: text
+    title: "Автоматизированные скрипты"
+    bullets:
+      - socpublic.py — автоматизация SocPublic.com
+      - seo-fast.py — работа с SEO-Fast.ru
+      - profitcentr.py — автоматизация ProfitCentr
+      - Расширяемая архитектура — легко добавлять новые скрипты
+
+  - type: divider
+
+  - type: text
+    title: "Результат"
+    bullets:
+      - Полностью рабочая система автоматизации
+      - Open source
+      - Модульная архитектура для расширения
