@@ -39,7 +39,7 @@ blocks:
   - type: divider
 
   - type: image
-    title: "Main Screens"
+    title: "Main Pages"
     src: /media/projects/unitymt/main.png
     alt: "Main screens"
     
