@@ -2,9 +2,10 @@ name: Alexander Gusarov
 title: DevOps / Infrastructure Engineer
 
 summary: >
-  DevOps engineer with hands-on production experience: Kubernetes, 750+ Linux servers
-  via Ansible, IaC on AWS, and production monitoring from scratch. Dev background
-  (14 years) means I understand both sides of the pipeline.
+  DevOps engineer with 1 year of hands-on production experience in Kubernetes, 
+  Linux server management (750+ servers via Ansible), IaC on AWS, and observability 
+  from scratch. Scripting and debugging skills from prior dev work help diagnose 
+  incidents faster and communicate with dev teams without friction.
 
 contacts:
   - label: Email
@@ -21,13 +22,12 @@ contacts:
     url: https://career.habr.com/xandergusarov
 
 achievements:
-  - Automated infrastructure for 750+ Linux servers using Ansible and Kubernetes,
-    reducing manual operations by ~80%
-  - Reduced deployment time from 8 minutes to 2 minutes (−75%) through CI/CD pipeline optimization
-  - Reduced MTTR by 60% through centralized monitoring and alerting
-  - Reduced Docker image size from 500MB to 200MB improving build and deployment performance
-  - Replaced manual infrastructure health checks with automated service monitoring (Go + PostgreSQL)
-  - Responded to production incidents including SSH attacks with 1.5–2 minute SLA response
+  - Automated infrastructure management for 750+ Linux servers (Selectel VPS + bare metal) using Ansible playbooks and Kubernetes, reducing manual operations by ~80%
+  - Reduced deployment time from 8 to 2 minutes (−75%) by optimizing GitLab CI caching, build parallelization, and Docker layer structure
+  - Reduced MTTR by 60% through centralized monitoring stack (Prometheus, Grafana, AlertManager)
+  - Reduced Docker image size from 500MB to 200MB by switching to Alpine base, multi-stage builds, and removing debug tools from production images
+  - Replaced manual service health checks with automated SaaS monitoring service (Go + PostgreSQL + React) supporting configurable check intervals (10s–24h)
+  - Responded to production incidents including SSH brute-force attacks with 1.5–2 minute SLA via KVM live access and automated blocking
 
 skills:
   - group: Orchestration
@@ -97,21 +97,14 @@ experience:
     role: DevOps Engineer
     period: Dec 2024 — Jan 2026
     description:
-      - Monitored and maintained 750+ Linux servers (Selectel VPS and bare metal)
-        — network interfaces, ports, access management, and incident response
-      - Managed Kubernetes clusters on Yandex Cloud and self-hosted
-        (GitLab, Matrix, Keycloak, Vault); wrote and maintained Helm charts
-      - Built Terraform infrastructure for ~20 AWS services ($550 → $300/month);
-        wrote custom modules, provisioned ClickHouse; Ansible for per-instance configuration
-      - Optimized CI/CD across multiple repos (GitHub Actions + GitLab CI);
-        unified pipeline structure reduced deploy time from 8 to 2 minutes
-      - Built observability stack from scratch — VictoriaMetrics probes, Prometheus alerting,
-        custom Grafana dashboards; AlertManager integrated with Telegram and Matrix
-      - Developed and deployed SaaS monitoring service (Go + Gin/GORM + React)
-        — ping, domain, SSL checks with configurable intervals (10s–24h)
-      - Responded to SSH brute-force attacks via KVM live access,
-        port blocking, user rotation, and timeout configuration
-      - Grew infrastructure team from 3 to 6 engineers; mentored 3 junior members
+      - Monitored and maintained 750+ Linux servers (Selectel VPS and bare metal) — network interfaces, port configuration, SSH access management, and incident response
+      - Deployed and maintained Kubernetes clusters on Yandex Cloud and self-hosted infrastructure (GitLab, Matrix, Keycloak, Vault); wrote Helm charts for internal services and adapted community charts for production use
+      - Built Terraform infrastructure for ~20 AWS services, reducing monthly costs from $550 to $300; wrote custom modules for repeatable deployments, provisioned ClickHouse clusters; used Ansible for per-instance configuration and secrets management
+      - Optimized CI/CD pipelines across multiple repos (GitHub Actions + GitLab CI); unified pipeline structure, added caching and build parallelization, reduced deploy time from 8 to 2 minutes
+      - Built observability stack from scratch using VictoriaMetrics for metrics storage, Prometheus for scraping and alerting, custom Grafana dashboards for service health visualization; integrated AlertManager with Telegram and Matrix for incident notifications
+      - Developed and deployed SaaS monitoring service (Go + Gin/GORM + React) with ping, domain, and SSL checks; configurable intervals from 10 seconds to 24 hours
+      - Responded to production incidents including SSH brute-force attacks via KVM live access; blocked malicious IPs, rotated compromised credentials, configured fail2ban and SSH timeouts
+      - Grew infrastructure team from 3 to 6 engineers; mentored 3 junior members on Kubernetes basics, GitLab CI best practices, and incident response procedures
     stack:
       - Kubernetes
       - Helm
@@ -132,10 +125,10 @@ experience:
     role: Fullstack Engineer
     period: Jul 2022 — Oct 2023
     description:
-      - Developed backend services with .NET Core + EF Core;
+      - Developed backend services with .NET Core + EF Core; 
         built REST APIs for internal government and enterprise systems
       - Introduced Git workflow, GitLab CI pipelines and Docker for dev environments
-      - Improved team productivity by ~25%
+      - Improved team productivity by ~25% through code reviews, CI automation, and knowledge sharing
     stack:
       - C#
       - .NET Core
@@ -149,10 +142,10 @@ experience:
     role: Software Engineer / Co-Founder
     period: Feb 2017 — Oct 2019
     description:
-      - Built multiplayer backend for Bhop Jump (on-prem master server +
-        Google Cloud); P2P + dedicated servers up to 16 players
-      - Delivered 10+ production projects including games and business software
-      - Deployed services using Docker; used macOS VMs for iOS build pipelines
+      - Built multiplayer backend for Bhop Jump (on-prem master server + Google Cloud); 
+        P2P + dedicated servers supporting up to 16 players
+      - Delivered 10+ production projects including mobile games, web apps, and business software
+      - Deployed services using Docker; set up macOS VMs for iOS build pipelines
     stack:
       - Node.js
       - WebSockets
