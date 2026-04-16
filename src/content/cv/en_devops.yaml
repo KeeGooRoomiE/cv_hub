@@ -1,11 +1,7 @@
 name: Alexander Gusarov
 title: DevOps / Infrastructure Engineer
 
-summary: >
-  DevOps engineer with 1 year of hands-on production experience in Kubernetes, 
-  Linux server management (750+ servers via Ansible), IaC on AWS, and observability 
-  from scratch. Scripting and debugging skills from prior dev work help diagnose 
-  incidents faster and communicate with dev teams without friction.
+summary: "DevOps engineer with 1 year of hands-on production experience in Kubernetes, Linux server management (750+ servers via Ansible), IaC on AWS, and observability from scratch. Scripting and debugging skills from prior dev work help diagnose incidents faster and communicate with dev teams without friction."
 
 contacts:
   - label: Email
