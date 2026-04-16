@@ -61,8 +61,12 @@ jobs:
 
     steps:
       - name: Notify Telegram
-        if: ${{ secrets.PIPLINE_BOT_SECRET != '' && secrets.CHAT_ID != '' }}
         run: |
+          if [ -z "${{ secrets.PIPLINE_BOT_SECRET }}" ] || [ -z "${{ secrets.CHAT_ID }}" ]; then
+            echo "No telegram secrets, skipping notification"
+            exit 0
+          fi
+
           STATUS="${{ needs.deploy.result }}"
 
           if [ "$STATUS" = "success" ]; then
