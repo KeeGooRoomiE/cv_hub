@@ -54,3 +54,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  notify_telegram:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    # Skip entire job if secrets are missing or empty
+    if: ${{ secrets.PIPLINE_BOT_SECRET != '' && secrets.CHAT_ID != '' }}
+
+    steps:
+      - name: Notify Telegram (success)
+        if: success()
+        run: curl -s -X POST "https://api.telegram.org/bot${{ secrets.PIPLINE_BOT_SECRET }}/sendMessage" -d chat_id="${{ secrets.CHAT_ID }}" -d text="@${{ github.actor }}%0A✅ Deployment succeeded!%0AVisit the site:%0Ahttps://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+
+      - name: Notify Telegram (failure)
+        if: failure()
+        run: curl -s -X POST "https://api.telegram.org/bot${{ secrets.PIPLINE_BOT_SECRET }}/sendMessage" -d chat_id="${{ secrets.CHAT_ID }}" -d text="@${{ github.actor }}%0A❌ Deployment failed!"
