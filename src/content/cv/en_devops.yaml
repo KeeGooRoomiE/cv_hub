@@ -96,15 +96,15 @@ experience:
   - company: InfoScale
     role: DevOps Engineer
     period: Dec 2024 — Jan 2026
-    description: >
-      Monitored and maintained 750+ Linux servers (Selectel VPS and bare metal) — network interfaces, port configuration, SSH access management, and incident response
-      Deployed and maintained Kubernetes clusters on Yandex Cloud and self-hosted infrastructure (GitLab, Matrix, Keycloak, Vault); wrote Helm charts for internal services and adapted community charts for production use
-      Built Terraform infrastructure for ~20 AWS services, reducing monthly costs from $550 to $300; wrote custom modules for repeatable deployments, provisioned ClickHouse clusters; used Ansible for per-instance configuration and secrets management
-      Optimized CI/CD pipelines across multiple repos (GitHub Actions + GitLab CI); unified pipeline structure, added caching and build parallelization, reduced deploy time from 8 to 2 minutes
-      Built observability stack from scratch using VictoriaMetrics for metrics storage, Prometheus for scraping and alerting, custom Grafana dashboards for service health visualization; integrated AlertManager with Telegram and Matrix for incident notifications
-      Developed and deployed SaaS monitoring service (Go + Gin/GORM + React) with ping, domain, and SSL checks; configurable intervals from 10 seconds to 24 hours
-      Responded to production incidents including SSH brute-force attacks via KVM live access; blocked malicious IPs, rotated compromised credentials, configured fail2ban and SSH timeouts
-      Grew infrastructure team from 3 to 6 engineers; mentored 3 junior members on Kubernetes basics, GitLab CI best practices, and incident response procedures
+    description:
+      - Monitored and maintained 750+ Linux servers (Selectel VPS and bare metal) — network interfaces, port configuration, SSH access management, and incident response
+      - Deployed and maintained Kubernetes clusters on Yandex Cloud and self-hosted infrastructure (GitLab, Matrix, Keycloak, Vault); wrote Helm charts for internal services and adapted community charts for production use
+      - Built Terraform infrastructure for ~20 AWS services, reducing monthly costs from $550 to $300; wrote custom modules for repeatable deployments, provisioned ClickHouse clusters; used Ansible for per-instance configuration and secrets management
+      - Optimized CI/CD pipelines across multiple repos (GitHub Actions + GitLab CI); unified pipeline structure, added caching and build parallelization, reduced deploy time from 8 to 2 minutes
+      - Built observability stack from scratch using VictoriaMetrics for metrics storage, Prometheus for scraping and alerting, custom Grafana dashboards for service health visualization; integrated AlertManager with Telegram and Matrix for incident notifications
+      - Developed and deployed SaaS monitoring service (Go + Gin/GORM + React) with ping, domain, and SSL checks; configurable intervals from 10 seconds to 24 hours
+      - Responded to production incidents including SSH brute-force attacks via KVM live access; blocked malicious IPs, rotated compromised credentials, configured fail2ban and SSH timeouts
+      - Grew infrastructure team from 3 to 6 engineers; mentored 3 junior members on Kubernetes basics, GitLab CI best practices, and incident response procedures
     stack:
       - Kubernetes
       - Helm
@@ -124,11 +124,10 @@ experience:
   - company: AZNResearch
     role: Fullstack Engineer
     period: Jul 2022 — Oct 2023
-    description: >
-      Developed backend services with .NET Core + EF Core; 
-      built REST APIs for internal government and enterprise systems
-      Introduced Git workflow, GitLab CI pipelines and Docker for dev environments
-      Improved team productivity by ~25% through code reviews, CI automation, and knowledge sharing
+    description:
+      - Developed backend services with .NET Core + EF Core; built REST APIs for internal government and enterprise systems
+      - Introduced Git workflow, GitLab CI pipelines and Docker for dev environments
+      - Improved team productivity by ~25% through code reviews, CI automation, and knowledge sharing
     stack:
       - C#
       - .NET Core
@@ -141,11 +140,10 @@ experience:
   - company: Project Tech
     role: Software Engineer / Co-Founder
     period: Feb 2017 — Oct 2019
-    description: >
-      Built multiplayer backend for Bhop Jump (on-prem master server + Google Cloud); 
-      P2P + dedicated servers supporting up to 16 players
-      Delivered 10+ production projects including mobile games, web apps, and business software
-      Deployed services using Docker; set up macOS VMs for iOS build pipelines
+    description:
+      - Built multiplayer backend for Bhop Jump (on-prem master server + Google Cloud); P2P + dedicated servers supporting up to 16 players
+      - Delivered 10+ production projects including mobile games, web apps, and business software
+      - Deployed services using Docker; set up macOS VMs for iOS build pipelines
     stack:
       - Node.js
       - WebSockets
