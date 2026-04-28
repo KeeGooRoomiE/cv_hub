@@ -39,9 +39,21 @@ src/content/
   i18n/
     translations.yaml    ← UI strings for all languages
   showcase/
-    projects.yaml        ← showcase projects
+    projects_en.yaml     ← showcase projects (English)
+    projects_ru.yaml     ← showcase projects (Russian)
   changelog/
     changelog.yaml       ← version history
+
+src/components/
+  Layout.astro           ← главный лейаут, подключение фона
+  AnimatedBackground.astro  ← CSS-only орбы
+  GalaxyBackground.astro    ← canvas галактика с parallax
+  PlayStationWaves.astro    ← canvas XMB заливочные волны
+  WaveLines.astro           ← canvas XMB световые линии
+  blocks/
+    TextBlock.astro
+    ImageBlock.astro
+    DividerBlock.astro
 
 public/
   media/
@@ -49,6 +61,15 @@ public/
       {slug}/            ← project assets
         cover.png
         {slug_}_{lang}.yaml  ← case study content (optional)
+  themes/
+    frosted.css / light.css / nordic.css / peachy.css
+
+docs/
+  ENGINEERING.md         ← архитектурные решения и философия
+  INFO.md                ← этот файл, справочник по данным
+  BKG_INFO.md            ← справочник по фоновым компонентам
+  LLM-CONTEXT.md         ← контекст для AI-инструментов
+  examples/              ← примеры YAML для CV, showcase, case study
 ```
 
 После выполнения `npm run cv:build` в `public/cv/` появляются смёрженные артефакты.
@@ -367,9 +388,13 @@ ProjectPage.astro renders case study
 
 Props:
 - `title`, `lang`, `section`, `profile`
+- `description` — мета-описание страницы (опционально, есть дефолт из translations)
+- `ogImage` — URL OG-картинки (опционально, есть дефолт `/og-image.png`)
 - `customLangLinks` — переопределяет автоматические ссылки language switcher
 
 **Showcase и case study страницы обязаны передавать `customLangLinks`**, иначе переключатель языка ведёт на CV-роуты.
+
+Содержит dropdown-меню ролей (если профилей > 1). Dropdown работает через JS click-toggle с click-outside и Escape для закрытия.
 
 ### ProjectPage.astro
 
@@ -377,11 +402,23 @@ Props: `data`, `showcaseHref`, `langLinks`, `lang`
 
 ### ProjectCard.astro
 
-Два режима: обычная карточка и сворачиваемая архивная.
+Два режима: обычная карточка и сворачиваемая архивная (`archived: true` в YAML).  
+Prop `hasCasePage` — добавляет ссылку на case study если страница существует.
 
 ### Блоки (`blocks/`)
 
 `TextBlock.astro`, `ImageBlock.astro`, `DividerBlock.astro` — используются в `ProjectPage`.
+
+### Фоновые компоненты
+
+Взаимозаменяемы — подключается один в `Layout.astro`. Подробный справочник по всем параметрам — `docs/BKG_INFO.md`.
+
+| Компонент | Описание |
+|---|---|
+| `AnimatedBackground` | CSS-only, без JS, 4 blur-орба, theme-aware |
+| `GalaxyBackground` | Canvas, спиральная галактика с mouse parallax |
+| `PlayStationWaves` | Canvas, XMB-стиль, заливочные синусоидальные волны |
+| `WaveLines` | Canvas, XMB-стиль, световые линии с glow |
 
 ---
 
