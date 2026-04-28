@@ -1,6 +1,33 @@
 # actual types of elements: fixed, added, changed, removed
 
 changelog:
+  - version: "1.5.3"
+    date: "2026-04-26"
+    changes:
+      - type: added
+        text: "PlayStationWaves component — XMB-inspired filled sine-wave canvas background with configurable props, time-of-day hue shift and non-deterministic start position"
+      - type: added
+        text: "WaveLines component — XMB-style glowing stroke wave lines canvas background with symmetric line layout and offscreen glow compositing"
+      - type: added
+        text: "GitHub Actions Telegram notification — deploy.yml notifies a Telegram bot on deploy success or failure via PIPLINE_BOT_SECRET and CHAT_ID secrets; gracefully skips if secrets are not configured"
+      - type: changed
+        text: "Telegram notification now covers build failures — notify_telegram uses needs: [build, deploy] with if: always() so a failed build job also triggers a notification"
+      - type: changed
+        text: "Telegram notification message extended with branch name and short commit SHA"
+      - type: changed
+        text: "CI: Playwright Chromium now cached by package-lock.json hash — saves ~2 min per deploy on cache hit"
+      - type: added
+        text: "LICENSE — MIT license added to repository"
+      - type: added
+        text: "ARCHITECTURE.md — root-level architecture overview: stack, data pipeline, routing, theming, background components, CI/CD, trade-offs"
+      - type: added
+        text: "CHANGELOG.md — root-level changelog in Keep a Changelog format covering full version history"
+      - type: fixed
+        text: "WaveLines glow compositing bug — destination-in mask was applied to full canvas each iteration, destroying background alpha at edges; fixed via per-line offscreen canvas"
+      - type: fixed
+        text: "Sticky header now works unconditionally — body height: 100% constrained scroll to html element; changed to min-height: 100%"
+      - type: fixed
+        text: "Role dropdown — replaced CSS :hover toggle with JS click-toggle and click-outside to close; menu no longer closes on accidental cursor exit; added smooth opacity/transform transition"
   - version: "1.5.2"
     date: "2026-04-05"
     changes:

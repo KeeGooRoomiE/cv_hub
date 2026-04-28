@@ -72,7 +72,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html { height: 100%; }
+body { min-height: 100%; }
 
 body {
   margin: 0;
@@ -276,7 +277,9 @@ a:hover { text-decoration: underline; }
 } */
 
 .dropdown__menu {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
@@ -289,13 +292,22 @@ a:hover { text-decoration: underline; }
   z-index: 100;
   box-shadow: var(--shadow-soft);
   margin: 0;
+  /* Скрыто по умолчанию — visibility сохраняет размер для transition,
+     pointer-events блокирует клики пока закрыто */
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity var(--t), visibility var(--t), transform var(--t);
 }
 
-.dropdown:hover .dropdown__menu,
+/* Открыто по клику (JS) или по фокусу (клавиатура) */
+.dropdown.is-open .dropdown__menu,
 .dropdown:focus-within .dropdown__menu {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .dropdown__menu li {

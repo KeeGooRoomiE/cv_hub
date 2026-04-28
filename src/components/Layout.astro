@@ -162,6 +162,37 @@ const authorGitHubPage = 'https://github.com/KeeGooRoomiE/';
       <slot />
     </main>
 
+    <script>
+      // Dropdown: click-toggle + click-outside to close.
+      // Pure CSS :hover закрывает меню при малейшем выходе курсора за контейнер.
+      document.querySelectorAll<HTMLElement>('.dropdown').forEach(dropdown => {
+        const trigger = dropdown.querySelector<HTMLElement>('.dropdown__trigger');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', e => {
+          e.stopPropagation();
+          const isOpen = dropdown.classList.contains('is-open');
+          // Закрываем все остальные дропдауны
+          document.querySelectorAll('.dropdown.is-open').forEach(d => d.classList.remove('is-open'));
+          if (!isOpen) dropdown.classList.add('is-open');
+        });
+      });
+
+      // Клик вне любого дропдауна — закрываем все
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.dropdown.is-open').forEach(d => d.classList.remove('is-open'));
+      });
+
+      // Escape — закрываем все и возвращаем фокус на триггер
+      document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll<HTMLElement>('.dropdown.is-open').forEach(dropdown => {
+          dropdown.classList.remove('is-open');
+          dropdown.querySelector<HTMLElement>('.dropdown__trigger')?.focus();
+        });
+      });
+    </script>
+
     <footer class="footer">
       <div class="container footer__inner">
         <span><a href={authorGitHubPage} target="_blank" rel="noopener" class="footer__link">

@@ -32,6 +32,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
@@ -56,7 +62,8 @@ jobs:
         uses: actions/deploy-pages@v4
 
   notify_telegram:
-    needs: deploy
+    needs: [build, deploy]
+    if: always()
     runs-on: ubuntu-latest
 
     steps:
@@ -67,12 +74,17 @@ jobs:
             exit 0
           fi
 
-          STATUS="${{ needs.deploy.result }}"
+          BUILD_STATUS="${{ needs.build.result }}"
+          DEPLOY_STATUS="${{ needs.deploy.result }}"
+          SHA="${{ github.sha }}"
+          SHORT_SHA="${SHA:0:7}"
 
-          if [ "$STATUS" = "success" ]; then
-            TEXT="@${{ github.actor }}%0A✅ Deployment succeeded!%0AVisit the site:%0Ahttps://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          if [ "$BUILD_STATUS" = "success" ] && [ "$DEPLOY_STATUS" = "success" ]; then
+            TEXT="@${{ github.actor }}%0A✅ Deployed successfully!%0ABranch: ${{ github.ref_name }}%0ACommit: ${SHORT_SHA}%0A🌐 https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          elif [ "$BUILD_STATUS" != "success" ]; then
+            TEXT="@${{ github.actor }}%0A❌ Build failed!%0ABranch: ${{ github.ref_name }}%0ACommit: ${SHORT_SHA}"
           else
-            TEXT="@${{ github.actor }}%0A❌ Deployment failed!"
+            TEXT="@${{ github.actor }}%0A❌ Deploy failed!%0ABranch: ${{ github.ref_name }}%0ACommit: ${SHORT_SHA}"
           fi
 
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.PIPLINE_BOT_SECRET }}/sendMessage" \
