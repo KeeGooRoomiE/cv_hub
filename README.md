@@ -199,6 +199,21 @@ Preview any theme live via URL:
 https://YOUR_ACCOUNT.github.io/cv_hub/?theme=peachy
 ```
 
+### Backgrounds
+
+4 interchangeable backgrounds — swap in one line in `Layout.astro`:
+
+![WaveLines background](docs/repo-assets/bkg-samples/wavelines_example.png)
+
+| Component | Type | Description |
+|---|---|---|
+| `AnimatedBackground` | CSS-only | Glowing blur orbs, theme-aware, zero JS |
+| `GalaxyBackground` | Canvas | Spiral galaxy with mouse parallax |
+| `PlayStationWaves` | Canvas | XMB-style filled sine waves, time-of-day hue |
+| `WaveLines` | Canvas | XMB-style glowing stroke lines |
+
+Full props reference → [`docs/BKG_INFO.md`](docs/BKG_INFO.md)
+
 ---
 
 ## How to deploy
@@ -277,6 +292,9 @@ src/
     ProjectPage.astro      # case study page template
     blocks/                # TextBlock, ImageBlock, DividerBlock
     AnimatedBackground.astro
+    GalaxyBackground.astro
+    PlayStationWaves.astro
+    WaveLines.astro
   scripts/
     merge.mjs
     t.ts
@@ -328,7 +346,7 @@ docs/
 | [INFO.md](docs/INFO.md) | YAML field reference, routing, i18n, profiles, case studies |
 | [ENGINEERING.md](docs/ENGINEERING.md) | Architecture decisions, system design, trade-offs |
 | [`LLM-CONTEXT.md`](docs/LLM-CONTEXT.md) | Full project context for AI tools (Claude, ChatGPT, Cursor) |
-| [BKG_INFO.md](docs/BKG_INFO.md) | AnimatedBackground component docs |
+| [BKG_INFO.md](docs/BKG_INFO.md) | All background components — props, tuning, previews |
 
 ---
 

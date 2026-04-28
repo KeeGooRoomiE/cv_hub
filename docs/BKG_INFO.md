@@ -24,6 +24,8 @@ import AnimatedBackground from './AnimatedBackground.astro';
 
 ## AnimatedBackground
 
+![AnimatedBackground preview](repo-assets/bkg-samples/ab_example.png)
+
 **Тип:** CSS-only, без JS, без canvas  
 **Файл:** `src/components/AnimatedBackground.astro`  
 **Props:** нет — всё настраивается напрямую в `<style>` компонента
@@ -56,6 +58,8 @@ import AnimatedBackground from './AnimatedBackground.astro';
 ---
 
 ## GalaxyBackground
+
+![GalaxyBackground preview](repo-assets/bkg-samples/gb_example.png)
 
 **Тип:** Canvas + `requestAnimationFrame` + mouse parallax  
 **Файл:** `src/components/GalaxyBackground.astro`  
@@ -101,6 +105,8 @@ import AnimatedBackground from './AnimatedBackground.astro';
 ---
 
 ## PlayStationWaves
+
+![PlayStationWaves preview](repo-assets/bkg-samples/pswaves_example.png)
 
 **Тип:** Canvas + `requestAnimationFrame`  
 **Файл:** `src/components/PlayStationWaves.astro`  
@@ -167,6 +173,8 @@ import AnimatedBackground from './AnimatedBackground.astro';
 ---
 
 ## WaveLines
+
+![WaveLines preview](repo-assets/bkg-samples/wavelines_example.png)
 
 **Тип:** Canvas + `requestAnimationFrame` + offscreen compositing  
 **Файл:** `src/components/WaveLines.astro`  
