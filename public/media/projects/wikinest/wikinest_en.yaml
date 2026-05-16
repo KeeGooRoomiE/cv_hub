@@ -39,10 +39,10 @@ blocks:
 
       The established options each come with significant baggage:
 
-      - **Confluence** — per-user SaaS pricing that punishes growth, opaque versioning, vendor lock-in
-      - **Wiki.js** — requires Node.js server, PostgreSQL or MongoDB, ongoing infrastructure maintenance
-      - **Docusaurus / MkDocs** — need a Node.js or Python build pipeline, local environment setup, CI for deployment
-      - **Notion** — closed platform, no real version history, export is a one-way door
+      - Confluence — per-user SaaS pricing that punishes growth, opaque versioning, vendor lock-in
+      - Wiki.js — requires Node.js server, PostgreSQL or MongoDB, ongoing infrastructure maintenance
+      - Docusaurus / MkDocs — need a Node.js or Python build pipeline, local environment setup, CI for deployment
+      - Notion — closed platform, no real version history, export is a one-way door
 
       For a team of 2–8 engineers who just want to write docs and track decisions, none of these is proportionate to the actual need.
 
