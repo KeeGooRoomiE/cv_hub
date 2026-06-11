@@ -78,17 +78,25 @@ body { min-height: 100%; }
 body {
   margin: 0;
   color: var(--text);
-  background:
-    radial-gradient(1200px 700px at 12% -12%, var(--bg-glow-1), transparent 60%),
-    radial-gradient(980px 520px at 92% 0%,    var(--bg-glow-2), transparent 55%),
-    radial-gradient(800px 520px at 50% 120%,  rgba(255,255,255,0.04), transparent 55%),
-    var(--bg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+  background: var(--bg);
   font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Глоу-градиенты фона. Отдельный fixed-слой вместо background-attachment: fixed —
+   fixed attachment отключает быстрый путь скролла и заставляет браузер
+   перерисовывать градиенты на каждом кадре скролла. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 700px at 12% -12%, var(--bg-glow-1), transparent 60%),
+    radial-gradient(980px 520px at 92% 0%,    var(--bg-glow-2), transparent 55%),
+    radial-gradient(800px 520px at 50% 120%,  rgba(255,255,255,0.04), transparent 55%);
 }
 
 body::before {
@@ -111,7 +119,9 @@ body::before {
       transparent 2px,
       transparent 6px
     );
-  mix-blend-mode: overlay;
+  /* mix-blend-mode: overlay убран — blend mode заставлял компоновать
+     полноэкранный offscreen-слой на каждом кадре. При opacity 0.06
+     визуальная разница незаметна, а стоимость — целый compositing pass. */
 }
 
 a { color: inherit; text-decoration: none; }
