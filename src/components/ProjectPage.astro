@@ -93,6 +93,17 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
   })}
 
 </div>
+
+<!-- Image lightbox -->
+<div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-modal="true">
+  <button class="lightbox__close" type="button" aria-label="Close">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  <img class="lightbox__img" src="" alt="" />
+</div>
 </Layout>
 
 <script>
@@ -101,13 +112,13 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
     if (!btn) return;
 
     const url = window.location.href;
-    
+
     try {
       await navigator.clipboard.writeText(url);
-      
+
       // Показываем галочку
       btn.classList.add('share-btn--copied');
-      
+
       // Возвращаем иконку ссылки через 3 секунды
       setTimeout(() => {
         btn.classList.remove('share-btn--copied');
@@ -116,6 +127,41 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
       console.error('Failed to copy:', err);
     }
   });
+</script>
+
+<script>
+  // Click-to-zoom lightbox for case-study images
+  const lightbox = document.querySelector('[data-lightbox]') as HTMLElement | null;
+  if (lightbox) {
+    const lbImg = lightbox.querySelector('.lightbox__img') as HTMLImageElement;
+
+    const open = (src: string, alt: string) => {
+      lbImg.src = src;
+      lbImg.alt = alt;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const close = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lbImg.removeAttribute('src');
+    };
+
+    document.querySelectorAll('.project-page .image-block__img').forEach((node) => {
+      const img = node as HTMLImageElement;
+      img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt));
+    });
+
+    // Click anywhere in the lightbox (backdrop, image or close button) closes it
+    lightbox.addEventListener('click', () => close());
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) close();
+    });
+  }
 </script>
 
 <style>
@@ -193,5 +239,59 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
   .share-btn--copied .share-btn__icon--check {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 48px);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    cursor: zoom-out;
+    animation: lightbox-in 0.18s ease;
+  }
+
+  .lightbox.is-open {
+    display: flex;
+  }
+
+  .lightbox__img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow);
+    cursor: zoom-out;
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    cursor: pointer;
+    transition: background var(--t), border-color var(--t);
+  }
+
+  .lightbox__close:hover {
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @keyframes lightbox-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 </style>

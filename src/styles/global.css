@@ -135,6 +135,11 @@ a:hover { text-decoration: underline; }
   z-index: 1;
 }
 
+/* Case-study images are click-to-zoom (lightbox) */
+.project-page .image-block__img {
+  cursor: zoom-in;
+}
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    404 PAGE
@@ -415,13 +420,6 @@ a:hover { text-decoration: underline; }
   border-radius: var(--r-lg);
   padding: 16px;
   box-shadow: var(--shadow-soft);
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
-}
-
-.card:hover {
-  border-color: rgba(var(--accent-rgb) / 0.22);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
 }
 
 .card__meta {
@@ -604,12 +602,11 @@ a:hover { text-decoration: underline; }
 }
 
 .tag {
-  border: 1px solid var(--border);
   border-radius: var(--r-pill);
-  padding: 5px 10px;
+  padding: 4px 9px;
   font-size: 12px;
-  color: var(--text-strong);
-  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .links {
