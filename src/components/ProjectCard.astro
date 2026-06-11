@@ -4,7 +4,7 @@
 // CV Hub
 // Updated to support extended showcase schema
 //
-const { project, t: tProp = {} } = Astro.props;
+const { project, t: tProp = {}, eager = false } = Astro.props;
 
 const t = {
   platforms: tProp.platforms ?? 'Platforms',
@@ -107,7 +107,8 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
               class="media__el"
               src={withBase(featuredMedia.src)}
               alt={featuredMedia.alt ?? ''}
-              loading="lazy"
+              loading={eager ? 'eager' : 'lazy'}
+              fetchpriority={eager ? 'high' : undefined}
               onerror="this.closest('.media')?.remove();"
             />
           )}
@@ -262,7 +263,8 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
             class="media__el"
             src={withBase(featuredMedia.src)}
             alt={featuredMedia.alt ?? ''}
-            loading="lazy"
+            loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : undefined}
             onerror="this.closest('.media')?.remove();"
           />
         )}

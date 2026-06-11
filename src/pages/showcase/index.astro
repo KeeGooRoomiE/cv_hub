@@ -56,6 +56,15 @@ projects = [...projects].sort((a, b) => {
 
 const projectSlugsWithPages = new Set(getSlugsWithYaml(langIds));
 
+// LCP optimization: the first card whose cover is an actual image/gif should
+// load eagerly with high priority. Cards without media (e.g. cv-hub) are skipped.
+const hasImageCover = (p: any) => {
+  const m = Array.isArray(p?.media) ? p.media : [];
+  const fm = m.find((x: any) => x?.featured) ?? m[0];
+  return fm && (fm.type === 'image' || fm.type === 'gif');
+};
+const eagerIdx = projects.findIndex(hasImageCover);
+
 const showcaseLangLinks = allLangs.map(l => ({
   id:     l.id,
   label:  l.label,
@@ -77,9 +86,10 @@ const showcaseLangLinks = allLangs.map(l => ({
     {projects.length > 0 && (
       <div class="showcase__section">
         <div class="grid">
-          {projects.map((p: any) => (
+          {projects.map((p: any, i: number) => (
             <ProjectCard
               project={p}
+              eager={i === eagerIdx}
               t={{
                 platforms: t('showcase.platforms'),
                 stack:     t('showcase.stack'),
