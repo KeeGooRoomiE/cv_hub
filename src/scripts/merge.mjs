@@ -28,6 +28,12 @@ function readYaml(path) {
   return parse(readFileSync(path, 'utf8'));
 }
 
+// NOTE (intentional): a profile spec REPLACES the experience set, it does not
+// append to it. The result is exactly the spec's entries — each shallow-merged
+// over the base entry whose `company` matches (so a spec entry can carry just
+// `{ company }` to inherit base fields). Base experiences not listed in the spec
+// are dropped, and matching is by exact `company` string. This lets each profile
+// curate its own ordered list of relevant jobs.
 function mergeExperience(base, spec) {
   if (!spec || spec.length === 0) return base;
 
@@ -69,6 +75,23 @@ if (!languagesRaw) {
 const profiles = profilesRaw?.profiles ?? [{ id: 'default', slug: '', spec: null }];
 const langIds     = languagesRaw.languages.map(l => l.id);
 const defaultLang = languagesRaw.default;
+
+// Invariant: routing and dropdown links key on profile.slug, while merged CV
+// filenames and download URLs (resume_{lang}_{spec}) key on profile.spec.
+// If they diverge, a profile page (/{slug}/) and its CV/downloads silently
+// desync. Enforce slug === spec (both empty/null for the default profile).
+for (const p of profiles) {
+  const slugNorm = p.slug || null;
+  const specNorm = p.spec ?? null;
+  if (slugNorm !== specNorm) {
+    console.error(
+      `❌ Profile "${p.id}": slug (${JSON.stringify(p.slug)}) and spec ` +
+      `(${JSON.stringify(p.spec)}) must match. Set spec === slug, or leave ` +
+      `both empty/null for the default profile.`
+    );
+    process.exit(1);
+  }
+}
 
 mkdirSync(outputDir, { recursive: true });
 

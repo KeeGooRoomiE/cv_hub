@@ -6,7 +6,7 @@
 //  Created by Alexander Gusarov on 03.03.2026.
 //  @spartan121
 //
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
 import { getEntry } from 'astro:content';
@@ -29,7 +29,16 @@ const t = makeT(translations?.data ?? {}, defaultLang);
 // --- CV data from merged artifact ---
 const cvFileName = defaultProfile.spec ? `${defaultLang}_${defaultProfile.spec}.yaml` : `${defaultLang}.yaml`;
 const cvPath = join(process.cwd(), 'public/cv', cvFileName);
-const data = parse(readFileSync(cvPath, 'utf8'));
+
+let data: any = {};
+if (existsSync(cvPath)) {
+  data = parse(readFileSync(cvPath, 'utf8'));
+} else {
+  const fallbackPath = join(process.cwd(), 'public/cv', `${defaultLang}.yaml`);
+  if (existsSync(fallbackPath)) {
+    data = parse(readFileSync(fallbackPath, 'utf8'));
+  }
+}
 
 // --- URLs ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');

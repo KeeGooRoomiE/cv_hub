@@ -171,10 +171,6 @@ const showcaseLangLinks = kind === 'list'
     }))
   : undefined;
 
-const featured = projects.filter((p: any) => p.featured && !p.archived && !p.archive);
-const regular  = projects.filter((p: any) => !p.featured && !p.archived && !p.archive);
-const archived = projects.filter((p: any) => p.archived || p.archive);
-
 // ── Project page ───────────────────────────────────────────────────────────
 
 const projectData = kind === 'project' ? loadProjectYaml(slug, lang, defaultLang) : null;
@@ -213,12 +209,11 @@ const langLinks = kind === 'project'
             project={p}
             eager={i === eagerIdx}
             t={{
-              platforms: t('showcase.platforms')[lang] ?? 'Platforms',
-              stack:     t('showcase.stack')[lang] ?? 'Stack',
-              tags:      t('showcase.tags')[lang] ?? 'Tags',
-              featured:  t('showcase.featured')[lang] ?? 'Featured',
+              platforms: t('showcase.platforms'),
+              stack:     t('showcase.stack'),
+              tags:      t('showcase.tags'),
+              featured:  t('showcase.featured'),
             }}
-            ...
           />
         ))}
       </div>
@@ -236,20 +231,4 @@ const langLinks = kind === 'project'
 <style>
   .showcase__header { margin-bottom: 24px; }
   .showcase__header h1 { margin: 0; }
-  .showcase__section { margin-bottom: 14px; }
-  .showcase__section--regular { margin-top: 40px; }
-  .showcase__section--archive {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .showcase__section-title {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin: 0 0 14px;
-  }
 </style>
