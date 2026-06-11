@@ -79,9 +79,14 @@ projects:
         type: repo
       - label: DeckThemes
         url: https://deckthemes.com/themes/view?themeId=0c5d6c86-ef3e-4af7-a041-34731a51fe7f
+    media:
+      - type: image
+        src: /media/projects/steam-deck-keyboard/cover.png
+        alt: "Steam Deck custom keyboard theme preview"
+        featured: true
 
   - slug: sand-balls
-    order: 3
+    order: 4
     name: Sand Balls
     role: Level & Systems Designer
     year: "2020"
@@ -110,7 +115,7 @@ projects:
         featured: true
 
   - slug: bhop-jump
-    order: 4
+    order: 5
     name: Bhop Jump
     role: Gameplay & Multiplayer Engineer
     year: "2017"
@@ -139,7 +144,7 @@ projects:
         featured: true
 
   - slug: s-s-platformer
-    order: 5
+    order: 6
     featured: true
     name: "S+S"
     role: Game Developer
@@ -167,7 +172,7 @@ projects:
         featured: true
 
   - slug: lana-and-ronen
-    order: 6
+    order: 7
     name: Lana & Ronen
     role: Gameplay Developer & Level Designer
     year: "2019"
@@ -193,7 +198,7 @@ projects:
         type: store
 
   - slug: wings-gms-online
-    order: 7
+    order: 8
     name: Wings GMS Online
     role: Gameplay & Multiplayer Systems Engineer
     year: "2022"
@@ -215,12 +220,12 @@ projects:
         type: repo
     media:
       - type: image
-        src: /media/projects/wings/cover.gif
+        src: /media/projects/wings-gms-online/cover.gif
         alt: "Wings gameplay screenshot"
         featured: true
 
   - slug: afc-capital
-    order: 8
+    order: 9
     name: "AFC Capital Partners"
     role: Frontend Developer
     year: "2023"
@@ -243,7 +248,7 @@ projects:
         type: article
 
   - slug: apple-watch-diceroll
-    order: 9
+    order: 10
     name: Apple Watch DiceRoll
     role: Swift / WatchOS Developer
     year: "2024"
@@ -262,9 +267,14 @@ projects:
       - label: Github
         url: https://github.com/KeeGooRoomiE/AppleWatch_DiceRoll
         type: repo
+    media:
+      - type: image
+        src: /media/projects/apple-watch-diceroll/cover.png
+        alt: "Apple Watch DiceRoll app screen"
+        featured: true
 
   - slug: africa-finance-corporation
-    order: 10
+    order: 11
     archived: true
     name: "Africa Finance Corporation"
     role: Frontend Developer
@@ -288,7 +298,7 @@ projects:
         type: article
 
   - slug: amaka-studio
-    order: 11
+    order: 12
     archived: true
     name: "Amaka Studio"
     role: Frontend Developer
@@ -309,7 +319,7 @@ projects:
         type: demo
 
   - slug: thelo-db
-    order: 12
+    order: 13
     archived: true
     name: "Thelo DB Engineering"
     role: Frontend Developer
@@ -330,7 +340,7 @@ projects:
         type: demo
 
   - slug: thelo-rs
-    order: 13
+    order: 14
     archived: true
     name: "Thelo Group"
     role: Frontend Developer
@@ -351,7 +361,7 @@ projects:
         type: demo
 
   - slug: timberman-mp
-    order: 14
+    order: 15
     archived: true
     name: Timberman Multiplayer
     role: Gameplay & Network Engineer
@@ -371,12 +381,12 @@ projects:
         type: repo
     media:
       - type: image
-        src: /media/projects/timberman/cover.gif
+        src: /media/projects/timberman-mp/cover.gif
         alt: "Timberman multiplayer gameplay"
         featured: true
 
   - slug: aniplanes
-    order: 15
+    order: 16
     archived: true
     name: AniPlanes
     role: Unity Game Developer
@@ -397,7 +407,7 @@ projects:
         featured: true
 
   - slug: gunfire
-    order: 16
+    order: 17
     archived: true
     name: GunFire
     role: Gameplay Engineer
@@ -423,7 +433,7 @@ projects:
         featured: true
 
   - slug: dodge-agent
-    order: 17
+    order: 18
     archived: true
     name: Dodge Agent
     role: Gameplay & Level Designer
@@ -443,7 +453,7 @@ projects:
         featured: true
 
   - slug: pop-them-all
-    order: 18
+    order: 19
     archived: true
     name: Pop Them All
     role: Gameplay & Level Designer
@@ -458,7 +468,7 @@ projects:
         type: store
 
   - slug: hole-run
-    order: 19
+    order: 20
     archived: true
     name: Hole Run
     role: Gameplay & Level Designer
@@ -473,7 +483,7 @@ projects:
         type: store
 
   - slug: personality-shift
-    order: 20
+    order: 21
     archived: true
     name: Personality Shift
     role: Gameplay & Level Designer
@@ -489,7 +499,7 @@ projects:
         featured: true
 
   - slug: flower-king
-    order: 21
+    order: 22
     archived: true
     name: "Flower King: Collect and Grow"
     role: Level Designer
@@ -516,7 +526,7 @@ projects:
         featured: true
 
   - slug: park-them-all
-    order: 22
+    order: 23
     archived: true
     name: Park Them All
     role: Gameplay & Level Designer
@@ -532,7 +542,7 @@ projects:
         featured: true
 
   - slug: candy-merge
-    order: 23
+    order: 24
     archived: true
     name: Candy Merge
     role: Gameplay & Level Designer
@@ -552,7 +562,7 @@ projects:
         featured: true
 
   - slug: break-stack-tower
-    order: 24
+    order: 25
     archived: true
     name: "Break Stack Tower"
     role: Gameplay & Level Designer
@@ -570,7 +580,7 @@ projects:
         type: store
 
   - slug: wonder-blast-alice-friends
-    order: 25
+    order: 26
     archived: true
     name: "Wonder Blast – Alice & Friends"
     role: Level Designer
@@ -591,12 +601,12 @@ projects:
         type: store
     media:
       - type: image
-        src: /media/projects/wonder-blast/cover.png
+        src: /media/projects/wonder-blast-alice-friends/cover.png
         alt: "Wonder Blast gameplay"
         featured: true
 
   - slug: solitaire-resort
-    order: 26
+    order: 27
     archived: true
     name: "Solitaire Resort"
     role: Level Designer & Game Balance Designer
@@ -616,7 +626,7 @@ projects:
         featured: true
 
   - slug: cookie-crush
-    order: 27
+    order: 28
     archived: true
     name: "Cookie Crush"
     role: Level Designer
@@ -635,7 +645,7 @@ projects:
         type: store
 
   - slug: helens-quiz
-    order: 28
+    order: 29
     archived: true
     name: Helens Quiz
     role: Gameplay & UI Designer
@@ -661,7 +671,7 @@ projects:
         featured: true
 
   - slug: westland
-    order: 29
+    order: 30
     archived: true
     name: Westland
     role: Gameplay Developer
@@ -683,7 +693,7 @@ projects:
         featured: true
 
   - slug: kalina-malina-delivery
-    order: 30
+    order: 31
     archived: true
     name: "Калина‑Малина: доставка еды"
     role: Mobile App Developer
@@ -705,7 +715,7 @@ projects:
         type: store
 
   - slug: transport-railroad-crossing
-    order: 31
+    order: 32
     archived: true
     name: Transport Railroad Crossing
     role: Gameplay Designer & Developer
@@ -724,7 +734,7 @@ projects:
         featured: true
 
   - slug: filtap
-    order: 32
+    order: 33
     archived: true
     name: "Filtap!"
     role: Game Developer
@@ -744,7 +754,7 @@ projects:
         featured: true
 
   - slug: box-keeper
-    order: 33
+    order: 34
     archived: true
     name: Box Keeper
     role: Game Developer
@@ -768,7 +778,7 @@ projects:
         featured: true
 
   - slug: wrap
-    order: 34
+    order: 35
     archived: true
     name: "Wrap!"
     role: Game Developer
@@ -784,7 +794,7 @@ projects:
         featured: true
 
   - slug: recolor
-    order: 35
+    order: 36
     archived: true
     name: Recolor
     role: Game Developer
@@ -800,7 +810,7 @@ projects:
         featured: true
 
   - slug: make-it-work
-    order: 36
+    order: 37
     archived: true
     name: "Make It Work!"
     role: Game Developer
