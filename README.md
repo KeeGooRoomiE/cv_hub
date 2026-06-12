@@ -11,6 +11,7 @@
 **Your personal site, CV, and project portfolio — from one YAML file.**
 
 🌐 **Live demo:** https://keegooroomie.github.io/cv_hub/
+
 📋 **Changelog:** [CHANGELOG.md](CHANGELOG.md) · [live history](https://keegooroomie.github.io/cv_hub/changelog) · [releases](https://github.com/KeeGooRoomiE/cv_hub/releases)
 
 ![CV Hub Preview](docs/repo-assets/preview_main.jpeg)
