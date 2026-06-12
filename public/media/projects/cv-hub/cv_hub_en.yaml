@@ -5,7 +5,7 @@ tagline: "Resume as Code. Treat your professional identity as a reproducible, ve
 shareable: true
 
 platforms: [Web, GitHub Pages]
-stack: [Astro, TypeScript, YAML, Playwright, docx.js, GitHub Actions]
+stack: [Astro, TypeScript, YAML, Playwright, docx.js, Canvas, GitHub Actions]
 
 links:
   - label: GitHub
@@ -28,7 +28,7 @@ blocks:
 
       Instead of maintaining fragmented representations across LinkedIn, PDF, Notion, and portfolio sites, CV Hub introduces a single declarative source of truth — a YAML file — that drives the entire output pipeline.
 
-      The result is a fully automated system where one change propagates consistently across all formats and all role-specific variations.
+      The result is a fully automated system where one change propagates consistently across every format and every role-specific variation. The very page you are reading is part of it: this case study is rendered from a block-based YAML document by the same engine that builds the CV.
 
   - type: divider
 
@@ -74,9 +74,34 @@ blocks:
     src: /media/projects/cv-hub/profiles.png
     alt: "Multi-profile merge pipeline"
     body: |
-      Role-specific resumes are generated using a two-layer model: base CV + delta overrides.
+      Role-specific resumes are generated using a two-layer model: a base CV plus per-profile delta overrides.
 
       This allows precise control over positioning without duplicating data.
+
+  - type: text
+    title: "How profiles work"
+    body: |
+      Each profile is declared once in `profiles.yml` with an id, a URL slug, and a spec key. At build time `merge.mjs` walks every profile × language combination and produces a normalized artifact per pair.
+
+      The merge is deliberately explicit rather than magical:
+      - Scalar and list fields in a delta replace the base value outright.
+      - Experience entries are matched by company name — a delta entry carrying just a company inherits the base entry and overrides only the fields it specifies.
+      - A profile's experience list fully defines its own ordered set, so each role can curate exactly the history that is relevant to it.
+
+      The output is deterministic: the same source always yields the same artifacts, and a build-time guard enforces that a profile's routing slug and its file-spec key stay in sync, so a profile's page can never silently desync from its CV and downloads.
+
+  - type: divider
+
+  - type: text
+    title: "Internationalization"
+    body: |
+      Languages are a first-class axis, not an afterthought. The system renders an N profiles × N languages matrix from a single content base.
+
+      - A `languages.yml` registry defines available languages and the default; the header language switcher is generated from it.
+      - Every UI string lives in `translations.yaml` and is resolved through a small `makeT()` helper with a fallback chain: requested language → English → the key itself, so a missing translation degrades gracefully instead of breaking the page.
+      - Routing is fully static. `[...slug].astro` emits one page per profile × language combination, and the default-language home stays at the clean root path.
+
+      Chinese translations already ship in the content layer, ready to be switched on by adding a single line to the language registry.
 
   - type: divider
 
@@ -85,11 +110,13 @@ blocks:
     bullets:
       - Static-first architecture with zero client-side JavaScript by default
       - YAML-based Single Source of Truth for all resume data
-      - Multi-profile system (DevOps, GameDev, etc.) via deterministic merge pipeline
-      - Multi-language support with fallback chain
+      - Multi-profile system (DevOps, GameDev, etc.) via a deterministic merge pipeline
+      - Multi-language support with a graceful fallback chain
       - Automated document generation (PDF via Playwright, DOCX/TXT via docx.js)
+      - A block-based case-study engine powering these Deep Dive pages
+      - Four interchangeable animated background components (CSS and Canvas)
       - URL-based theme switching with shareable state
-      - Fully automated CI/CD pipeline using GitHub Actions
+      - Fully automated CI/CD pipeline using GitHub Actions with Telegram alerts
       - Dynamic environment-aware configuration (siteUrl from GITHUB_REPOSITORY)
 
   - type: divider
@@ -100,30 +127,74 @@ blocks:
       The system is built as a deterministic pipeline.
 
       Data layer:
-      - YAML files (base + profile deltas)
+      - YAML files (base CV + profile deltas, showcase projects, case studies, translations, changelog)
 
       Processing layer:
-      - merge.mjs → produces normalized artifacts
-      - document generators → create PDF/DOCX/TXT
+      - merge.mjs → produces normalized per-profile, per-language artifacts
+      - document generators → create PDF / DOCX / TXT from those artifacts
 
       Presentation layer:
-      - Astro static build → HTML output
+      - Astro static build → pre-rendered HTML, content validated by typed schemas
 
       Deployment:
       - GitHub Actions → immutable build → GitHub Pages
 
-      No runtime server. No hidden state. Every output is reproducible from source.
+      No runtime server. No hidden state. No database. Every output is reproducible from source, and content shape is validated by Zod schemas before a single page is built.
 
   - type: divider
 
   - type: text
-    title: "Engineering Decisions"
-    bullets:
-      - Astro over SPA frameworks to eliminate unnecessary runtime and hydration cost
-      - Static generation to guarantee performance and predictability
-      - YAML over CMS to retain full control and versioning
-      - URL-driven state instead of localStorage for shareability and transparency
-      - Explicit delta files instead of implicit overrides to keep changes observable
+    title: "Dynamic backgrounds"
+    body: |
+      The atmosphere of the site is driven by a small library of interchangeable background components. Only one is active at a time — they are designed as a drop-in palette, each self-contained and configured through the same design-token system as the rest of the styling.
+
+      There are two families: a CSS-only layer that costs almost nothing, and a set of Canvas renderers inspired by the PlayStation XMB interface. Each is shown below.
+
+  - type: image
+    title: "AnimatedBackground — the default"
+    subtitle: "Pure CSS · zero JavaScript"
+    src: /media/projects/cv-hub/bg-animated.jpg
+    alt: "AnimatedBackground — drifting blurred orbs"
+    body: |
+      Four large radial-gradient orbs drift behind the content with a fine noise overlay on top. It is entirely CSS — no JavaScript, no canvas, no main-thread work.
+
+      It is also the most performance-tuned: the keyframes animate translation only (no scale), so the browser caches each blurred orb as a texture and simply moves it instead of re-rasterizing an 60px blur every frame. The whole layer is disabled below 768px and honors `prefers-reduced-motion`.
+
+  - type: image
+    title: "GalaxyBackground"
+    subtitle: "Canvas · requestAnimationFrame"
+    src: /media/projects/cv-hub/bg-galaxy.jpg
+    alt: "GalaxyBackground — drifting starfield"
+    body: |
+      A canvas-rendered starfield with slow parallax drift, accent-tinted to the active theme. A heavier, more cinematic option for when atmosphere matters more than idle cost.
+
+  - type: image
+    title: "PlayStationWaves"
+    subtitle: "Canvas · XMB-inspired filled waves"
+    src: /media/projects/cv-hub/bg-pswaves.jpg
+    alt: "PlayStationWaves — filled sine waves"
+    body: |
+      Filled sine waves layered like the PlayStation XMB menu, with a time-of-day hue shift and a non-deterministic start position (seeded from the timestamp) so no two loads look identical. Roughly 18 props expose wave count, speed, amplitude, color and draw quality.
+
+  - type: image
+    title: "WaveLines"
+    subtitle: "Canvas · XMB-inspired glow lines"
+    src: /media/projects/cv-hub/bg-wavelines.jpg
+    alt: "WaveLines — glowing stroke lines"
+    body: |
+      A stroke-based cousin of PlayStationWaves: glowing lines arranged symmetrically around a center axis. Each line's glow is composited on its own offscreen canvas to avoid a subtle bug where a shared `destination-in` mask was eating the background alpha at the edges.
+
+  - type: text
+    title: "Background performance engineering"
+    body: |
+      Beautiful backgrounds are easy to make janky, so they are treated as a performance surface in their own right.
+
+      - The CSS orbs avoid per-frame blur re-rasterization by animating transforms only.
+      - The full-page gradient lives on a fixed pseudo-element layer instead of `background-attachment: fixed`, so it never repaints on scroll.
+      - A fullscreen `mix-blend-mode` pass was removed once it proved invisible at its opacity but expensive every frame.
+      - Every animated background is disabled on small screens and respects reduced-motion.
+
+      The net effect: rich motion on capable desktops, and a calm, cheap render everywhere else.
 
   - type: divider
 
@@ -132,6 +203,67 @@ blocks:
     src: /media/projects/cv-hub/themes.jpeg
     alt: "Theme variations"
     caption: "Frosted, Light, Nordic, Peachy — controlled via URL parameter"
+    body: |
+      Theming is a set of CSS custom properties layered over a token base. A theme is selected with a `?theme=` URL parameter and applied through a tiny inline script, which keeps the state shareable — send a link and the recipient sees exactly the palette you chose.
+
+  - type: divider
+
+  - type: text
+    title: "Document export pipeline"
+    body: |
+      The same merged YAML that renders the site also generates downloadable documents, so the web and offline versions can never drift apart.
+
+      - PDF is produced by rendering a print-tuned layout in headless Chromium via Playwright — pixel-faithful to the site.
+      - DOCX is built programmatically with docx.js, producing a real editable Word document rather than a screenshot.
+      - TXT is emitted as a clean plain-text fallback for ATS systems and copy-paste.
+
+      Every profile × language pair gets its own set of files, generated in CI and linked directly from the matching page.
+
+  - type: divider
+
+  - type: text
+    title: "CI/CD & automation"
+    body: |
+      Shipping is a single `git push`.
+
+      - GitHub Actions runs the full pipeline on every push to main: merge → generate documents → render PDFs → static build → deploy to Pages.
+      - The Playwright Chromium binary is cached by lockfile hash, shaving roughly two minutes off a cold deploy.
+      - A Telegram bot reports the result — success, build failure, or deploy failure — with branch and short commit SHA, degrading silently if no secrets are configured.
+      - `siteUrl` and base path are derived from `GITHUB_REPOSITORY`, so a fork builds and deploys correctly with zero configuration.
+      - A sitemap covering every profile × language route is generated at build time, with a matching robots.txt.
+
+  - type: divider
+
+  - type: text
+    title: "Performance engineering"
+    body: |
+      Performance is measured, not assumed.
+
+      - Static, pre-rendered HTML with no hydration cost by default.
+      - The first Showcase cover with a real image is loaded eagerly with high fetch priority; everything else stays lazy — a deliberate LCP optimization.
+      - Scroll-time compositing was profiled and the expensive layers (fixed gradient repaints, a fullscreen blend pass) were removed.
+      - Result: Lighthouse 100 Performance / 100 Accessibility / 100 SEO, with motion that stays smooth on low-end hardware.
+
+  - type: divider
+
+  - type: text
+    title: "The Showcase system"
+    body: |
+      The portfolio half of the site is the same idea applied recursively. Projects are declared in a YAML list, and each can carry a full Deep Dive case study — like this one — assembled from a small set of content blocks: text, image, divider and links.
+
+      The blocks are validated by a typed schema and rendered by dedicated components, which means a long-form, editorial case study is authored entirely in data, with no bespoke page code. It behaves like a controlled, static alternative to a Notion page: portable, versioned, and fast.
+
+  - type: divider
+
+  - type: text
+    title: "Engineering Decisions"
+    bullets:
+      - Astro over SPA frameworks to eliminate unnecessary runtime and hydration cost
+      - Static generation to guarantee performance and predictability
+      - YAML over a CMS to retain full control and Git-native versioning
+      - URL-driven state instead of localStorage for shareability and transparency
+      - Explicit delta files instead of implicit overrides to keep changes observable
+      - Typed content schemas so malformed data fails the build instead of the browser
 
   - type: divider
 
@@ -157,6 +289,7 @@ blocks:
       - No CMS — intentional trade-off for control and transparency
       - No backend — static-only architecture
       - Manual delta creation for profiles — explicit over implicit complexity
+      - Canvas backgrounds cost more than the CSS default — hence one default, the rest opt-in
       - Limited runtime flexibility in favor of determinism
 
   - type: divider
