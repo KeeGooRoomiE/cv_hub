@@ -165,9 +165,12 @@ projects:
       - label: Играть
         url: https://sundukovy.com/game
         type: demo
+      - label: Подробнее
+        url: /showcase/s-s-platformer
+        type: product
     media:
       - type: image
-        src: /media/projects/s-s-platformer/cover.png
+        src: /media/projects/s-s-platformer/cover.jpg
         alt: "S+S скриншот"
         featured: true
 
