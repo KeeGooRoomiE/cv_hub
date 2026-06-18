@@ -1,7 +1,7 @@
 name: Alexander Gusarov
 title: DevOps / Infrastructure Engineer
 
-summary: "DevOps engineer with 1 year of hands-on production experience in Kubernetes, Linux server management (750+ servers via Ansible), IaC on AWS, and observability from scratch. Scripting and debugging skills from prior dev work help diagnose incidents faster and communicate with dev teams without friction."
+summary: "DevOps engineer with 2 years of hands-on production experience in Kubernetes, Linux server management (750+ servers via Ansible), IaC on AWS, and observability from scratch. Scripting and debugging skills from prior dev work help diagnose incidents faster and communicate with dev teams without friction."
 
 contacts:
   - label: Email
@@ -91,7 +91,7 @@ experience:
 
   - company: InfoScale
     role: DevOps Engineer
-    period: Dec 2024 — Jan 2026
+    period: Dec 2024 — May 2026
     description:
       - Monitored and maintained 750+ Linux servers (Selectel VPS and bare metal) — network interfaces, port configuration, SSH access management, and incident response
       - Deployed and maintained Kubernetes clusters on Yandex Cloud and self-hosted infrastructure (GitLab, Matrix, Keycloak, Vault); wrote Helm charts for internal services and adapted community charts for production use
