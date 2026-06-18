@@ -2,7 +2,7 @@ name: Александр Гусаров
 title: DevOps / Infrastructure Engineer
 
 summary: >
-  DevOps-инженер с 1 годом практического опыта в продакшене: Kubernetes, 
+  DevOps-инженер с 2 годами практического опыта в продакшене: Kubernetes, 
   управление Linux-серверами (750+ через Ansible), IaC на AWS и observability с нуля. 
   Навыки скриптинга и отладки из прошлого опыта разработки помогают быстрее 
   диагностировать инциденты и работать с dev-командами без барьеров.
@@ -95,7 +95,7 @@ experience:
 
   - company: InfoScale
     role: DevOps-инженер
-    period: Дек 2024 — Янв 2026
+    period: Дек 2024 — Май 2026
     description:
       - "Мониторинг и обслуживание 750+ Linux-серверов (Selectel VPS + bare metal): сетевые интерфейсы, настройка портов, управление SSH-доступами и реагирование на инциденты"
       - "Развёртывание и поддержка Kubernetes-кластеров в Yandex Cloud и self-hosted инфраструктуре (GitLab, Matrix, Keycloak, Vault); написание Helm-чартов для внутренних сервисов и адаптация community-чартов под продакшн"
