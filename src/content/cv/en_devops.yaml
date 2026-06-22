@@ -91,7 +91,7 @@ experience:
 
   - company: InfoScale
     role: DevOps Engineer
-    period: Dec 2024 — Jan 2026
+    period: Dec 2024 — Present
     description:
       - Monitored and maintained 750+ Linux servers (Selectel VPS and bare metal) — network interfaces, port configuration, SSH access management, and incident response
       - Deployed and maintained Kubernetes clusters on Yandex Cloud and self-hosted infrastructure (GitLab, Matrix, Keycloak, Vault); wrote Helm charts for internal services and adapted community charts for production use
