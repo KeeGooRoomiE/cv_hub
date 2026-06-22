@@ -95,7 +95,7 @@ experience:
 
   - company: InfoScale
     role: DevOps-инженер
-    period: Дек 2024 — Май 2026
+    period: Дек 2024 — Янв 2026
     description:
       - "Мониторинг и обслуживание 750+ Linux-серверов (Selectel VPS + bare metal): сетевые интерфейсы, настройка портов, управление SSH-доступами и реагирование на инциденты"
       - "Развёртывание и поддержка Kubernetes-кластеров в Yandex Cloud и self-hosted инфраструктуре (GitLab, Matrix, Keycloak, Vault); написание Helm-чартов для внутренних сервисов и адаптация community-чартов под продакшн"
