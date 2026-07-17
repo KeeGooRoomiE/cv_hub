@@ -64,9 +64,18 @@ function html(cv, lang = 'en') {
 
   const tr = T[lang] ?? T.en;
 
+  // Escape user data before interpolating into HTML — a stray < or & in a
+  // company name / bullet / URL would otherwise break or inject into the PDF.
+  const esc = (v) => String(v ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
   /* ── Contacts: label as clickable link, URL hidden ── */
   const contactsHtml = (cv.contacts ?? [])
-    .map(c => `<div class="contact-row"><a href="${c.url}">${c.label}</a></div>`)
+    .map(c => `<div class="contact-row"><a href="${esc(c.url)}">${esc(c.label)}</a></div>`)
     .join('');
 
   /* ── Education ── */
@@ -76,10 +85,10 @@ function html(cv, lang = 'en') {
       <h3>${tr.education}</h3>
       ${(cv.education ?? []).map(e => `
         <div class="edu-item">
-          <div class="edu-institution">${e.institution}</div>
-          ${e.period ? `<div class="edu-period">${e.period}</div>` : ''}
-          ${e.degree ? `<div class="edu-degree">${e.degree}</div>` : ''}
-          ${e.field  ? `<div class="edu-field">${e.field}</div>`   : ''}
+          <div class="edu-institution">${esc(e.institution)}</div>
+          ${e.period ? `<div class="edu-period">${esc(e.period)}</div>` : ''}
+          ${e.degree ? `<div class="edu-degree">${esc(e.degree)}</div>` : ''}
+          ${e.field  ? `<div class="edu-field">${esc(e.field)}</div>`   : ''}
         </div>
       `).join('')}
     </div>` : '';
@@ -94,8 +103,8 @@ function html(cv, lang = 'en') {
         const items = typeof s === 'string' ? [s] : (s.items ?? []);
         return `
         <div class="skill-group-block">
-          ${groupName ? `<div class="skill-group-name">${groupName}</div>` : ''}
-          <div class="skill-items">${items.join(' · ')}</div>
+          ${groupName ? `<div class="skill-group-name">${esc(groupName)}</div>` : ''}
+          <div class="skill-items">${items.map(esc).join(' · ')}</div>
         </div>`;
       }).join('')}
     </div>` : '';
@@ -107,8 +116,8 @@ function html(cv, lang = 'en') {
       <h3>${tr.languages}</h3>
       ${(cv.languages ?? []).map(l => `
         <div class="lang-row">
-          <div class="lang-name">${l.language}</div>
-          <div class="lang-level">${l.level}</div>
+          <div class="lang-name">${esc(l.language)}</div>
+          <div class="lang-level">${esc(l.level)}</div>
         </div>
       `).join('')}
     </div>` : '';
@@ -117,7 +126,7 @@ function html(cv, lang = 'en') {
   const aboutHtml = cv.summary ? `
     <section class="content-section">
       <h2>${tr.about}</h2>
-      <p class="summary-text">${cv.summary}</p>
+      <p class="summary-text">${esc(cv.summary)}</p>
     </section>` : '';
 
   /* ── Achievements ── */
@@ -125,7 +134,7 @@ function html(cv, lang = 'en') {
     <section class="content-section">
       <h2>${tr.achievements}</h2>
       <ul class="bullets">
-        ${(cv.achievements ?? []).map(a => `<li>${a}</li>`).join('')}
+        ${(cv.achievements ?? []).map(a => `<li>${esc(a)}</li>`).join('')}
       </ul>
     </section>` : '';
 
@@ -139,12 +148,12 @@ function html(cv, lang = 'en') {
         <div class="exp-entry">
           <div class="exp-lead">
             <div class="exp-header">
-              <div class="exp-company">${exp.company}${exp.role ? ` <span class="exp-role">— ${exp.role}</span>` : ''}</div>
-              <div class="exp-period">${cleanPeriod(exp.period)}</div>
+              <div class="exp-company">${esc(exp.company)}${exp.role ? ` <span class="exp-role">— ${esc(exp.role)}</span>` : ''}</div>
+              <div class="exp-period">${esc(cleanPeriod(exp.period))}</div>
             </div>
           </div>
-          ${desc.length ? `<ul class="bullets">${desc.map(d => `<li>${d}</li>`).join('')}</ul>` : ''}
-          ${exp.stack?.length ? `<div class="exp-stack">${exp.stack.join(', ')}</div>` : ''}
+          ${desc.length ? `<ul class="bullets">${desc.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
+          ${exp.stack?.length ? `<div class="exp-stack">${exp.stack.map(esc).join(', ')}</div>` : ''}
         </div>`;
       }).join('')}
     </section>` : '';
@@ -384,8 +393,8 @@ function html(cv, lang = 'en') {
 
   <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="cv-name">${cv.name ?? ''}</div>
-    <div class="cv-title">${cv.title ?? ''}</div>
+    <div class="cv-name">${esc(cv.name)}</div>
+    <div class="cv-title">${esc(cv.title)}</div>
 
     ${contactsHtml}
     ${educationHtml}

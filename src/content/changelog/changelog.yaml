@@ -33,6 +33,8 @@ changelog:
       - type: fixed
         text: "Build robustness: home page now guards a missing merged CV artifact with a fallback instead of crashing the build (matches the dynamic profile route)"
       - type: fixed
+        text: "PDF export now HTML-escapes all interpolated CV data (company names, bullets, contacts, skills) — a stray < or & in a field no longer breaks or injects into the generated PDF"
+      - type: fixed
         text: "Mobile header — the Role dropdown button rendered larger than the nav links (16px vs 14px, wider padding) because a later .dropdown__trigger { font: inherit } overrode the mobile rule; the mobile rule's specificity was raised so the button now matches the links"
       - type: removed
         text: "Dead code in the dynamic showcase route — unused featured/regular/archived split, leftover CSS classes and a stray ... token in the card markup"

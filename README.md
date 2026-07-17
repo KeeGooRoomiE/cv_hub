@@ -15,10 +15,10 @@
 📋 **Changelog:** [CHANGELOG.md](CHANGELOG.md) · [live history](https://keegooroomie.github.io/cv_hub/changelog) · [releases](https://github.com/KeeGooRoomiE/cv_hub/releases)
 
 ![CV Hub Preview](docs/repo-assets/preview_main.jpeg)
-[![Lighthouse Performance](https://img.shields.io/badge/Lighthouse-Performance%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomii.github.io/cv_hub/)
-[![Lighthouse Accessibility](https://img.shields.io/badge/Lighthouse-Accessibility%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomii.github.io/cv_hub/)
-[![Lighthouse Best Practices](https://img.shields.io/badge/Lighthouse-Best%20Practices%2096-00C853?logo=lighthouse&logoColor=white)](https://keegooroomii.github.io/cv_hub/)
-[![Lighthouse SEO](https://img.shields.io/badge/Lighthouse-SEO%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomii.github.io/cv_hub/)
+[![Lighthouse Performance](https://img.shields.io/badge/Lighthouse-Performance%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
+[![Lighthouse Accessibility](https://img.shields.io/badge/Lighthouse-Accessibility%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
+[![Lighthouse Best Practices](https://img.shields.io/badge/Lighthouse-Best%20Practices%2096-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
+[![Lighthouse SEO](https://img.shields.io/badge/Lighthouse-SEO%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
 
 ---
 
@@ -171,7 +171,7 @@ npm run resume:import:all
 
 ### Option C — Generate via LLM
 
-Feed your resume (PDF, DOCX, plain text) to Claude or ChatGPT with the prompt from `docs/llm-context.md`. The document also contains full project context for AI tools — feed it before making any code changes.
+Feed your resume (PDF, DOCX, plain text) to Claude or ChatGPT with the prompt from `docs/LLM-CONTEXT.md`. The document also contains full project context for AI tools — feed it before making any code changes.
 
 ---
 

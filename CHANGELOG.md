@@ -32,6 +32,7 @@ Versioning: [Semantic Versioning](https://semver.org/).
 - Role dropdown accessibility — added `aria-haspopup`, `aria-controls` and `aria-expanded` synced with open state; removed a stray always-true `active` class on the trigger
 - i18n: showcase card labels (Platforms/Stack/Tags/Featured) on non-default-language lists no longer fall back to English literals — a stray `[lang]` index on an already-resolved string was dropping the real translations; now correctly localized and ready for additional languages
 - Build robustness: home page now guards a missing merged CV artifact with a fallback instead of crashing the build (matches the dynamic profile route)
+- PDF export now HTML-escapes all interpolated CV data (company names, bullets, contacts, skills) — a stray `<` or `&` in a field no longer breaks or injects into the generated PDF
 - Mobile header — the Role dropdown button rendered larger than the nav links (16px vs 14px, wider padding) because a later `.dropdown__trigger { font: inherit }` overrode the mobile rule; the mobile rule's specificity was raised so the button now matches the links
 
 ---
