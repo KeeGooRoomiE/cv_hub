@@ -366,7 +366,7 @@ blocks:
     caption: "Caption text under image"
 ```
 
-Block types: `text`, `image`, `divider`. All fields in `text` and `image` blocks are optional — render only what's present.
+Block types: `text`, `image`, `video`, `divider`. All fields are optional (except `src` on `image`/`video`) — render only what's present. A `video` block with `loop: true` autoplays muted and looped (short ambient clips); otherwise it shows controls + an optional `poster`.
 
 ---
 

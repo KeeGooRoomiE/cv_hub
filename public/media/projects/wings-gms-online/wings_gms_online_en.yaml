@@ -1,0 +1,170 @@
+title: "Wings GMS Online"
+role: "Solo Game Developer — gameplay, art, feel"
+year: "2022"
+tagline: "Fake-3D online aerial combat, built solo in GameMaker — a tech-and-craft showcase of a game that was never finished, and is public exactly for that reason."
+shareable: true
+
+platforms: [Web, Mobile Web]
+stack: [GameMaker Studio, GML, Node.js, Socket.io]
+
+links:
+  - label: GitHub
+    url: https://github.com/KeeGooRoomiE/WingsGMSOnline-MINDPLAYS-
+
+blocks:
+
+  - type: video
+    src: /media/projects/wings-gms-online/saucer.mp4
+    loop: true
+    alt: "A flying saucer barrel-rolls and slices a plane with its laser"
+
+  - type: text
+    title: "Overview"
+    body: |
+      Wings is a fake-3D online aerial-combat game I built almost entirely solo in GameMaker — code, art, and game feel.
+
+      It was a commission. A web platform (crypto-flavoured) paid $2000 for it, then folded and walked away. The game never shipped, never had real players beyond internal tests, and the source has sat untouched since. It is public for one reason: the density of game-design and engineering decisions inside it. This is a showcase, not a product.
+
+  - type: text
+    title: "Why it's here"
+    body: |
+      Read this as a tech and craft showcase. The interesting part of Wings isn't a launch or a player count — it's how much feel, atmosphere and systems got packed into a 2D engine: convincing 3D from flat sprites, a combat toolkit tuned for impact, a fully diegetic HUD, day/night driven by your real clock, and a renderer that scales itself to hold framerate on anything.
+
+  - type: divider
+
+  - type: text
+    title: "Inspirations"
+    body: |
+      Four references shaped it:
+
+      - Cortex Command — effects and colour; the chunky, satisfying explosions.
+      - Luftrausers — the feel, the mechanics, and the borrowed idea of fake-3D.
+      - HighFleet — the layered mountains, the realism, and the lighting that flashes off gunfire.
+      - Ace Combat — the cockpit-style UI.
+
+  - type: text
+    title: "From a space proof-of-concept to the sky"
+    body: |
+      It started as something tiny: two ships in space on websockets, just flying around. That prototype only had to prove a few things — that behaviour could be synchronised over the network, that you could see other clients by their IDs, and that shooting worked across the wire. Once that held, the actual game began.
+
+  - type: divider
+
+  - type: text
+    title: "Fake-3D from three sprites"
+    body: |
+      There is no 3D engine here. Each aircraft is three hand-drawn sprites — top, bottom and side — swapped as the plane pitches. As `image_yscale` interpolates toward zero, the code switches sprites at the crossing so one "washes" into the next, and the vertical scaling sells a convincing bank. A sign flip keeps the reversal correct.
+
+      The flying saucer above is the trick at its most shameless: a genuinely solid-looking 3D object, conjured from a couple of flat sprites and a scale curve.
+
+  - type: text
+    title: "The flight model"
+    body: |
+      The plane is hard to describe and that's the point — it feels like a heavy chunk of iron in the sky and a nimble, responsive thing at the same time.
+
+      It has gravity, and it flies against it. Turns carry inertia, amplified by the moving camera, so you can never snap a 360 — your maximum turn rate per second is gated by speed: the faster you fly, the harder you turn. Hold a heading (within ten degrees) for a couple of seconds and the "engines kick in," speed accumulates, and a sharp turn out of that throws a visible exhaust — so you learn to tap the guns mid-turn to compensate for the inertia. In practice it reads beautifully.
+
+  - type: video
+    title: "Combat"
+    src: /media/projects/wings-gms-online/combat.mp4
+    alt: "Aerial dogfight gameplay — guns, rockets, the laser"
+    caption: "Dynamics, the laser, and the impact toolkit in motion."
+
+  - type: text
+    title: "Juice — making every shot land"
+    body: |
+      A lot of the work went into impact, so that a shot was never just a shot.
+
+      Bullets have basic ballistics and fall after a time aloft, ejecting casings that drop almost instantly and splash on the water. Rockets launch, then light their engine ~10m out and trail smoke; homing rockets chase for a while and simply drop when they "run out of fuel." Every explosion lands a small stun, a burst of MG fire does more than spaced single shots, and special weapons each feel distinct. Smoke from other planes disperses as you fly through it; a plane can be "lost" inside a cloud thanks to the fake-3D depth. Gunfire flickers the lighting — most visible at night, where you can spot an attacker you can't see by their tracers alone.
+
+      There is no audio at all — I never got to it. The whole sense of force is carried by motion, light and the camera.
+
+  - type: divider
+
+  - type: text
+    title: "Orbital AI"
+    body: |
+      The AI is deliberately simple and reads as a real dogfighter. It picks the nearest player and flies to random points on circles around them — tight circles (96–144px) to attack, wider ones (256–384–640px) to regroup. A damped rotation steers toward the target point, and it only fires when its heading aligns within a threshold and the reload is ready. Convincing combat out of almost no logic.
+
+      In the free-for-all there are no markings on anyone, so with a few bots flying at varied aggression you genuinely can't tell who's a person — they feel alive in the small space of a session.
+
+  - type: text
+    title: "Dynamic camera"
+    body: |
+      Three camera objects share influence. The camera leads by speed (`camDist = spd * 96`), and in "interest mode" it snaps toward key objects with a cinematic zoom — when an enemy locks in, it pulls back to hold both planes in frame at once, then drifts back. It follows the action, not the player.
+
+  - type: text
+    title: "Day and night, on your real clock"
+    body: |
+      The sky is three gradients drawn with `draw_rectangle_color`, their colours interpolated per RGB channel from `date_get_hour()` — so the time of day in the game is your actual time of day. At night the palette shifts and the gunfire-flash lighting becomes its own readout; clouds are lit or shadowed by the hour, and a plane cutting through a cloud throws its own particles.
+
+  - type: divider
+
+  - type: text
+    title: "The world — one 8×8k map"
+    body: |
+      Globally there is a single huge 8×8k map, made seamless by wrapping at the sides.
+
+      Along the bottom sits 300px of water. Water didn't feel like water in early tests — you'd just take damage and die a second under it — so I gave it two kinds of splash: small ones at the airflow boundary when you skim close, and enormous ones within about five metres. Flying low and then snapping a barrel-roll up turned into a genuine "How to Train Your Dragon" moment.
+
+      At the top is the edge of the atmosphere. Gravity bites harder up there; it's "safe territory," but you have ten seconds — fall, get shot down, or you're carried up into the start menu (and re-entry drops you straight back into the fight). The edge became a free-kill zone for ambushing anyone trying to leave, especially with the fast direct rockets fired in a three-pronged trident. The middle of the map is the meat, where something is always happening.
+
+      Behind it all: four seamless mountain layers in the HighFleet vein, parallaxing against the plane's position for real depth and reacting to the time of day.
+
+  - type: text
+    title: "A HUD that lives in the world"
+    body: |
+      The interface is almost entirely diegetic — a green frame around your own plane. A left arrow shows your altitude relative to the world (it drops near water, rises toward the atmosphere); a top one does the same for horizontal navigation, replacing a minimap. A bottom healthbar fills as your special weapon recharges, so you know when you can fire it.
+
+      Around the plane sit two cursors: a thin one tracking the mouse, a wider one tracking the plane's tilt — when they converge, they form a tight reticle that tells you the shot spread is now minimal. Add the lock-on frame that appears on an enemy in range and angle (showing its charge state and angle accuracy), and that's the entire on-screen UI. I planned an HP bar too, but left it out — the world already had enough diegetic signals, and HP is meant to be read from smoke and fire.
+
+  - type: text
+    title: "Weapons"
+    body: |
+      Machine guns with spread and ejected casings; rockets with area damage; homing rockets; a laser built on `collision_line` for dynamic length that dealt damage every tick — a genuinely overpowered, spectacular weapon that needed constant rebalancing against everything else; and a "punch," a speed-burst ram that could kill outright. Bonus crates dropped as pickups for the special weapons.
+
+  - type: text
+    title: "UI from draw calls"
+    body: |
+      The interface is built almost 100% from GameMaker `draw_` primitives rather than UI assets, styled after Ace Combat cockpits.
+
+  - type: divider
+
+  - type: text
+    title: "Performance engineering"
+    body: |
+      The most spectacular thing in the project was also its worst bug: dynamic clouds at 2,000 particles. They changed shape, shed pieces behind them with speed, and looked insanely real — flawless on an M1 Mac, a horror on the web. They were cut.
+
+      The fix that stuck was structural: the game world renders to its own layer, separate from the UI, so I could lock the aspect ratio at launch and scale the world's render resolution in percent on the fly. A one-second median FPS below target drops it — from 100% down to 60% in 2% steps — and in a busy pixel game it's almost invisible, while staying stable on the weakest "Pentium bucket." Best of all it gave one optimization point shared by PC and phones. (Five named presets back it, with mobile Safari defaulting to 65%.)
+
+  - type: text
+    title: "Controls on both platforms"
+    body: |
+      On phones it's a D-pad plus two fire buttons — that was plenty. A runtime detector works out whether you're on touch or mouse (by whether mouse coordinates move under a held click, versus multitouch) and switches the controls live, so the screen is always right. I also built a small in-game console to monitor state after launch without debug tooling.
+
+  - type: divider
+
+  - type: text
+    title: "Netcode — the honest part"
+    body: |
+      The network was the real pain. Node.js + Socket.io drives state and bullet sync over WebSockets, intended for 32-player free-for-all. But the work was never finished: the client sends its position, the server relays it to everyone, and lerping plus a little angle prediction keep planes from teleporting — no server authority, nothing deeper.
+
+      Two things made it hard. The GameMaker + Socket.io + Node combination gave genuinely awful network performance that had to be fought constantly. And the backend came from another developer, so I couldn't write my own — at most I could adapt it to specific needs. It was only ever tested internally, with a few bots in the mix for dynamics.
+
+  - type: text
+    title: "What state it's in"
+    body: |
+      A playable but unfinished demo. There's the dynamic renderer, about half the UI, plenty of features disabled, and raw fly-and-shoot at the core. The source is as-is — exactly where it stopped.
+
+  - type: text
+    title: "What it could have been"
+    body: |
+      The plan was a small, fun online io-game on the web, then a five-minute singleplayer version with progression for mobile and the Steam Deck. It all slammed shut when the client folded. I'd genuinely like to finish that singleplayer one day — not in GameMaker, but keeping every one of the tricks.
+
+  - type: divider
+
+  - type: text
+    title: "Takeaways"
+    body: |
+      Wings is a density-of-ideas project. Solo, in a 2D engine, it stacks up convincing fake-3D from flat sprites, a feel-first combat toolkit, a fully diegetic HUD, day/night on a real clock, and a renderer that scales itself to survive any hardware — none of it groundbreaking alone, all of it adding up to a game that felt good to fly in the few minutes it ran.
+
+      It never shipped, and that was never the point of keeping it public. The point is everything inside it.

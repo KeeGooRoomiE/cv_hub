@@ -14,6 +14,7 @@ Versioning: [Semantic Versioning](https://semver.org/).
 
 ### Added
 - `merge.mjs` validates the profile `slug === spec` invariant and fails fast with a clear message, preventing silent desync between a profile's URL and its CV/download files
+- Case-study video block — `type: video` content block, either a silent autoplay loop (short clips) or poster + controls (longer clips)
 
 ### Changed
 - Tags de-emphasized — removed borders and muted text on Platforms/Stack/Tags pills so the identical-looking groups stop competing for attention and section hierarchy reads clearer (lead designer feedback)

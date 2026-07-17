@@ -10,6 +10,8 @@ changelog:
         text: "SEO: sitemap.xml (via @astrojs/sitemap, covers all profile × language routes) and robots.txt pointing to it"
       - type: added
         text: "merge.mjs validates the profile slug === spec invariant and fails fast with a clear message, preventing silent desync between a profile's URL and its CV/download files"
+      - type: added
+        text: "Case-study video block — type: video content block, either a silent autoplay loop (short clips) or poster + controls (longer clips)"
       - type: changed
         text: "Tags de-emphasized — removed borders and muted text on Platforms/Stack/Tags pills so the identical-looking groups stop competing for attention and section hierarchy reads clearer"
       - type: changed

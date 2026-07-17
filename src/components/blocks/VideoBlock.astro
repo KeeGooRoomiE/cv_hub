@@ -1,0 +1,118 @@
+---
+//
+//  blocks/VideoBlock.astro
+//  CV Hub — Video block
+//
+//  All fields optional except src.
+//  loop: true  → silent autoplay loop, no controls (short ambient clips)
+//  loop: false → controls + poster + lazy metadata (longer clips)
+//
+
+const { src, poster, alt, caption, title, subtitle, body, loop } = Astro.props;
+
+const hasText = title || subtitle || body || caption;
+const hasSrc  = !!src;
+if (!hasText && !hasSrc) return;
+
+const withBase = (p = '') => {
+  const s = String(p);
+  if (!s) return '';
+  if (/^(https?:)?\/\//i.test(s) || s.startsWith('data:')) return s;
+  const clean = s.replace(/^\/+/, '');
+  const base = String(import.meta.env.BASE_URL || '/');
+  return (base.endsWith('/') ? base : base + '/') + clean;
+};
+
+const isLoop = loop === true;
+---
+
+<div class="video-block">
+  {title    && <h2 class="video-block__title">{title}</h2>}
+  {subtitle && <p  class="video-block__subtitle">{subtitle}</p>}
+  {body     && <p  class="video-block__body">{body}</p>}
+
+  {hasSrc && (
+    <figure class="video-block__figure">
+      {isLoop ? (
+        <video
+          class="video-block__el"
+          src={withBase(src)}
+          poster={poster ? withBase(poster) : undefined}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label={alt ?? title ?? ''}
+          onerror="this.closest('figure')?.remove();"
+        ></video>
+      ) : (
+        <video
+          class="video-block__el"
+          src={withBase(src)}
+          poster={poster ? withBase(poster) : undefined}
+          controls
+          playsinline
+          preload="metadata"
+          aria-label={alt ?? title ?? ''}
+          onerror="this.closest('figure')?.remove();"
+        ></video>
+      )}
+      {caption && (
+        <figcaption class="video-block__caption">{caption}</figcaption>
+      )}
+    </figure>
+  )}
+</div>
+
+<style>
+  .video-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .video-block__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .video-block__subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .video-block__body {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .video-block__figure {
+    margin: 0;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .video-block__el {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    background: #000;
+  }
+
+  .video-block__caption {
+    display: block;
+    font-size: 12px;
+    padding: 8px 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+</style>
