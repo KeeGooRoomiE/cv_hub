@@ -19,12 +19,12 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "ajv": "^8.18.0",
+    "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "astro": "^5.17.1",
-    "docx": "^9.5.0",
-    "unpdf": "^1.4.0",
-    "yaml": "^2.8.2"
+    "docx": "^9.7.1",
+    "unpdf": "^1.8.1",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "playwright": "^1.58.2"
