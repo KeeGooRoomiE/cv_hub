@@ -224,6 +224,9 @@ projects:
       - label: Github
         url: https://github.com/KeeGooRoomiE/WingsGMSOnline-MINDPLAYS-
         type: repo
+      - label: Deep Dive
+        url: /showcase/wings-gms-online
+        type: product
     media:
       - type: image
         src: /media/projects/wings-gms-online/cover.gif
