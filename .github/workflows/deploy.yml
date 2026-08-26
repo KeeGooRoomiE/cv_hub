@@ -39,8 +39,20 @@ jobs:
       - name: Verify Chrome is available
         run: google-chrome --version
 
+      # `npm run build` runs all four stages; they are split here into named
+      # steps (same runner, same filesystem — zero cost) so the Actions UI shows
+      # per-stage timing and points at the exact stage that failed.
+      - name: Merge CV data
+        run: npm run cv:build
+
+      - name: Generate DOCX + TXT
+        run: npm run resume:generate
+
+      - name: Render PDFs
+        run: npm run resume:pdf
+
       - name: Build Astro site
-        run: npm run build
+        run: npx astro build
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3

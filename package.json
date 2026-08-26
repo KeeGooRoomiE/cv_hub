@@ -1,7 +1,10 @@
 {
   "name": "cv-hub",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.5.5",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "astro dev",
     "preview": "astro preview",
@@ -20,12 +23,10 @@
     "ajv-formats": "^3.0.1",
     "astro": "^5.17.1",
     "docx": "^9.5.0",
-    "hast-util-parse-selector": "^4.0.0",
     "unpdf": "^1.4.0",
     "yaml": "^2.8.2"
   },
   "devDependencies": {
-    "playwright": "^1.58.2",
-    "serve": "^14.2.6"
+    "playwright": "^1.58.2"
   }
 }

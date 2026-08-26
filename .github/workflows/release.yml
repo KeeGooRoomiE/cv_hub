@@ -1,0 +1,68 @@
+name: Attach CV artifacts to release
+
+# When a release is published, regenerate the resume documents and attach them
+# to it — so every version carries the actual CV files, not just release notes.
+# Pages always serves latest (deploy.yml); a release is a versioned snapshot.
+#
+# Note: no `astro build` here — a release only needs the documents, so the site
+# stage is skipped.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify Chrome is available
+        run: google-chrome --version
+
+      - name: Merge CV data
+        run: npm run cv:build
+
+      - name: Generate DOCX + TXT
+        run: npm run resume:generate
+
+      - name: Render PDFs
+        run: npm run resume:pdf
+
+      # Secrets and context go through env, never inline ${{ }} in the shell.
+      - name: Attach resume files to the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [ -z "$TAG" ]; then
+            echo "No release tag in context (manual run?) — skipping upload."
+            exit 0
+          fi
+          # Match the generated files by their naming convention
+          # (resume_{lang}[_{spec}].{ext}) — regular files only. This skips
+          # subdirectories (gh fails on those) and stray files like .DS_Store.
+          files=()
+          while IFS= read -r f; do files+=("$f"); done \
+            < <(find public/downloads -maxdepth 1 -type f -name 'resume_*' | sort)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "::error::No generated resume files found in public/downloads"
+            exit 1
+          fi
+          echo "Uploading ${#files[@]} file(s) to release $TAG"
+          gh release upload "$TAG" "${files[@]}" --clobber

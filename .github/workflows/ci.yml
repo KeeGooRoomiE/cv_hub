@@ -1,0 +1,73 @@
+name: CI
+
+# Runs the full generation pipeline on every pull request, so a broken YAML or
+# a failing build is caught before it reaches main (main is deployed by
+# deploy.yml — this workflow never deploys anything).
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # PDF export drives the runner's preinstalled Google Chrome via Playwright
+      # (channel: 'chrome' when CI=true) — no browser download.
+      - name: Verify Chrome is available
+        run: google-chrome --version
+
+      # Same four stages as the deploy build, as named steps: a failure points
+      # at the exact stage. Content schemas are validated by Astro at build
+      # time, so malformed YAML fails here instead of reaching main.
+      - name: Merge CV data
+        run: npm run cv:build
+
+      - name: Generate DOCX + TXT
+        run: npm run resume:generate
+
+      - name: Render PDFs
+        run: npm run resume:pdf
+
+      - name: Build Astro site
+        run: npx astro build
+
+      # Generated files are gitignored, so uploading them here is the only way
+      # to inspect what a PR actually produces.
+      - name: Upload generated resume files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-files
+          path: public/downloads/
+          retention-days: 7
+          if-no-files-found: warn
+
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+          retention-days: 7

@@ -124,6 +124,16 @@ All respect `prefers-reduced-motion`: draw one static frame, cancel RAF.
 
 ## CI/CD
 
+Three workflows, one shared pipeline:
+
+| Workflow | Trigger | Does |
+|---|---|---|
+| `ci.yml` | pull request | Full generation pipeline + uploads generated resumes and site as artifacts. Never deploys. |
+| `deploy.yml` | push to `main` | Same pipeline → GitHub Pages → Telegram notification |
+| `release.yml` | release published | Regenerates documents and attaches PDF/DOCX/TXT to the release (skips `astro build` — a release only needs the documents) |
+
+The four pipeline stages run as separate named steps rather than one opaque `npm run build`, so the Actions UI shows per-stage timing and the exact failure point.
+
 ```
 push → main  (runner: Node 24)
   ↓

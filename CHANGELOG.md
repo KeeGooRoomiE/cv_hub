@@ -6,25 +6,40 @@ Versioning: [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.5.5] — 2026-08-26
+
+### Added
+- Case-study video block — `type: video` content block, either a silent autoplay loop (short clips) or poster + controls (longer clips)
+- CI workflow (`ci.yml`) — pull requests now run the full generation pipeline (merge → DOCX/TXT → PDF → Astro build) and upload the generated resumes and site as downloadable artifacts, so a broken build or malformed YAML is caught before it reaches `main`
+- Release workflow (`release.yml`) — publishing a GitHub Release regenerates the resume documents and attaches all PDF/DOCX/TXT files to it, making every version a self-contained CV snapshot
+- Dependabot — weekly grouped npm updates and monthly GitHub Actions updates; every update PR is verified by the CI pipeline instead of being merged blind
+- Node version pinned via `.nvmrc` and `package.json` `engines` (>=24), matching the CI runner
+
+### Changed
+- CI: GitHub Actions runner upgraded to Node 24
+- `package.json` version synced to the changelog version (was stuck at `0.0.1` while the project shipped 1.5.x)
+- CI: the deploy build step split into named per-stage steps (merge / DOCX+TXT / PDF / Astro) — same runner and cost, but the Actions UI now shows per-stage timing and points at the exact stage that failed
+- CI: PDF export now drives the runner's preinstalled Google Chrome (`channel: 'chrome'`) instead of downloading Playwright's chromium — removes the `cdn.playwright.dev` download that was stalling and hanging deploys; the Playwright browser-cache step was dropped. Local builds still use Playwright's bundled chromium
+- Responsive breakpoints consolidated from seven ad-hoc values to two — `768px` (desktop/mobile base: header, fonts, paddings, animated background) and `960px` (multi-column CV and showcase grids); mobile container side padding tightened
+
+### Fixed
+- PDF export now HTML-escapes all interpolated CV data (company names, bullets, contacts, skills) — a stray `<` or `&` in a field no longer breaks or injects into the generated PDF
+- Mobile header — the Role dropdown button rendered larger than the nav links (16px vs 14px, wider padding) because a later `.dropdown__trigger { font: inherit }` overrode the mobile rule; the mobile rule's specificity was raised so the button now matches the links
+
+### Removed
+- Two unused dependencies — `hast-util-parse-selector` and `serve` were not imported or referenced by any script
+
+---
 ## [1.5.4] — 2026-06-12
 
 ### Added
 - Click-to-zoom lightbox for case-study images — clicking any Deep Dive image opens it fullscreen; close via backdrop click, close button or Escape
 - SEO: `sitemap.xml` (via `@astrojs/sitemap`, covers all profile × language routes) and `robots.txt` pointing to it
-
-### Added
 - `merge.mjs` validates the profile `slug === spec` invariant and fails fast with a clear message, preventing silent desync between a profile's URL and its CV/download files
-- Case-study video block — `type: video` content block, either a silent autoplay loop (short clips) or poster + controls (longer clips)
 
 ### Changed
 - Tags de-emphasized — removed borders and muted text on Platforms/Stack/Tags pills so the identical-looking groups stop competing for attention and section hierarchy reads clearer (lead designer feedback)
 - CI: Telegram notification now passes secrets and context through an `env` block instead of inline `${{ }}` interpolation in the shell script
-- CI: GitHub Actions runner upgraded to Node 24
-- CI: PDF export now drives the runner's preinstalled Google Chrome (`channel: 'chrome'`) instead of downloading Playwright's chromium — removes the `cdn.playwright.dev` download that was stalling and hanging deploys; the Playwright browser-cache step was dropped. Local builds still use Playwright's bundled chromium
-- Responsive breakpoints consolidated from seven ad-hoc values to two — `768px` (desktop/mobile base: header, fonts, paddings, animated background) and `960px` (multi-column CV and showcase grids); mobile container side padding tightened
-
-### Removed
-- Dead code in the dynamic showcase route — unused featured/regular/archived split, leftover CSS classes and a stray `...` token in the card markup
 
 ### Fixed
 - Removed hover-lift from passive cards (Experience and others) — the global `.card:hover` translate/shadow was a false affordance on non-clickable cards; hover now stays only on interactive showcase project cards (lead designer feedback)
@@ -33,11 +48,11 @@ Versioning: [Semantic Versioning](https://semver.org/).
 - Role dropdown accessibility — added `aria-haspopup`, `aria-controls` and `aria-expanded` synced with open state; removed a stray always-true `active` class on the trigger
 - i18n: showcase card labels (Platforms/Stack/Tags/Featured) on non-default-language lists no longer fall back to English literals — a stray `[lang]` index on an already-resolved string was dropping the real translations; now correctly localized and ready for additional languages
 - Build robustness: home page now guards a missing merged CV artifact with a fallback instead of crashing the build (matches the dynamic profile route)
-- PDF export now HTML-escapes all interpolated CV data (company names, bullets, contacts, skills) — a stray `<` or `&` in a field no longer breaks or injects into the generated PDF
-- Mobile header — the Role dropdown button rendered larger than the nav links (16px vs 14px, wider padding) because a later `.dropdown__trigger { font: inherit }` overrode the mobile rule; the mobile rule's specificity was raised so the button now matches the links
+
+### Removed
+- Dead code in the dynamic showcase route — unused featured/regular/archived split, leftover CSS classes and a stray `...` token in the card markup
 
 ---
-
 ## [1.5.3] — 2026-04-26
 
 ### Added

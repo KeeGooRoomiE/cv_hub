@@ -1,0 +1,35 @@
+version: 2
+
+updates:
+  # npm dependencies — grouped so a routine bump is one PR, not eight.
+  # Every PR runs ci.yml (full generation pipeline), so updates are verified
+  # rather than merged blind.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      dev-dependencies:
+        dependency-type: "development"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # Keep the workflow actions themselves current (checkout, setup-node, cache…)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
