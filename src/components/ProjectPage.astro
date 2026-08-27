@@ -10,6 +10,7 @@ import Layout from './Layout.astro';
 import TextBlock  from './blocks/TextBlock.astro';
 import ImageBlock from './blocks/ImageBlock.astro';
 import VideoBlock from './blocks/VideoBlock.astro';
+import CodeBlock  from './blocks/CodeBlock.astro';
 import Divider    from './blocks/DividerBlock.astro';
 
 const { data, showcaseHref, langLinks, lang } = Astro.props;
@@ -91,6 +92,7 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
     if (block.type === 'text')    return <TextBlock  {...block} />;
     if (block.type === 'image')   return <ImageBlock {...block} />;
     if (block.type === 'video')   return <VideoBlock {...block} />;
+    if (block.type === 'code')    return <CodeBlock   {...block} />;
     return null;
   })}
 

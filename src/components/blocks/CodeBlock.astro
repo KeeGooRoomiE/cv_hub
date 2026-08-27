@@ -1,0 +1,84 @@
+---
+//
+//  blocks/CodeBlock.astro
+//  CV Hub — Code block
+//
+//  Created by Alexander Gusarov on 27.08.2026.
+//  @spartan121
+//
+//  A monospace command/snippet block. No syntax highlighting engine on
+//  purpose — keeps the dependency list small; this is for short terminal
+//  commands and snippets, not full source files.
+//
+//  All fields optional except body. body renders verbatim (it's meant to be
+//  copy-pasted exactly) — no backtick/inline-code parsing there. title/
+//  subtitle/caption are prose and do get `backtick` → <code> treatment
+//  (see InlineText.astro).
+//  anchor: optional id for deep-linking (e.g. /showcase/cv-hub#quickstart).
+//
+
+import InlineText from './InlineText.astro';
+
+const { title, subtitle, body, caption, anchor } = Astro.props;
+
+const hasBody = !!body;
+if (!hasBody) return;
+---
+
+<div class="code-block" id={anchor || undefined}>
+  {title    && <h2 class="code-block__title"><InlineText text={title} /></h2>}
+  {subtitle && <p  class="code-block__subtitle"><InlineText text={subtitle} /></p>}
+
+  <pre class="code-block__pre"><code class="code-block__code">{body}</code></pre>
+
+  {caption && (
+    <p class="code-block__caption"><InlineText text={caption} /></p>
+  )}
+</div>
+
+<style>
+  .code-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    scroll-margin-top: 84px;
+  }
+
+  .code-block__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .code-block__subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .code-block__pre {
+    margin: 0;
+    padding: 14px 16px;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.35);
+    overflow-x: auto;
+  }
+
+  .code-block__code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-strong);
+    white-space: pre;
+  }
+
+  .code-block__caption {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>

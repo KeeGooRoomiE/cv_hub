@@ -1,0 +1,33 @@
+---
+//
+//  blocks/InlineText.astro
+//  CV Hub — renders `backtick` spans in a string as styled <code>.
+//
+//  Created by Alexander Gusarov on 27.08.2026.
+//  @spartan121
+//
+//  Shared by TextBlock / ImageBlock / VideoBlock / CodeBlock for their prose
+//  fields (title/subtitle/body/caption/bullets). Owns the .inline-code style
+//  since Astro scopes CSS per-component — a parent block's <style> would not
+//  reach elements rendered by this child component.
+//
+
+import { parseInline } from '../../scripts/inline-format';
+
+const { text } = Astro.props;
+const segments = parseInline(text);
+---
+
+{segments.map((seg) => (seg.code ? <code class="inline-code">{seg.text}</code> : seg.text))}
+
+<style>
+  .inline-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    color: var(--text-strong);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 1px 6px;
+  }
+</style>

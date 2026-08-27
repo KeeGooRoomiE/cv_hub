@@ -3,11 +3,19 @@
 //  blocks/ImageBlock.astro
 //  CV Hub — Image block
 //
+//  Created by Alexander Gusarov on 31.03.2026.
+//  @spartan121
+//
 //  All fields optional.
 //  If src is missing — renders text content only (if any).
+//  anchor: optional id for deep-linking (e.g. /showcase/cv-hub#quickstart).
+//  `backtick` spans in title/subtitle/body/caption render as styled <code>
+//  (see InlineText.astro).
 //
 
-const { src, alt, caption, title, subtitle, body } = Astro.props;
+import InlineText from './InlineText.astro';
+
+const { src, alt, caption, title, subtitle, body, anchor } = Astro.props;
 
 const hasText = title || subtitle || body || caption;
 const hasSrc  = !!src;
@@ -23,10 +31,10 @@ const withBase = (p = '') => {
 };
 ---
 
-<div class="image-block">
-  {title    && <h2 class="image-block__title">{title}</h2>}
-  {subtitle && <p  class="image-block__subtitle">{subtitle}</p>}
-  {body     && <p  class="image-block__body">{body}</p>}
+<div class="image-block" id={anchor || undefined}>
+  {title    && <h2 class="image-block__title"><InlineText text={title} /></h2>}
+  {subtitle && <p  class="image-block__subtitle"><InlineText text={subtitle} /></p>}
+  {body     && <p  class="image-block__body"><InlineText text={body} /></p>}
 
   {hasSrc && (
     <figure class="image-block__figure">
@@ -38,7 +46,7 @@ const withBase = (p = '') => {
         onerror="this.closest('figure')?.remove();"
       />
       {caption && (
-        <figcaption class="image-block__caption">{caption}</figcaption>
+        <figcaption class="image-block__caption"><InlineText text={caption} /></figcaption>
       )}
     </figure>
   )}
@@ -51,6 +59,7 @@ const withBase = (p = '') => {
     gap: 10px;
     margin-top: 8px;
     margin-bottom: 8px;
+    scroll-margin-top: 84px;
   }
 
   .image-block__title {

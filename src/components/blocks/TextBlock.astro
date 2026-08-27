@@ -3,23 +3,31 @@
 //  blocks/TextBlock.astro
 //  CV Hub — Text block
 //
+//  Created by Alexander Gusarov on 31.03.2026.
+//  @spartan121
+//
 //  All fields optional. Renders only what's present.
+//  anchor: optional id for deep-linking (e.g. /showcase/cv-hub#quickstart).
+//  `backtick` spans in title/subtitle/body/bullets render as styled <code>
+//  (see InlineText.astro).
 //
 
-const { title, subtitle, body, bullets = [], links = [] } = Astro.props;
+import InlineText from './InlineText.astro';
+
+const { title, subtitle, body, bullets = [], links = [], anchor } = Astro.props;
 
 const hasContent = title || subtitle || body || bullets.length > 0 || links.length > 0;
 if (!hasContent) return;
 ---
 
-<div class="text-block">
-  {title    && <h2 class="text-block__title">{title}</h2>}
-  {subtitle && <p  class="text-block__subtitle">{subtitle}</p>}
-  {body     && <p  class="text-block__body">{body}</p>}
+<div class="text-block" id={anchor || undefined}>
+  {title    && <h2 class="text-block__title"><InlineText text={title} /></h2>}
+  {subtitle && <p  class="text-block__subtitle"><InlineText text={subtitle} /></p>}
+  {body     && <p  class="text-block__body"><InlineText text={body} /></p>}
 
   {bullets.length > 0 && (
     <ul class="text-block__bullets">
-      {bullets.map((b: string) => <li>{b}</li>)}
+      {bullets.map((b: string) => <li><InlineText text={b} /></li>)}
     </ul>
   )}
 
@@ -37,6 +45,7 @@ if (!hasContent) return;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    scroll-margin-top: 84px;
   }
 
   .text-block__title {
