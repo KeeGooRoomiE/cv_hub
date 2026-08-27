@@ -46,7 +46,7 @@ const siteUrl = owner
   : 'http://localhost:4321';
 
 const metaDescription = description ?? t('meta.description');
-const metaImage = ogImage ?? `${siteUrl}/og-image.png`;
+const metaImage = ogImage ?? `${siteUrl}/media/og-image.png`;
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 

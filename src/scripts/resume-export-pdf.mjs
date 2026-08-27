@@ -1,6 +1,9 @@
 /**
  * resume-export-pdf.mjs
  *
+ * Created by Alexander Gusarov on 04.03.2026.
+ * @spartan121
+ *
  * Reads src/content/cv/en.yaml and ru.yaml,
  * builds a clean two-column print HTML and exports PDF via Playwright.
  *

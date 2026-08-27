@@ -1,6 +1,9 @@
 /**
  * resume-import-linkedin.mjs
  *
+ * Created by Alexander Gusarov on 04.03.2026.
+ * @spartan121
+ *
  * Parses a standard English LinkedIn PDF export into JSON Resume + YAML.
  *
  * Usage:

@@ -1,7 +1,7 @@
 {
   "name": "cv-hub",
   "type": "module",
-  "version": "1.5.5",
+  "version": "1.6.0",
   "engines": {
     "node": ">=24"
   },
@@ -15,13 +15,14 @@
     "resume:import": "node src/scripts/resume-import-json.mjs",
     "resume:linkedin": "node src/scripts/resume-import-linkedin.mjs",
     "resume:import:all": "node src/scripts/resume-import-json.mjs docs/cv_en.json en && node src/scripts/resume-import-json.mjs docs/cv_ru.json ru",
-    "build": "npm run cv:build && npm run resume:generate && npm run resume:pdf && astro build"
+    "og:generate": "node src/scripts/generate-og-image.mjs",
+    "build": "npm run cv:build && npm run resume:generate && npm run resume:pdf && astro build && npm run og:generate"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
-    "astro": "^5.17.1",
+    "astro": "^7.2.7",
     "docx": "^9.7.1",
     "unpdf": "^1.8.1",
     "yaml": "^2.9.0"

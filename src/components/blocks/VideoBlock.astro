@@ -3,12 +3,23 @@
 //  blocks/VideoBlock.astro
 //  CV Hub — Video block
 //
+//  Created by Alexander Gusarov on 17.07.2026.
+//  @spartan121
+//
 //  All fields optional except src.
-//  loop: true  → silent autoplay loop, no controls (short ambient clips)
-//  loop: false → controls + poster + lazy metadata (longer clips)
+//  src pointing at YouTube (youtube.com/watch, youtu.be, youtube.com/embed)
+//    → renders a responsive iframe embed.
+//  Otherwise src is a local/hosted video file:
+//    loop: true  → silent autoplay loop, no controls (short ambient clips)
+//    loop: false → controls + poster + lazy metadata (longer clips)
+//  anchor: optional id for deep-linking (e.g. /showcase/cv-hub#quickstart).
+//  `backtick` spans in title/subtitle/body/caption render as styled <code>
+//  (see InlineText.astro).
 //
 
-const { src, poster, alt, caption, title, subtitle, body, loop } = Astro.props;
+import InlineText from './InlineText.astro';
+
+const { src, poster, alt, caption, title, subtitle, body, loop, anchor } = Astro.props;
 
 const hasText = title || subtitle || body || caption;
 const hasSrc  = !!src;
@@ -23,17 +34,30 @@ const withBase = (p = '') => {
   return (base.endsWith('/') ? base : base + '/') + clean;
 };
 
+const youtubeId = hasSrc
+  ? String(src).match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/)?.[1] ?? null
+  : null;
+
 const isLoop = loop === true;
 ---
 
-<div class="video-block">
-  {title    && <h2 class="video-block__title">{title}</h2>}
-  {subtitle && <p  class="video-block__subtitle">{subtitle}</p>}
-  {body     && <p  class="video-block__body">{body}</p>}
+<div class="video-block" id={anchor || undefined}>
+  {title    && <h2 class="video-block__title"><InlineText text={title} /></h2>}
+  {subtitle && <p  class="video-block__subtitle"><InlineText text={subtitle} /></p>}
+  {body     && <p  class="video-block__body"><InlineText text={body} /></p>}
 
   {hasSrc && (
     <figure class="video-block__figure">
-      {isLoop ? (
+      {youtubeId ? (
+        <iframe
+          class="video-block__el video-block__el--youtube"
+          src={`https://www.youtube.com/embed/${youtubeId}`}
+          title={alt ?? title ?? 'YouTube video'}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      ) : isLoop ? (
         <video
           class="video-block__el"
           src={withBase(src)}
@@ -59,7 +83,7 @@ const isLoop = loop === true;
         ></video>
       )}
       {caption && (
-        <figcaption class="video-block__caption">{caption}</figcaption>
+        <figcaption class="video-block__caption"><InlineText text={caption} /></figcaption>
       )}
     </figure>
   )}
@@ -72,6 +96,7 @@ const isLoop = loop === true;
     gap: 10px;
     margin-top: 8px;
     margin-bottom: 8px;
+    scroll-margin-top: 84px;
   }
 
   .video-block__title {
@@ -106,6 +131,11 @@ const isLoop = loop === true;
     display: block;
     object-fit: cover;
     background: #000;
+  }
+
+  .video-block__el--youtube {
+    aspect-ratio: 16 / 9;
+    border: 0;
   }
 
   .video-block__caption {

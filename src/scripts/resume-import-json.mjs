@@ -1,6 +1,9 @@
 /**
  * resume-import-json.mjs
  *
+ * Created by Alexander Gusarov on 04.03.2026.
+ * @spartan121
+ *
  * Usage:
  *   npm run resume:import -- resume.json en
  *
