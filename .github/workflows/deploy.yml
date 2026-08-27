@@ -102,6 +102,11 @@ jobs:
 
           SHORT_SHA="${SHA:0:7}"
 
+          if [ "$BUILD_STATUS" = "cancelled" ] || [ "$DEPLOY_STATUS" = "cancelled" ]; then
+            echo "Run was superseded by a newer push (concurrency cancel-in-progress), skipping notification"
+            exit 0
+          fi
+
           if [ "$BUILD_STATUS" = "success" ] && [ "$DEPLOY_STATUS" = "success" ]; then
             TEXT="@${ACTOR}%0A✅ Deployed successfully!%0ABranch: ${BRANCH}%0ACommit: ${SHORT_SHA}%0A🌐 https://${OWNER}.github.io/${REPO_NAME}/"
           elif [ "$BUILD_STATUS" != "success" ]; then
