@@ -1,0 +1,43 @@
+---
+//
+//  quickstart.astro
+//  CV Hub
+//
+//  Created by Alexander Gusarov on 27.08.2026.
+//  @spartan121
+//
+//  Short, memorable redirect stub — the link dropped into release announcement
+//  posts (replacing a bare GitHub repo URL) instead of the longer canonical
+//  /showcase/cv-hub#quickstart. GitHub Pages is pure static hosting with no
+//  server-side rewrites, so a redirect here means a real (tiny) HTML page:
+//  meta-refresh + JS as a fast primary path, a visible link as the fallback
+//  if both are blocked. Excluded from the sitemap (astro.config.mjs) — the
+//  canonical content lives at the real URL, this is only an alias.
+//
+//  NOTE: this route exists purely as a presentation touch (a short link to
+//  drop into announcement posts) — it's cosmetic, not load-bearing. See also
+//  get-started.astro, a second alias to the same target kept for variety.
+//
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const target = `${base}/showcase/cv-hub/#quickstart`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quickstart — CV Hub</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <script define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p>
+      Redirecting to <a href={target}>the quickstart guide</a>…
+    </p>
+  </body>
+</html>

@@ -12,6 +12,10 @@ links:
     url: https://github.com/KeeGooRoomiE/cv_hub
   - label: Changelog
     url: https://keegooroomie.github.io/cv_hub/changelog
+  - label: Quickstart
+    url: https://keegooroomie.github.io/cv_hub/quickstart
+  - label: LLM Context
+    url: https://github.com/KeeGooRoomiE/cv_hub/blob/main/docs/LLM-CONTEXT.md
 
 blocks:
 
@@ -249,9 +253,16 @@ blocks:
   - type: text
     title: "The Showcase system"
     body: |
-      The portfolio half of the site is the same idea applied recursively. Projects are declared in a YAML list, and each can carry a full Deep Dive case study — like this one — assembled from a small set of content blocks: text, image, divider and links.
+      The portfolio half of the site is the same idea applied recursively. Projects are declared in a YAML list, and each can carry a full Deep Dive case study — like this one — assembled from a small set of content blocks: `text`, `image`, `video`, `code`, `divider`.
 
       The blocks are validated by a typed schema and rendered by dedicated components, which means a long-form, editorial case study is authored entirely in data, with no bespoke page code. It behaves like a controlled, static alternative to a Notion page: portable, versioned, and fast.
+
+      `video` embeds a YouTube link directly as a responsive player — no self-hosted file required, which came in handy for testing:
+
+  - type: image
+    src: /media/projects/cv-hub/video-block-demo.jpg
+    alt: "A YouTube video embedded in a case-study video block"
+    caption: "Now you can be rick-rolled right in your showcase."
 
   - type: divider
 
@@ -313,3 +324,51 @@ blocks:
       By applying system design principles — single source of truth, deterministic pipelines, and automation — the project transforms a static document into a scalable, maintainable system.
 
       This approach generalizes beyond resumes to any domain where data consistency, reproducibility, and multi-target output matter.
+
+  - type: divider
+
+  - type: text
+    title: "Want your own?"
+    anchor: "quickstart"
+    body: |
+      Everything on this page — this case study, the CV behind it, even the Rick Roll a few sections up — is a live CV Hub instance. If you have five minutes and know how to use `git`, you can have your own.
+
+  - type: text
+    title: "1. Fork it"
+    body: |
+      Fork the repository on GitHub, then clone your fork.
+
+  - type: code
+    body: |
+      git clone https://github.com/YOUR_ACCOUNT/cv_hub.git
+      cd cv_hub
+
+  - type: text
+    title: "2. Fill in your data"
+    body: |
+      Everything lives in one file: `src/content/cv/en.yaml`. Three ways to fill it in — pick whichever is easiest:
+    bullets:
+      - "`Edit the YAML directly` — name, summary, experience, skills. Plain text, no build step needed to see the shape of it."
+      - "`Import a JSON Resume` — already have one? `npm run resume:import` converts it."
+      - "`Feed it to an AI` — paste your existing resume (PDF or plain text) into Claude or ChatGPT together with the prompt from `docs/LLM-CONTEXT.md`. It hands back ready-to-use YAML — genuinely the fastest path if you'd rather not touch the schema by hand."
+
+  - type: text
+    title: "3. Look at it"
+    body: |
+      Run it locally and open `http://localhost:4321` — every save shows up instantly.
+
+  - type: code
+    body: |
+      npm install
+      npm run dev
+
+  - type: text
+    title: "4. Ship it"
+    body: |
+      Turn on GitHub Pages once — `Settings → Pages → Source: GitHub Actions` — then just push. Every commit to `main` rebuilds and redeploys automatically. No separate deploy step, ever again.
+
+  - type: code
+    body: |
+      git add .
+      git commit -m "my resume"
+      git push

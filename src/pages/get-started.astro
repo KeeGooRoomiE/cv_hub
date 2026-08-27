@@ -1,0 +1,38 @@
+---
+//
+//  get-started.astro
+//  CV Hub
+//
+//  Created by Alexander Gusarov on 27.08.2026.
+//  @spartan121
+//
+//  Second short redirect stub, same target as quickstart.astro — a more
+//  literal/onboarding-flavored alias kept purely for presentation variety
+//  (a bit more choice of link wording for announcement posts). Cosmetic
+//  only, not load-bearing: removing it changes nothing functionally, the
+//  canonical content still lives at /showcase/cv-hub#quickstart. Excluded
+//  from the sitemap (astro.config.mjs) for the same reason.
+//
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const target = `${base}/showcase/cv-hub/#quickstart`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Get Started — CV Hub</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <script define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p>
+      Redirecting to <a href={target}>the quickstart guide</a>…
+    </p>
+  </body>
+</html>
