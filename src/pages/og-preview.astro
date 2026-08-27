@@ -1,0 +1,51 @@
+---
+//
+//  og-preview.astro
+//  CV Hub
+//
+//  Created by Alexander Gusarov on 27.08.2026.
+//  @spartan121
+//
+//  Screenshot target for the OG-image generation pipeline
+//  (src/scripts/generate-og-image.mjs). Always renders the sample CV from
+//  docs/examples/example_cv.yaml — never touches public/cv/ (real data),
+//  so there is zero risk of mock content leaking into the live pages.
+//
+//  Deliberately excluded from the sitemap (astro.config.mjs) and deleted
+//  from dist/ by the generation script right after the screenshot is taken
+//  — this route never actually ships to production.
+//
+
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { parse } from 'yaml';
+import { getEntry } from 'astro:content';
+import { makeT } from '../scripts/t';
+import HomePage from '../components/HomePage.astro';
+
+const translations = await getEntry('i18n', 'translations');
+const t = makeT(translations?.data ?? {}, 'en');
+
+const examplePath = join(process.cwd(), 'docs/examples/example_cv.yaml');
+const data = parse(readFileSync(examplePath, 'utf8'));
+---
+
+<HomePage
+  lang="en"
+  data={data}
+  pdfUrl="#"
+  docxUrl="#"
+  txtUrl="#"
+  profile=""
+  t={{
+    nameFallback:     t('cv.unnamed'),
+    contacts:         t('cv.contacts'),
+    skills:           t('cv.skills'),
+    experience:       t('cv.experience'),
+    achievements:     t('cv.achievements'),
+    downloads:        t('cv.download'),
+    company:          t('cv.company_fallback'),
+    empty_skills:     t('cv.empty_skills'),
+    empty_experience: t('cv.empty_experience'),
+  }}
+/>
