@@ -61,13 +61,13 @@ npm run dev
 ### 5. Commit with a clear message
 
 ```bash
-git commit -m "fix: correct layout on mobile"
-git commit -m "feat: add certifications field to YAML schema"
-git commit -m "docs: clarify YAML structure in README"
+git commit -m "FIX/ correct layout on mobile"
+git commit -m "ADD/ add certifications field to YAML schema"
+git commit -m "DOCS/ clarify YAML structure in README"
+git commit -m "UPD/ change behavioral ci pattern"
 ```
 
-Prefix convention: `fix:`, `feat:`, `docs:`, `style:`, `refactor:`
-
+Prefix convention: `FIX/`, `UPD/`, `ADD/`, `INIT/`, `DOCS/`
 ### 6. Open a Pull Request
 
 Go to the original repository and open a PR with a short description of what you changed and why.
