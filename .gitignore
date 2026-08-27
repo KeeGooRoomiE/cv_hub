@@ -26,6 +26,9 @@ pnpm-debug.log*
 *.pdf
 *.txt
 /public/cv
+# Regenerated every build by src/scripts/generate-og-image.mjs — a build
+# output like sitemap.xml, not a source file.
+/public/media/og-image.png
 
 # Claude local working files (behaviour file CLAUDE.md stays committed)
 .claude/

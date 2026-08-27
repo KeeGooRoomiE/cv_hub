@@ -39,7 +39,7 @@ jobs:
       - name: Verify Chrome is available
         run: google-chrome --version
 
-      # `npm run build` runs all four stages; they are split here into named
+      # `npm run build` runs all five stages; they are split here into named
       # steps (same runner, same filesystem — zero cost) so the Actions UI shows
       # per-stage timing and points at the exact stage that failed.
       - name: Merge CV data
@@ -53,6 +53,12 @@ jobs:
 
       - name: Build Astro site
         run: npx astro build
+
+      # Screenshots /og-preview (sample CV, docs/examples/example_cv.yaml)
+      # through Playwright and composites a framed, wallpapered 1200×630 card
+      # — regenerated every deploy, never committed (see .gitignore).
+      - name: Generate OG image
+        run: npm run og:generate
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v5

@@ -8,10 +8,10 @@ Keep this file lean. A bloated behaviour file gets ignored.
 ## Project context
 
 - **Project:** CV Hub — data-driven personal CV / portfolio. One YAML source → live site + PDF/DOCX/TXT, deployed to GitHub Pages.
-- **Stack:** Astro 5, TypeScript, YAML content, Playwright (PDF export), docx.js, GitHub Actions. No backend, no runtime JS by default.
+- **Stack:** Astro 7, TypeScript, YAML content, Playwright (PDF export), docx.js, GitHub Actions. No backend, no runtime JS by default.
 - **Entry points:**
   - `src/pages/` — `index.astro`, `[...slug].astro` (profile × language), `showcase/` (list + `[...rest].astro` cases)
-  - `src/content/` — YAML (cv, showcase, changelog, i18n, languages, profiles) validated by `config.ts` Zod schemas
+  - `src/content/` — YAML (cv, showcase, changelog, i18n, languages, profiles) validated by `src/content.config.ts` Zod schemas (Content Layer `glob()` loaders)
   - `src/scripts/merge.mjs` — profile merge pipeline (base + delta → per-profile, per-language artifacts)
   - `public/media/projects/{slug}/{slug}_{lang}.yaml` — block-based case studies
 - **Key invariants:**

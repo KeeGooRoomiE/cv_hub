@@ -39,7 +39,7 @@ jobs:
       - name: Verify Chrome is available
         run: google-chrome --version
 
-      # Same four stages as the deploy build, as named steps: a failure points
+      # Same five stages as the deploy build, as named steps: a failure points
       # at the exact stage. Content schemas are validated by Astro at build
       # time, so malformed YAML fails here instead of reaching main.
       - name: Merge CV data
@@ -54,6 +54,12 @@ jobs:
       - name: Build Astro site
         run: npx astro build
 
+      # Screenshots /og-preview and composites the framed, wallpapered OG
+      # card — same pipeline as deploy.yml, so a broken screenshot/theme/
+      # wallpaper is caught on the PR instead of on main.
+      - name: Generate OG image
+        run: npm run og:generate
+
       # Generated files are gitignored, so uploading them here is the only way
       # to inspect what a PR actually produces.
       - name: Upload generated resume files
@@ -64,6 +70,13 @@ jobs:
           path: public/downloads/
           retention-days: 7
           if-no-files-found: warn
+
+      - name: Upload OG image
+        uses: actions/upload-artifact@v7
+        with:
+          name: og-image
+          path: public/media/og-image.png
+          retention-days: 7
 
       - name: Upload built site
         uses: actions/upload-artifact@v7

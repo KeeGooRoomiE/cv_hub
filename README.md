@@ -48,6 +48,7 @@ One YAML file generates everything:
 | 🌍 Multi-language | EN, RU, or any language — switcher included |
 | 📁 Case studies | Per-project deep-dive pages with text, images, architecture |
 | 🎨 Themes | 4 built-in themes, switchable via URL |
+| 🖼️ [Social card](https://keegooroomie.github.io/cv_hub/media/og-image.png) | Auto-generated on every build — a themed, framed screenshot, no manual design tool needed |
 
 No duplicated resumes. No platform lock-in. No visual builders.
 
