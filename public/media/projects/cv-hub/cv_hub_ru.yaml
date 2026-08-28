@@ -20,7 +20,7 @@ links:
 blocks:
 
   - type: image
-    src: /media/projects/cv-hub/cover.png
+    src: /media/projects/cv-hub/cover.jpg
     alt: "Главная страница CV Hub"
 
   - type: text
@@ -75,7 +75,7 @@ blocks:
   - type: image
     title: "Мультипрофильная система"
     subtitle: "Архитектура base + delta"
-    src: /media/projects/cv-hub/profiles.png
+    src: /media/projects/cv-hub/profiles.jpg
     alt: "Пайплайн слияния профилей"
     body: |
       Ролевые резюме генерируются по двухслойной модели: базовое CV плюс дельта-переопределения на каждый профиль.

@@ -228,8 +228,8 @@ projects:
         url: /showcase/wings-gms-online
         type: product
     media:
-      - type: image
-        src: /media/projects/wings-gms-online/cover.gif
+      - type: video
+        src: /media/projects/wings-gms-online/cover.mp4
         alt: "Wings gameplay screenshot"
         featured: true
 
@@ -389,8 +389,8 @@ projects:
         url: https://github.com/KeeGooRoomiE/timbermanMPGMS
         type: repo
     media:
-      - type: image
-        src: /media/projects/timberman-mp/cover.gif
+      - type: video
+        src: /media/projects/timberman-mp/cover.mp4
         alt: "Timberman multiplayer gameplay"
         featured: true
 

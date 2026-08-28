@@ -24,7 +24,7 @@ contacts:
 achievements:
   - Operated and automated infrastructure for 750+ Linux servers (Selectel VPS and bare metal) with 99.9% uptime
   - Reduced deploy time from 8 to 2 minutes (−75%) and AWS costs from $550 to $300/month
-  - Send Balls — contributed to a mobile game with 100M+ downloads and top App Store rankings
+  - Sand Balls — contributed to a mobile game with 100M+ downloads and top App Store rankings
   - Bhop Jump — built multiplayer backend generating $160K+ revenue in the first quarter
   - Lana and Ronen — 1M+ downloads mobile title
   - Upwork Top Rated Plus — top 5% of freelancers with 20+ successful projects
@@ -131,7 +131,7 @@ experience:
     period: Feb 2020 — Jun 2020
     description:
       - Designed mechanics and levels for hyper-casual prototypes
-      - Contributed to Send Balls (100M+ downloads) and FlowerKing
+      - Contributed to Sand Balls (100M+ downloads) and FlowerKing
       - Improved D1-retention by 10% through retention/drop-off metric iterations
     stack: [Game Design, Unity]
 

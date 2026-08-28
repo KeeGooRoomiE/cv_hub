@@ -20,7 +20,7 @@ links:
 blocks:
 
   - type: image
-    src: /media/projects/cv-hub/cover.png
+    src: /media/projects/cv-hub/cover.jpg
     alt: "CV Hub main page"
 
   - type: text
@@ -75,7 +75,7 @@ blocks:
   - type: image
     title: "Multi-profile system"
     subtitle: "Base + delta architecture"
-    src: /media/projects/cv-hub/profiles.png
+    src: /media/projects/cv-hub/profiles.jpg
     alt: "Multi-profile merge pipeline"
     body: |
       Role-specific resumes are generated using a two-layer model: a base CV plus per-profile delta overrides.
