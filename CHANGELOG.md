@@ -6,6 +6,39 @@ Versioning: [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.6.0] — 2026-08-26
+
+### Added
+- Automated OG-image pipeline — `src/scripts/generate-og-image.mjs` screenshots a dedicated `/og-preview` route (sample CV data, `docs/examples/example_cv.yaml`) through Playwright and composites a framed, wallpapered 1200×630 card, matching the active theme's own design tokens. Supports `--theme=<name>` (falls back to the default look if unknown) and `--wallpaper=gradient|<image path>`. Runs as the last stage of `npm run build` and in CI (`deploy.yml`, `ci.yml`); the image is regenerated every build and no longer committed to git
+- Case-study video block now embeds YouTube — a `src` pointing at `youtube.com/watch`, `youtu.be` or `youtube.com/embed` renders a responsive 16:9 iframe instead of a local `<video>` tag, so a gameplay trailer or clip can be linked directly without hosting an mp4
+- New `code` content block (`type: code`) — a verbatim monospace block for terminal commands and short snippets, no syntax-highlighting engine by design
+- Any content block (`text`, `image`, `video`, `code`) now accepts `anchor: "id"` for deep-linking into a specific section, e.g. `/showcase/{slug}#quickstart` — accounts for the sticky header so the target isn't hidden underneath it
+- Backtick-quoted spans in block prose (`title`, `subtitle`, `body`, `bullets`, `caption`) now render as styled inline code instead of literal backtick characters, via a shared `InlineText` component — fixes existing case studies that already used backticks to mention file names and identifiers
+- `/quickstart` and `/get-started` — two short, memorable redirects to the CV Hub quickstart section, meant to replace a bare GitHub repo link in release announcements
+- Showcase card featured media now supports an autoplaying, looping `type: video` cover — a lighter drop-in replacement for a heavy animated GIF (silent, muted, no controls)
+
+### Changed
+- Upgraded to **Astro 7** (from 5) — brings Vite 8 and closes every outstanding npm advisory; `npm audit` now reports **0 vulnerabilities**, down from 15
+- Content collections migrated to the Astro **Content Layer** — `src/content/config.ts` replaced by `src/content.config.ts`, with each collection switched from the removed `type: 'data'` to an explicit `glob()` loader. Rendered output is byte-identical: all 20 pages verified against the Astro 5 build with no content differences
+- **Node 24 is now required** to build locally, matching `.nvmrc`, `package.json` `engines` and the CI runner — Astro 7 dropped support for Node 20
+
+### Fixed
+- CI: Telegram deploy notification no longer misreports a cancelled run as a failed build — `deploy.yml` now skips the notification entirely when `concurrency: cancel-in-progress` supersedes a run, instead of sending a false "Build failed!"
+- 404 page rendered a doubled `<html>`/`<head>`/`<body>` document — it wrapped its own scaffold around `<Layout>`, which already renders a full document — so the page was missing the site header/nav/footer and carried two competing `<title>` tags. Now renders through `<Layout>` like every other page
+- i18n: the `notfound404` translation block existed in `translations.yaml` but was missing from the content schema, so it was silently stripped on load — the 404 page's title now actually resolves instead of falling through
+- Favicon — `favicon.ico`/`favicon.svg` were committed but never linked from `<head>`, and the browser's passive fallback missed them entirely under the GitHub Pages base path (`/cv_hub/`) — added explicit `<link rel="icon">`, base-path aware
+- Case-study hero image (the first `image` block on a Deep Dive page, usually the cover shot under the title) now loads eagerly with `fetchpriority="high"` instead of lazy — same LCP treatment the showcase grid's first card already had
+- Case-study images now reserve a 16:9 aspect ratio before loading instead of collapsing to zero height, preventing layout shift as they load in
+- Every page previously shared one generic meta description and OG image regardless of content — case studies now use their own `tagline`, CV pages their `summary`, changelog its own subtitle
+- Case-study and changelog `<title>` now carry the "— CV Hub" suffix, matching how CV/profile pages already read in a browser tab or search result
+- `resume-import-json.mjs` and `resume-import-linkedin.mjs` printed a usage message pointing at npm scripts that don't exist (`npm run convert`, `npm run parse`) — now reference the real `resume:import`/`resume:linkedin` commands
+- `resume-import-linkedin.mjs` wrote its JSON output to `docs/` instead of `public/downloads/json/`, contradicting its own doc comment and the sibling import script's convention, and risking collision with the example input files `README.md` documents at that same `docs/` path
+
+### Removed
+- ~5.1 MB of orphaned media — stale cover-image variants no longer referenced by any showcase or case-study YAML, plus a duplicate `diceroll/` media folder left over from a prior rename (only `apple-watch-diceroll` is a real slug)
+
+---
+
 ## [1.5.5] — 2026-08-26
 
 ### Added

@@ -22,7 +22,7 @@ CV Hub is a static personal website and resume system built with Astro and YAML.
 
 Core concept: **Resume as Code**. One YAML file is the single source of truth. Everything else — website, PDF, DOCX, TXT, multiple language versions, multiple role-specific profiles — is generated from it automatically.
 
-**Stack:** Astro (static), YAML (data), TypeScript, GitHub Actions (CI/CD), GitHub Pages (hosting). Zero client-side JS by default.
+**Stack:** Astro 7 (static, Content Layer), YAML (data), TypeScript, GitHub Actions (CI/CD), GitHub Pages (hosting). Zero client-side JS by default.
 
 ---
 
@@ -30,6 +30,7 @@ Core concept: **Resume as Code**. One YAML file is the single source of truth. E
 
 ```
 src/
+  content.config.ts        # collection schemas + Content Layer glob() loaders
   content/
     cv/
       en.yaml              # base CV in English
@@ -57,6 +58,7 @@ src/
       [...rest].astro      # showcase list non-default lang + case study pages
     changelog.astro
     404.astro
+    og-preview.astro       # screenshot target for the OG-image pipeline (sample data, excluded from sitemap)
   components/
     Layout.astro           # shared layout: header, nav (JS dropdown), lang switcher, footer
     HomePage.astro         # CV page renderer
@@ -76,6 +78,7 @@ src/
     resume-export-pdf.mjs  # PDF generator via Playwright
     resume-import-json.mjs # JSON Resume → YAML converter
     resume-import-linkedin.mjs
+    generate-og-image.mjs  # screenshots og-preview.astro, composites the 1200x630 OG card
   styles/
     global.css             # all styles + CSS design tokens
     themes/                # frosted, light, nordic, peachy
@@ -429,6 +432,8 @@ Output naming: `resume_{lang}[_{spec}].{ext}`
 Examples: `resume_ru.pdf`, `resume_en_devops.docx`
 
 **PDF browser:** `resume-export-pdf.mjs` drives Playwright. On CI (`process.env.CI`) it launches the runner's preinstalled Google Chrome via `channel: 'chrome'` — no browser download (avoids `cdn.playwright.dev` stalls). Locally it uses Playwright's bundled chromium. The CI workflow has no `playwright install` step; it just verifies `google-chrome` is present.
+
+**OG image:** `npm run og:generate` (last stage of `npm run build`) screenshots `/og-preview` (sample data from `docs/examples/example_cv.yaml`) via the same Playwright pattern, then composites a framed 1200×630 card on a wallpaper matching the active theme's own CSS tokens. `--theme=<name>` and `--wallpaper=gradient|<path>` are optional flags. `public/media/og-image.png` is gitignored — regenerated every build, not a committed source file.
 
 ---
 

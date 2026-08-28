@@ -249,7 +249,7 @@ astro build             # статический сайт
 
 | Воркфлоу | Триггер | Что делает |
 |---|---|---|
-| `ci.yml` | pull request | Полный пайплайн генерации + выгрузка резюме и сайта как артефактов. Ничего не деплоит. |
+| `ci.yml` | pull request | Полный пайплайн генерации + выгрузка резюме, OG-картинки и сайта как артефактов. Ничего не деплоит. |
 | `deploy.yml` | push в `main` | Тот же пайплайн → GitHub Pages → уведомление в Telegram |
 | `release.yml` | публикация релиза | Перегенерирует документы и прикладывает PDF/DOCX/TXT к релизу (без `astro build` — релизу нужны только документы) |
 
@@ -268,7 +268,8 @@ npm run build
   ├── cv:build          → public/cv/*.yaml
   ├── resume:generate   → DOCX + TXT
   ├── resume:pdf        → PDF
-  └── astro build       → статический сайт + sitemap-index.xml
+  ├── astro build       → статический сайт + sitemap-index.xml
+  └── og:generate       → public/media/og-image.png + dist/media/og-image.png
   ↓
 upload artifact → deploy → GitHub Pages
   ↓
@@ -278,6 +279,8 @@ notify_telegram (always, даже при падении build)
         а не inline ${{ }} в shell
       если секреты не настроены — шаг пропускается молча
 ```
+
+**OG-image пайплайн.** `src/scripts/generate-og-image.mjs` скриншотит отдельный роут `/og-preview` (рендерит мок-CV из `docs/examples/example_cv.yaml`, никогда не трогает реальный `public/cv/` — нулевой риск утечки моковых данных на живые страницы) тем же паттерном Playwright/Chrome, что и генерация PDF. Сырой скриншот компонуется в рамку с обоями 1200×630 на второй headless-странице, используя вычисленные CSS-переменные самой страницы (`--accent`, `--bg` и т.д.) — обои всегда совпадают с запрошенной темой, без хардкода цветов. `--theme=<name>` выбирает тему (фоллбэк на дефолтный вид, если тема неизвестна); `--wallpaper=gradient|<путь к изображению>` переключает между градиентом из токенов и статичной картинкой. Работает последней стадией `npm run build`; `og-image.png` перегенерируется каждый билд и лежит в `.gitignore` — это build output, как `sitemap-index.xml`, а не исходник. Сам роут `/og-preview` исключён из sitemap (`astro.config.mjs`) и удаляется скриптом из `dist/` сразу после скриншота — в продакшн никогда не попадает.
 
 ---
 
