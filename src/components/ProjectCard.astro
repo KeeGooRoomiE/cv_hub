@@ -99,7 +99,9 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
             <video
               class="media__el"
               src={withBase(featuredMedia.src)}
-              controls
+              autoplay
+              muted
+              loop
               playsinline
               preload="metadata"
             ></video>
@@ -255,7 +257,9 @@ const accentStyle = accent ? `--card-accent: ${accent};` : '';
           <video
             class="media__el"
             src={withBase(featuredMedia.src)}
-            controls
+            autoplay
+            muted
+            loop
             playsinline
             preload="metadata"
           ></video>

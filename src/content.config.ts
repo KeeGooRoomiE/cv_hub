@@ -188,6 +188,7 @@ const i18n = defineCollection({
     cv: z.record(translationValueSchema).optional().default({}),
     showcase: z.record(translationValueSchema).optional().default({}),
     changelog: z.record(translationValueSchema).optional().default({}),
+    notfound404: z.record(translationValueSchema).optional().default({}),
     meta: z.record(translationValueSchema).optional().default({}),
   }),
 });

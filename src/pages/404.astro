@@ -6,41 +6,39 @@
 //  Created by Alexander Gusarov on 12.03.2026.
 //  @spartan121
 //
+//  Astro's static 404 page: one file, one output (dist/404.html), served for
+//  every unmatched path regardless of language — there is no way to know the
+//  visitor's intended language at this point, so `lang` stays the site
+//  default. <Layout> already renders the full <html>/<head>/<body> document
+//  (meta, canonical, nav, footer) — this page must not wrap it in a second
+//  one.
+//
 
 import Layout from '../components/Layout.astro';
+import { getEntry } from 'astro:content';
 import { makeT } from '../scripts/t';
 
 const {
-  title = 'CV Hub',
   lang = 'en',
   profile = '',
 } = Astro.props;
 
-// --- Meta ---
-const repo = import.meta.env.GITHUB_REPOSITORY;
-const [owner] = repo ? repo.split('/') : [null, null];
-const siteUrl = owner
-  ? `https://${owner}.github.io/`
-  : 'http://localhost:4321';
+const translations = await getEntry('i18n', 'translations');
+const t = makeT(translations?.data ?? {}, lang);
 
-const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const title = `${t('notfound404.title')} — CV Hub`;
+const subtitle = t('notfound404.subtitle');
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <link rel="canonical" href={canonicalUrl} />
-    <meta http-equiv="refresh" content={`5; url=${base}/`} />
+<Layout title={title} lang={lang} section="main" profile={profile}>
+  <section class="container">
+    <div class="h0">404</div>
+    {subtitle && <p class="muted">{subtitle}</p>}
+  </section>
+</Layout>
 
-  </head>
-  <body>
-    <Layout title={404} lang={lang} section="main" profile={profile}>
-    <section class="container">
-      <div class="h0">404</div>
-    </section>
-    </Layout>
-  </body>
-</html>
+<script define:vars={{ base }}>
+  setTimeout(() => window.location.replace(`${base}/`), 5000);
+</script>

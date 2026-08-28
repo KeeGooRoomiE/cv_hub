@@ -23,7 +23,7 @@ import { extractText as pdfExtractText } from 'unpdf';
 const args = process.argv.slice(2);
 
 if (args.length < 2) {
-  console.error('Usage: npm run parse -- <linkedin.pdf> <lang>');
+  console.error('Usage: npm run resume:linkedin -- <linkedin.pdf> <lang>');
   process.exit(1);
 }
 
@@ -36,7 +36,7 @@ if (!SUPPORTED_LANGS.includes(lang)) {
 }
 
 const root    = process.cwd();
-const jsonOut = path.join(root, 'docs', `cv_${lang}.json`);
+const jsonOut = path.join(root, 'public/downloads/json', `cv_${lang}.json`);
 const yamlOut = path.join(root, 'src/content/cv', `${lang}.yaml`);
 
 const PRESENT = { en: 'Present', ru: 'н.в.' };

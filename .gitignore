@@ -29,6 +29,10 @@ pnpm-debug.log*
 # Regenerated every build by src/scripts/generate-og-image.mjs — a build
 # output like sitemap.xml, not a source file.
 /public/media/og-image.png
+# Mechanical copy of src/styles/themes/*.css (astro.config.mjs `copy-themes`
+# vite plugin, runs on every dev/build) — the source of truth is src/, not
+# this one.
+/public/themes
 
 # Claude local working files (behaviour file CLAUDE.md stays committed)
 .claude/

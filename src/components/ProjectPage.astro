@@ -14,9 +14,25 @@ import CodeBlock  from './blocks/CodeBlock.astro';
 import Divider    from './blocks/DividerBlock.astro';
 
 const { data, showcaseHref, langLinks, lang } = Astro.props;
+
+// LCP: the first image block is very likely the hero shot right under the
+// title — load it eagerly instead of the lazy default every other image
+// block uses (same reasoning as ProjectCard's eager showcase-cover).
+const blocks = data.blocks ?? [];
+const firstImageIdx = blocks.findIndex((b: any) => b.type === 'image');
+
+const projectTitle = data?.title || 'CV Hub';
+const pageTitle = projectTitle === 'CV Hub' ? 'CV Hub' : `${projectTitle} — CV Hub`;
 ---
 
-<Layout title={data?.title ?? ''} lang={lang} section="showcase" profile="" customLangLinks={langLinks}>
+<Layout
+  title={pageTitle}
+  description={data?.tagline || undefined}
+  lang={lang}
+  section="showcase"
+  profile=""
+  customLangLinks={langLinks}
+>
 <div class="project-page container">
 
   <!-- Nav: back + share button -->
@@ -87,10 +103,10 @@ const { data, showcaseHref, langLinks, lang } = Astro.props;
   </header>
 
   <!-- Blocks -->
-  {(data.blocks ?? []).map((block: any) => {
+  {blocks.map((block: any, i: number) => {
     if (block.type === 'divider') return <Divider />;
     if (block.type === 'text')    return <TextBlock  {...block} />;
-    if (block.type === 'image')   return <ImageBlock {...block} />;
+    if (block.type === 'image')   return <ImageBlock {...block} eager={i === firstImageIdx} />;
     if (block.type === 'video')   return <VideoBlock {...block} />;
     if (block.type === 'code')    return <CodeBlock   {...block} />;
     return null;

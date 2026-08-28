@@ -59,7 +59,7 @@ const skillGroups = rawSkills
   .filter((g) => g.items.length > 0);
 ---
 
-<Layout title={pageTitle} lang={lang} section="main" profile={profile}>
+<Layout title={pageTitle} description={data?.summary || undefined} lang={lang} section="main" profile={profile}>
   <section class="container">
     <div class="page-grid">
 
