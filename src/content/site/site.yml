@@ -29,10 +29,16 @@
 #           `group` keys into translations.yaml under cv.downloads_{group}
 #           (falls back to the literal key if no translation exists).
 #
-# Personal site: keep it to [pdf, docx] — the two a visitor recognizes.
-# Demo/marketing deployment: show all four, grouped, so the ATS variant is
-# visible to people evaluating the product, not just the person running it.
-downloads: [pdf, docx]
+# This deployment is both: a personal CV *and* the project's only live demo
+# (there is no separate example-data deployment on purpose). So it runs the
+# grouped form with all four formats — the ATS variant has to be visible to
+# someone evaluating CV Hub, not just to its owner. A fork that is only a
+# personal CV is better off with the flat `downloads: [pdf, docx]`.
+downloads:
+  - group: people
+    items: [pdf, docx]
+  - group: ats
+    items: [pdfAts, txt]
 
 # "Made with CV Hub" footer credit, next to the GitHub link. Always points
 # at the upstream project regardless of whose fork this is — that's the

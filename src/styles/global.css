@@ -405,6 +405,12 @@ a:hover { text-decoration: underline; }
   .page-grid {
     display: flex;
     flex-direction: column;
+    /* The base rule sets align-items: flex-start, which in a grid means
+       "top-align the columns". Switching to a flex column here flips that
+       same property to the cross (horizontal) axis, where it means "shrink
+       every card to its content width" — which left the Download card
+       noticeably narrower than the ones below it. Restore stretching. */
+    align-items: stretch;
   }
 
   .sidebar,
