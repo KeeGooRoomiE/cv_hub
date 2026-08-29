@@ -15,7 +15,7 @@ CV Hub — статический сайт-резюме, построенный 
 | Data | YAML | Human-readable single source of truth, easy to diff and version |
 | Deploy | GitHub Pages + Actions | Free, immutable builds, no runtime server |
 | Styles | Plain CSS + custom properties | No build overhead, theme switching via one token file |
-| Docs | DOCX / PDF / TXT | Generated from YAML at build time via docx.js (DOCX/TXT) and Playwright (PDF) |
+| Docs | DOCX / PDF / TXT | Generated from YAML at build time via docx.js (DOCX/TXT) and Playwright (PDF, two-column + a single-column ATS-safe variant) |
 
 ---
 
@@ -152,7 +152,7 @@ npm run build
   ├── resume:generate   → DOCX + TXT
   ├── resume:pdf        → PDF via Playwright (drives system Chrome on CI)
   ├── astro build       → static site + sitemap-index.xml
-  └── og:generate       → public/media/og-image.png + dist/media/og-image.png
+  └── og:generate       → public/media/og-image-{lang}.png + dist/media/og-image-{lang}.png
   ↓
 GitHub Pages deploy
   ↓
@@ -163,7 +163,7 @@ The Telegram step passes secrets and context through an `env:` block (never inli
 
 **PDF browser strategy:** PDF export uses Playwright's Node API, but the browser binary differs by environment. On CI it drives the runner's **preinstalled Google Chrome** (`channel: 'chrome'`, gated on `process.env.CI`) — no browser is downloaded, which avoids `cdn.playwright.dev` download stalls that were hanging deploys. Local builds use Playwright's bundled chromium. See `src/scripts/resume-export-pdf.mjs`.
 
-**OG-image pipeline:** `src/scripts/generate-og-image.mjs` screenshots a dedicated `/og-preview` route (renders sample CV data from `docs/examples/example_cv.yaml`, never the real `public/cv/` — zero risk of mock content on live pages) through the same Playwright/Chrome pattern as PDF export. The raw screenshot is composited into a framed, wallpapered 1200×630 card on a second headless page, using the live page's own computed CSS custom properties (`--accent`, `--bg`, etc.) so the wallpaper always matches whichever theme was requested — no hardcoded colors. `--theme=<name>` picks a theme (falls back to the default look if unknown); `--wallpaper=gradient|<image path>` switches between a token-driven gradient and a static image. Runs as the last stage of `npm run build`; `og-image.png` is regenerated every build and is `.gitignore`d — a build output, like `sitemap-index.xml`, not a source file. The `/og-preview` route itself is excluded from the sitemap (`astro.config.mjs`) and deleted from `dist/` by the script right after the screenshot, so it never ships.
+**OG-image pipeline:** `src/scripts/generate-og-image.mjs` screenshots one dedicated `/og-preview/{lang}` route per configured language (`getStaticPaths()`, `src/pages/og-preview/[lang].astro`) — each rendering the real default-profile CV from `public/cv/{lang}.yaml` (same file `index.astro` reads; falls back to `docs/examples/example_cv.yaml` only if that file doesn't exist yet) — through the same Playwright/Chrome pattern as PDF export. One image per language, not per profile or per case study: every page picks its OG image by its own `lang` (`Layout.astro`), so a `/devops` or case-study page just reuses the same-language default-profile image instead of a dedicated screenshot. Each raw screenshot is composited into a framed, wallpapered 1200×630 card on a second headless page, using the live page's own computed CSS custom properties (`--accent`, `--bg`, etc., extracted once and reused across languages — theme tokens don't depend on CV content) so the wallpaper always matches whichever theme was requested — no hardcoded colors. `--theme=<name>` picks a theme (falls back to the default look if unknown); `--wallpaper=gradient|<image path>` switches between a token-driven gradient and a static image. Runs as the last stage of `npm run build`; `og-image-{lang}.png` files are regenerated every build and `.gitignore`d — build output, like `sitemap-index.xml`, not source files. The `/og-preview/*` routes are excluded from the sitemap (`astro.config.mjs`) and deleted from `dist/` by the script right after the screenshots, so they never ship.
 
 Run it standalone (after a fresh `astro build`) to iterate on the look without regenerating documents: `npm run og:generate -- --theme=nordic --wallpaper=docs/repo-assets/bkg-samples/wavelines_example.png`. Full CLI reference and CI wiring — `docs/INFO.md` §12.
 

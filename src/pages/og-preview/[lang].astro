@@ -1,0 +1,71 @@
+---
+//
+//  og-preview/[lang].astro
+//  CV Hub
+//
+//  Created by Alexander Gusarov on 27.08.2026.
+//  @spartan121
+//
+//  Screenshot target for the OG-image generation pipeline
+//  (src/scripts/generate-og-image.mjs) — one static route per configured
+//  language (/og-preview/en/, /og-preview/ru/, ...), each rendering the real
+//  default-profile CV from public/cv/{lang}.yaml — the same file index.astro
+//  reads — so the generated OG card shows actual data, not a mock persona.
+//  Static output can't read a query param at request time (there's no
+//  server), which is why this is a getStaticPaths() route instead of a
+//  single page branching on Astro.url.searchParams.
+//
+//  Falls back to docs/examples/example_cv.yaml only if public/cv/{lang}.yaml
+//  doesn't exist yet — e.g. running this script standalone before cv:build —
+//  so the route never crashes the build; in the normal `npm run build`
+//  sequence cv:build always runs first and this fallback never triggers.
+//
+//  Deliberately excluded from the sitemap (astro.config.mjs) and deleted
+//  from dist/ by the generation script right after the screenshots are
+//  taken — this route never actually ships to production.
+//
+
+import { readFileSync, existsSync } from 'fs';
+import { join } from 'path';
+import { parse } from 'yaml';
+import { getEntry } from 'astro:content';
+import { makeT } from '../../scripts/t';
+import HomePage from '../../components/HomePage.astro';
+
+export async function getStaticPaths() {
+  const langConfig = await getEntry('languages', 'languages');
+  const langs = langConfig?.data?.languages ?? [{ id: 'en', label: 'EN' }];
+  return langs.map((l) => ({ params: { lang: l.id } }));
+}
+
+const { lang } = Astro.params;
+
+const translations = await getEntry('i18n', 'translations');
+const t = makeT(translations?.data ?? {}, lang);
+
+const cvPath = join(process.cwd(), 'public/cv', `${lang}.yaml`);
+const examplePath = join(process.cwd(), 'docs/examples/example_cv.yaml');
+const data = existsSync(cvPath)
+  ? parse(readFileSync(cvPath, 'utf8'))
+  : parse(readFileSync(examplePath, 'utf8'));
+---
+
+<HomePage
+  lang={lang}
+  data={data}
+  pdfUrl="#"
+  docxUrl="#"
+  txtUrl="#"
+  profile=""
+  t={{
+    nameFallback:     t('cv.unnamed'),
+    contacts:         t('cv.contacts'),
+    skills:           t('cv.skills'),
+    experience:       t('cv.experience'),
+    achievements:     t('cv.achievements'),
+    downloads:        t('cv.download'),
+    company:          t('cv.company_fallback'),
+    empty_skills:     t('cv.empty_skills'),
+    empty_experience: t('cv.empty_experience'),
+  }}
+/>

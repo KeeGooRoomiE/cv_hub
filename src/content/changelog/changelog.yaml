@@ -5,7 +5,19 @@ changelog:
     date: "2026-08-26"
     changes:
       - type: added
-        text: "Automated OG-image pipeline — src/scripts/generate-og-image.mjs screenshots a dedicated /og-preview route (sample CV data, docs/examples/example_cv.yaml) through Playwright and composites a framed, wallpapered 1200x630 card, matching the theme's own design tokens. Supports --theme=<name> (falls back to the default look if unknown) and --wallpaper=gradient|<image path>. Runs as the last stage of npm run build and in CI (deploy.yml, ci.yml); the image is regenerated every build and no longer committed to git"
+        text: "JSON-LD schema.org/Person markup on CV/profile pages — name, job title, summary, email and sameAs links (GitHub/LinkedIn/Habr/etc. from contacts), knowsAbout from skills. Built from data the page already parses, no new schema"
+      - type: added
+        text: "hreflang alternate tags, reusing the same data that drives the language switcher — CV pages, showcase list and case studies (each scoped to the languages that actually have content); skipped on noindex'd pages and on the changelog, which doesn't have a real per-language build"
+      - type: added
+        text: "noindex on the 404 page"
+      - type: added
+        text: "Custom domain support — SITE_URL / BASE_PATH env overrides in astro.config.mjs, layered on top of the GITHUB_REPOSITORY-derived defaults ({owner}.github.io / /{repo}). Combined with a public/CNAME file, a fork can serve from its own domain instead of the default project-page URL"
+      - type: added
+        text: "npm run init — one-time onboarding script for a fresh fork. Backs up and clears the repo's own CV, showcase and case-study data (multi-profile reset to a single default) and reseeds it from docs/examples/*, so a new user edits a blank placeholder instead of someone else's resume. Interactive prompts for name/title/language, --dry-run to preview, --force to re-run, no new dependencies (node:readline/promises)"
+      - type: added
+        text: "ATS-safe PDF resume — resume:pdf now renders a second, single-column PDF (resume_{lang}[_{spec}]_ats.pdf) alongside the existing two-column one, from the same CV data. The flagship two-column layout risks scrambled text on ATS parsers that read multi-column pages left-to-right across both columns; the new variant is plain Arial/Helvetica, standard section headings, contacts in the body flow, no icons — reading order in the file matches visual order top to bottom. Linked as a fourth 'ATS PDF' download button next to PDF/DOCX/TXT"
+      - type: added
+        text: "Automated OG-image pipeline — src/scripts/generate-og-image.mjs screenshots one dedicated /og-preview/{lang} route per configured language through Playwright and composites each into a framed, wallpapered 1200x630 card, matching the theme's own design tokens. Each screenshot renders the real default-profile CV (public/cv/{lang}.yaml — same data the site itself shows), not mock data — every page picks the matching-language image automatically via Layout.astro, so a /devops, /gamedev or case-study page reuses the same-language default-profile card instead of a dedicated screenshot per page. Supports --theme=<name> (falls back to the default look if unknown) and --wallpaper=gradient|<image path>. Runs as the last stage of npm run build and in CI (deploy.yml, ci.yml); images are regenerated every build and never committed to git"
       - type: added
         text: "Case-study video block now embeds YouTube — a src pointing at youtube.com/watch, youtu.be or youtube.com/embed renders a responsive 16:9 iframe instead of a local <video> tag, so a gameplay trailer or clip can be linked directly without hosting an mp4"
       - type: added
@@ -24,6 +36,12 @@ changelog:
         text: "Content collections migrated to the Astro Content Layer — src/content/config.ts replaced by src/content.config.ts, with each collection switched from the removed type: 'data' to an explicit glob() loader. Rendered output is byte-identical: all 20 pages verified against the Astro 5 build with no content differences"
       - type: changed
         text: "Node 24 is now required to build locally, matching .nvmrc, package.json engines and the CI runner — Astro 7 dropped support for Node 20"
+      - type: fixed
+        text: "og:image/twitter:image pointed at the wrong URL on every page — the meta tag never included base, so on the deployed project-page site it resolved to {owner}.github.io/media/og-image.png instead of {owner}.github.io/cv_hub/media/og-image.png and 404'd. Link/social previews have been showing no image because of this"
+      - type: fixed
+        text: "Canonical, OG and Twitter meta URLs had a literal double slash on every page (https://…github.io//cv_hub/…) — siteUrl already carried a trailing slash and every consumer added its own leading one. Layout.astro now derives siteUrl from Astro's own Astro.site (which SITE_URL/BASE_PATH also flow through) instead of hand-rolling it from GITHUB_REPOSITORY"
+      - type: fixed
+        text: "Footer credit (GitHub link, 'Alexander Gusarov' byline URL) was hardcoded to the original repo — now derived from GITHUB_REPOSITORY, same as siteUrl already was, so a fork's footer points at itself"
       - type: fixed
         text: "CI: Telegram deploy notification no longer misreports a cancelled run as a failed build — deploy.yml now skips the notification entirely when concurrency: cancel-in-progress supersedes a run, instead of sending a false 'Build failed!'"
       - type: fixed
@@ -44,6 +62,8 @@ changelog:
         text: "resume-import-json.mjs and resume-import-linkedin.mjs printed a usage message pointing at npm scripts that don't exist (npm run convert, npm run parse) — now reference the real resume:import/resume:linkedin commands"
       - type: fixed
         text: "resume-import-linkedin.mjs wrote its JSON output to docs/ instead of public/downloads/json/, contradicting its own doc comment and the sibling import script's convention, and risking collision with the example input files README.md documents at that same docs/ path"
+      - type: removed
+        text: "public/themes/*.css untracked from git — it's a mechanical copy of src/styles/themes/*.css regenerated on every dev/build (astro.config.mjs's copy-themes plugin), not a source file; committing it separately from its source risked the two drifting out of sync"
       - type: removed
         text: "~5.1 MB of orphaned media — stale cover-image variants no longer referenced by any showcase or case-study YAML, plus a duplicate diceroll/ media folder left over from a prior rename (only apple-watch-diceroll is a real slug)"
   - version: "1.5.5"

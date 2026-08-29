@@ -6,13 +6,15 @@
  *
  * Reads src/content/cv/en.yaml and ru.yaml,
  * builds a clean two-column print HTML and exports PDF via Playwright.
+ * Also renders a second, single-column ATS-safe PDF from the same data —
+ * see htmlAts() below.
  *
  * Usage:
  *   npm run resume:pdf
  *
- * Output:
- *   public/downloads/resume_en.pdf
- *   public/downloads/resume_ru.pdf
+ * Output (per lang[_spec] found in public/cv/, e.g. en, en_devops, ru):
+ *   public/downloads/resume_{suffix}.pdf       — two-column, for humans
+ *   public/downloads/resume_{suffix}_ats.pdf   — single-column, for ATS parsers
  */
 
 import fs from 'node:fs';
@@ -28,6 +30,34 @@ const FILES = [
   { yaml: 'en.yaml', suffix: 'en' },
   { yaml: 'ru.yaml', suffix: 'ru' },
 ];
+
+const T = {
+  en: {
+    about:        'About me',
+    achievements: 'Key Achievements',
+    skills:       'Skills',
+    experience:   'Experience',
+    education:    'Education',
+    languages:    'Languages',
+  },
+  ru: {
+    about:        'Обо мне',
+    achievements: 'Ключевые достижения',
+    skills:       'Навыки',
+    experience:   'Опыт',
+    education:    'Образование',
+    languages:    'Языки',
+  },
+};
+
+// Escape user data before interpolating into HTML — a stray < or & in a
+// company name / bullet / URL would otherwise break or inject into the PDF.
+const esc = (v) => String(v ?? '')
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -46,35 +76,7 @@ function cleanPeriod(period = '') {
 }
 
 function html(cv, lang = 'en') {
-  const T = {
-    en: {
-      about:        'About me',
-      achievements: 'Key Achievements',
-      skills:       'Skills',
-      experience:   'Experience',
-      education:    'Education',
-      languages:    'Languages',
-    },
-    ru: {
-      about:        'Обо мне',
-      achievements: 'Ключевые достижения',
-      skills:       'Навыки',
-      experience:   'Опыт',
-      education:    'Образование',
-      languages:    'Языки',
-    },
-  };
-
   const tr = T[lang] ?? T.en;
-
-  // Escape user data before interpolating into HTML — a stray < or & in a
-  // company name / bullet / URL would otherwise break or inject into the PDF.
-  const esc = (v) => String(v ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
 
   /* ── Contacts: label as clickable link, URL hidden ── */
   const contactsHtml = (cv.contacts ?? [])
@@ -416,6 +418,146 @@ function html(cv, lang = 'en') {
 </html>`;
 }
 
+// ATS-safe variant: single linear column, reading order top-to-bottom exactly
+// matches DOM order (nothing an ATS text-extractor could re-shuffle across
+// columns), standard section headings, no icons, no header/footer regions —
+// contacts sit in the normal document flow. Same data, same esc()/tr, laid
+// out flat instead of sidebar + content.
+function htmlAts(cv, lang = 'en') {
+  const tr = T[lang] ?? T.en;
+
+  const contactsHtml = (cv.contacts ?? []).length ? `
+    <div class="contacts">
+      ${(cv.contacts ?? []).map(c => `<a href="${esc(c.url)}">${esc(c.label)}</a>`).join('<span class="sep">·</span>')}
+    </div>` : '';
+
+  const aboutHtml = cv.summary ? `
+    <section class="section">
+      <h2>${tr.about}</h2>
+      <p>${esc(cv.summary)}</p>
+    </section>` : '';
+
+  const skillsHtml = (cv.skills ?? []).length ? `
+    <section class="section">
+      <h2>${tr.skills}</h2>
+      ${(cv.skills ?? []).map(s => {
+        const groupName = typeof s === 'string' ? null : (s.group ?? null);
+        const items = typeof s === 'string' ? [s] : (s.items ?? []);
+        return `<p class="skill-line">${groupName ? `<strong>${esc(groupName)}:</strong> ` : ''}${items.map(esc).join(', ')}</p>`;
+      }).join('')}
+    </section>` : '';
+
+  const achievementsHtml = (cv.achievements ?? []).length ? `
+    <section class="section">
+      <h2>${tr.achievements}</h2>
+      <ul>${(cv.achievements ?? []).map(a => `<li>${esc(a)}</li>`).join('')}</ul>
+    </section>` : '';
+
+  const experienceHtml = (cv.experience ?? []).length ? `
+    <section class="section">
+      <h2>${tr.experience}</h2>
+      ${(cv.experience ?? []).map(exp => {
+        const desc = Array.isArray(exp.description) ? exp.description.filter(Boolean) : [];
+        return `
+        <div class="entry">
+          <p class="entry-head">
+            <strong>${esc(exp.company)}</strong>${exp.role ? ` — ${esc(exp.role)}` : ''}, ${esc(cleanPeriod(exp.period))}
+          </p>
+          ${desc.length ? `<ul>${desc.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
+          ${exp.stack?.length ? `<p class="entry-stack">${exp.stack.map(esc).join(', ')}</p>` : ''}
+        </div>`;
+      }).join('')}
+    </section>` : '';
+
+  const educationHtml = (cv.education ?? []).length ? `
+    <section class="section">
+      <h2>${tr.education}</h2>
+      ${(cv.education ?? []).map(e => `
+        <p class="entry-head">
+          <strong>${esc(e.institution)}</strong>${e.degree ? `, ${esc(e.degree)}` : ''}${e.period ? `, ${esc(e.period)}` : ''}
+        </p>`).join('')}
+    </section>` : '';
+
+  const languagesHtml = (cv.languages ?? []).length ? `
+    <section class="section">
+      <h2>${tr.languages}</h2>
+      <p>${(cv.languages ?? []).map(l => `${esc(l.language)} — ${esc(l.level)}`).join(', ')}</p>
+    </section>` : '';
+
+  return `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11pt;
+      font-weight: 400;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.4;
+    }
+
+    a { color: inherit; text-decoration: underline; }
+
+    .cv-name {
+      font-size: 20pt;
+      font-weight: 700;
+    }
+
+    .cv-title {
+      font-size: 12pt;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .contacts {
+      margin-top: 8px;
+      font-size: 10.5pt;
+    }
+
+    .contacts .sep { margin: 0 6px; }
+
+    .section { margin-top: 16px; }
+
+    .section h2 {
+      font-size: 13pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+    }
+
+    .section p { margin-bottom: 4px; }
+
+    .skill-line { font-size: 11pt; }
+
+    .entry { margin-bottom: 10px; }
+    .entry-head { break-inside: avoid; }
+    .entry-stack { font-style: italic; color: #333; font-size: 10.5pt; }
+
+    ul { padding-left: 18px; margin: 3px 0 6px; }
+    li { font-size: 11pt; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+  <div class="cv-name">${esc(cv.name)}</div>
+  <div class="cv-title">${esc(cv.title)}</div>
+  ${contactsHtml}
+  ${aboutHtml}
+  ${skillsHtml}
+  ${achievementsHtml}
+  ${experienceHtml}
+  ${educationHtml}
+  ${languagesHtml}
+</body>
+</html>`;
+}
+
 async function run() {
   ensureDir(OUTPUT_DIR);
 
@@ -445,6 +587,22 @@ async function run() {
     });
 
     console.log(`✔ ${outPath}`);
+
+    // ATS variant — flows naturally across as many pages as the content
+    // needs (unlike the fixed one-page two-column design above), so it gets
+    // real page margins instead of the zero-margin/fixed-height trick.
+    const contentAts = htmlAts(cv, lang);
+    await page.setContent(contentAts, { waitUntil: 'networkidle' });
+
+    const outPathAts = path.join(OUTPUT_DIR, `resume_${suffix}_ats.pdf`);
+    await page.pdf({
+      path:            outPathAts,
+      format:          'A4',
+      printBackground: true,
+      margin:          { top: '18mm', right: '18mm', bottom: '18mm', left: '18mm' },
+    });
+
+    console.log(`✔ ${outPathAts}`);
   }
 
   await browser.close();

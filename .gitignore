@@ -28,11 +28,14 @@ pnpm-debug.log*
 /public/cv
 # Regenerated every build by src/scripts/generate-og-image.mjs — a build
 # output like sitemap.xml, not a source file.
-/public/media/og-image.png
+/public/media/og-image-*.png
 # Mechanical copy of src/styles/themes/*.css (astro.config.mjs `copy-themes`
 # vite plugin, runs on every dev/build) — the source of truth is src/, not
 # this one.
 /public/themes
+# npm run init — local safety marker + backup of whatever it overwrote
+.cv-hub-initialized
+.cv-hub-backup-*
 
 # Claude local working files (behaviour file CLAUDE.md stays committed)
 .claude/

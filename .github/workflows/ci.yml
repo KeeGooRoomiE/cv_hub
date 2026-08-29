@@ -71,11 +71,11 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
-      - name: Upload OG image
+      - name: Upload OG images
         uses: actions/upload-artifact@v7
         with:
-          name: og-image
-          path: public/media/og-image.png
+          name: og-images
+          path: public/media/og-image-*.png
           retention-days: 7
 
       - name: Upload built site

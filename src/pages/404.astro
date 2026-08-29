@@ -32,7 +32,7 @@ const subtitle = t('notfound404.subtitle');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<Layout title={title} lang={lang} section="main" profile={profile}>
+<Layout title={title} lang={lang} section="main" profile={profile} noindex>
   <section class="container">
     <div class="h0">404</div>
     {subtitle && <p class="muted">{subtitle}</p>}

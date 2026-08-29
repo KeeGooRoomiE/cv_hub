@@ -12,6 +12,7 @@ const {
   lang = 'en',
   data = {},
   pdfUrl,
+  pdfAtsUrl,
   docxUrl,
   txtUrl,
   t: tProp = {},
@@ -28,9 +29,10 @@ const t = {
   company:      tProp.company      ?? 'Company',
   empty_skills:      tProp.empty_skills      ?? 'Add skills to YAML — tags will appear here.',
   empty_experience:  tProp.empty_experience  ?? 'Add experience to YAML — your timeline will appear here.',
-  pdf:  'PDF',
-  docx: 'DOCX',
-  txt:  'TXT',
+  pdf:    'PDF',
+  pdfAts: 'ATS PDF',
+  docx:   'DOCX',
+  txt:    'TXT',
 };
 
 const pageTitle = `${data?.name ?? t.nameFallback} — CV Hub`;
@@ -57,9 +59,23 @@ const skillGroups = rawSkills
       : { group: s?.group ?? null, items: Array.isArray(s?.items) ? s.items : [] }
   )
   .filter((g) => g.items.length > 0);
+
+// schema.org/Person — url/image get filled in by Layout itself; this only
+// supplies the person-specific fields. sameAs wants profile URLs (GitHub,
+// LinkedIn, ...), not a mailto: link, so email is split out separately.
+const emailContact = contacts.find((c) => /^mailto:/i.test(c?.url ?? ''));
+const profileContacts = contacts.filter((c) => /^https?:\/\//i.test(c?.url ?? ''));
+const personJsonLd = data?.name ? {
+  name: data.name,
+  jobTitle: data?.title || undefined,
+  description: data?.summary || undefined,
+  email: emailContact ? emailContact.url.replace(/^mailto:/i, '') : undefined,
+  sameAs: profileContacts.map((c) => c.url),
+  knowsAbout: skillGroups.flatMap((g) => g.items),
+} : undefined;
 ---
 
-<Layout title={pageTitle} description={data?.summary || undefined} lang={lang} section="main" profile={profile}>
+<Layout title={pageTitle} description={data?.summary || undefined} personJsonLd={personJsonLd} lang={lang} section="main" profile={profile}>
   <section class="container">
     <div class="page-grid">
 
@@ -70,9 +86,10 @@ const skillGroups = rawSkills
         <article class="card card--downloads">
           <h2 class="h2">{t.downloads}</h2>
           <div class="btnrow" aria-label={t.downloads}>
-            <a class="btn btn--ghost" href={pdfUrl}  download>{t.pdf}</a>
-            <a class="btn btn--ghost" href={docxUrl} download>{t.docx}</a>
-            <a class="btn btn--ghost" href={txtUrl}  download>{t.txt}</a>
+            <a class="btn btn--ghost" href={pdfUrl}    download>{t.pdf}</a>
+            <a class="btn btn--ghost" href={pdfAtsUrl} download>{t.pdfAts}</a>
+            <a class="btn btn--ghost" href={docxUrl}   download>{t.docx}</a>
+            <a class="btn btn--ghost" href={txtUrl}    download>{t.txt}</a>
           </div>
         </article>
 

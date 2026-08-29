@@ -6,6 +6,7 @@
     "node": ">=24"
   },
   "scripts": {
+    "init": "node src/scripts/init.mjs",
     "dev": "astro dev",
     "preview": "astro preview",
     "astro": "astro",

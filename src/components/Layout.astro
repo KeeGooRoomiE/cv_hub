@@ -25,6 +25,8 @@ const {
   description,
   ogImage,
   customLangLinks,
+  personJsonLd,
+  noindex = false,
 } = Astro.props;
 
 // --- Config ---
@@ -41,14 +43,25 @@ const t = makeT(translations?.data ?? {}, lang);
 // --- Meta ---
 const repo = import.meta.env.GITHUB_REPOSITORY;
 const [owner] = repo ? repo.split('/') : [null, null];
-const siteUrl = owner
-  ? `https://${owner}.github.io/`
-  : 'http://localhost:4321';
+// Astro.site mirrors astro.config.mjs's `site` — SITE_URL (custom domain) or
+// the GITHUB_REPOSITORY-derived github.io URL, whichever that resolved to.
+// Single source of truth instead of recomputing it here from the env var.
+// Astro.site always carries a trailing slash — stripped here since every
+// consumer below concatenates its own leading slash (previously produced a
+// literal "//" in canonical/OG URLs on every page).
+const siteUrl = (Astro.site?.toString() ?? 'http://localhost:4321/').replace(/\/$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const metaDescription = description ?? t('meta.description');
-const metaImage = ogImage ?? `${siteUrl}/media/og-image.png`;
+// og-image.png is a public/ asset, so it's served under `base` like anything
+// else — this was missing `base` entirely before, so the og:image URL 404'd
+// on the deployed (project-page) site.
+// One OG image per language (public/media/og-image-{lang}.png, see
+// generate-og-image.mjs) — every page already knows its own `lang`, so a
+// devops/gamedev/case-study page just reuses the same-language default-
+// profile image automatically, no per-page ogImage prop needed.
+const metaImage = ogImage ?? `${siteUrl}${base}/media/og-image-${lang}.png`;
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // --- Navigation ---
 function buildHref(profileSlug: string, langId: string): string {
@@ -79,9 +92,36 @@ const profileLinks = allProfiles.map(p => ({
   active: p.slug === profile,
 }));
 
+// hreflang: reuses langLinks — the same data that drives the language
+// switcher — so it's only ever as accurate as that already is. Skipped when
+// there's nothing to alternate between, when the page is noindex'd (404), or
+// for `changelog` — that page doesn't override langLinks (no per-page RU
+// build exists), so the inherited default would point hreflang at the
+// homepage instead of a real changelog translation.
+const showHreflang = !noindex && section !== 'changelog' && langLinks.length > 1;
+
 const currentYear = new Date().getFullYear();
-const authorGit = 'https://github.com/KeeGooRoomiE/cv_hub';
-const authorGitHubPage = 'https://github.com/KeeGooRoomiE/';
+// Derived from GITHUB_REPOSITORY (same as siteUrl above) instead of hardcoded
+// — a fork's footer credit points at itself, not at the original repo.
+const authorGit = repo ? `https://github.com/${repo}` : 'https://github.com/KeeGooRoomiE/cv_hub';
+const authorGitHubPage = owner ? `https://github.com/${owner}/` : 'https://github.com/KeeGooRoomiE/';
+
+// schema.org/Person — only pages that describe an actual person pass
+// personJsonLd (HomePage.astro); url/image are filled in here from data this
+// component already computed, so callers only supply person-specific fields.
+const jsonLd = personJsonLd ? {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  url: canonicalUrl,
+  image: metaImage,
+  ...Object.fromEntries(
+    Object.entries(personJsonLd).filter(([, v]) => v !== undefined && v !== '' && !(Array.isArray(v) && v.length === 0))
+  ),
+} : null;
+// JSON.stringify output is embedded verbatim in a <script> tag below — a "</"
+// in any string value (e.g. a bio mentioning markup) would otherwise close
+// the tag early. < is invisible to JSON parsers but not to an HTML tokenizer.
+const jsonLdSafe = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 ---
 
 <!doctype html>
@@ -91,9 +131,23 @@ const authorGitHubPage = 'https://github.com/KeeGooRoomiE/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={metaDescription} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="alternate icon" href={`${base}/favicon.ico`} />
+
+    {showHreflang && (
+      <>
+        {langLinks.map((l) => (
+          <link rel="alternate" hreflang={l.id} href={`${siteUrl}${l.href}`} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={`${siteUrl}${langLinks.find((l) => l.id === defaultLang)?.href ?? langLinks[0].href}`} />
+      </>
+    )}
+
+    {jsonLdSafe && (
+      <script type="application/ld+json" set:html={jsonLdSafe} />
+    )}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
