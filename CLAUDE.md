@@ -17,7 +17,7 @@ Keep this file lean. A bloated behaviour file gets ignored.
 - **Key invariants:**
   - `profile.slug` **must equal** `profile.spec` (enforced by a `merge.mjs` guard).
   - A media folder name **must match** its showcase slug.
-  - Two changelogs stay in sync: `CHANGELOG.md` (Keep a Changelog) + `src/content/changelog/changelog.yaml` (drives `/changelog`).
+  - Two changelogs, two roles — **not** a line-for-line sync: `CHANGELOG.md` (Keep a Changelog) is the full technical record; `src/content/changelog/changelog.yaml` (drives `/changelog`) is a curated distillate for site visitors. See "Changelog discipline" below for what earns a place on the site version.
 
 ---
 
@@ -75,7 +75,13 @@ This is the local memory that survives compaction — keep it accurate.
 ## Changelog discipline
 
 - Changelog records **project / code changes only**. Content edits — showcase cards, case-study YAML, images, ordering — are **not** changelogged.
-- Keep `CHANGELOG.md` and `src/content/changelog/changelog.yaml` in sync.
+- `CHANGELOG.md` is the full technical record — every change, diff-level detail, for forkers/contributors/release tooling.
+- `src/content/changelog/changelog.yaml` (drives `/changelog`) is a **curated distillate**, not a line-for-line copy — the site doubles as a landing page for CV Hub as a product (via `/showcase/cv-hub`, `/quickstart`), so a wall of CI plumbing and internal refactors reads as noise, not signal, to that audience. An entry earns a place on the site version only if the reader would:
+  1. change how they configure or use the product (`site.yml`, `npm run init`, `SITE_URL`, a new required Node version, ...);
+  2. learn that something that used to hurt them just got fixed (social previews weren't loading, 404 had no header, ...);
+  3. get a signal about the project's health that matters to them (moved to Astro 7, zero vulnerabilities, ...).
+  Everything else — CI plumbing, internal refactors, script usage-message fixes — stays in `CHANGELOG.md` only. Judge by this filter, not by matching the entry count of a past version.
+- `/changelog` must link out to the full `CHANGELOG.md` and GitHub Releases. A curated page with no way to reach the full log reads as "the project barely changes" — the opposite of the signal curation is meant to give.
 - On the changelog page, group a version's entries by type in order: **Added → Changed → Fixed → Removed**.
 
 ---

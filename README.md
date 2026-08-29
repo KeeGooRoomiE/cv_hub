@@ -14,7 +14,7 @@
 
 📋 **Changelog:** [CHANGELOG.md](CHANGELOG.md) · [live history](https://keegooroomie.github.io/cv_hub/changelog) · [releases](https://github.com/KeeGooRoomiE/cv_hub/releases)
 
-![CV Hub Preview](docs/repo-assets/preview_main.jpeg)
+![CV Hub Preview — one YAML file in, a full site out](docs/repo-assets/preview_yaml_to_site.jpeg)
 [![Lighthouse Performance](https://img.shields.io/badge/Lighthouse-Performance%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
 [![Lighthouse Accessibility](https://img.shields.io/badge/Lighthouse-Accessibility%20100-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
 [![Lighthouse Best Practices](https://img.shields.io/badge/Lighthouse-Best%20Practices%2096-00C853?logo=lighthouse&logoColor=white)](https://keegooroomie.github.io/cv_hub/)
@@ -23,6 +23,9 @@
 ---
 
 ## ⚡ Get your site live in 5 minutes
+
+1. **[Fork this repo](https://github.com/KeeGooRoomiE/cv_hub/fork)** — the button, not `git clone` on this repo directly. Everything below assumes you're inside your own fork.
+2. Clone your fork and run it:
 
 ```bash
 git clone https://github.com/YOUR_ACCOUNT/cv_hub.git
