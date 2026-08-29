@@ -2,7 +2,7 @@
 
 changelog:
   - version: "1.6.0"
-    date: "2026-08-26"
+    date: "2026-08-30"
     changes:
       - type: added
         text: "ATS-safe PDF resume — a single-column version built for pasting into job-portal upload forms, alongside the polished two-column one"

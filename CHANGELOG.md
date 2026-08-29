@@ -6,7 +6,7 @@ Versioning: [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [1.6.0] — 2026-08-26
+## [1.6.0] — 2026-08-30
 
 ### Added
 - `src/content/site/site.yml` — new deployment-wide settings collection, decoupled from any profile or language. First field: `downloads`, controlling which resume-download buttons show on CV pages and in what order (defaults to the flat `[pdf, docx]`). PDF and ATS-PDF/DOCX/TXT split into different audiences — PDF is what a visitor recognizes, ATS-PDF and TXT are mainly useful to the CV's own owner (job-portal upload forms, paste-into-a-textarea), not someone browsing the site — so they no longer clutter the default button row. A demo/marketing deployment can opt into a **grouped** form instead (`downloads: [{group: people, items: [pdf, docx]}, {group: ats, items: [pdfAts, txt]}]`) to show all four with a small labeled heading per audience — required as soon as two entries would render the same one-word button label (pdf and pdfAts both say "PDF"; the qualifier lives on the group heading, e.g. "For ATS", never on the button itself — see `docs/INFO.md` §17 for the convention this is meant to prevent regressing). Group headings reuse the `.skillsgroup__title` idiom already used for CV skills, and translate via `translations.yaml` (`cv.downloads_{group}`). `HomePage.astro` now reads this collection itself (same pattern `Layout.astro` already uses for `languages`/`profiles`/`i18n`) instead of the URLs being threaded through as four separate props from `index.astro`/`[...slug].astro`
