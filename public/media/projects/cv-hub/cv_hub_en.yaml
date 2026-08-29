@@ -122,6 +122,12 @@ blocks:
       - URL-based theme switching with shareable state
       - Fully automated CI/CD pipeline using GitHub Actions with Telegram alerts
       - Dynamic environment-aware configuration (siteUrl from GITHUB_REPOSITORY)
+      - ATS-safe single-column PDF alongside the polished two-column one, from the same data
+      - One-command onboarding (`npm run init`) that wipes the example data and starts a fork clean
+      - Auto-generated, per-language social preview cards from real CV data — no design tool
+      - "`schema.org/Person` JSON-LD, `hreflang`, and per-page SEO metadata instead of one generic string site-wide"
+      - Print-ready — `Ctrl+P` produces a clean document, not a dark-theme screenshot
+      - Custom domain support (`SITE_URL` / `BASE_PATH`) on top of the default GitHub Pages URL
 
   - type: divider
 
@@ -222,6 +228,24 @@ blocks:
       - TXT is emitted as a clean plain-text fallback for ATS systems and copy-paste.
 
       Every profile × language pair gets its own set of files, generated in CI and linked directly from the matching page.
+
+      Prefer `Ctrl+P`? The live page prints clean too — a dedicated print stylesheet strips the chrome (nav, footer, animated background) and remaps every color token for paper, no separate template to maintain.
+
+  - type: divider
+
+  - type: text
+    title: "Social preview cards"
+    body: |
+      Sharing a link should look like something. Every build screenshots a real, live-rendered page through a headless browser — no manual design tool, no static template — and composites it into a framed, wallpapered 1200×630 card using the active theme's own design tokens, so the card is always in sync with however the site happens to be themed.
+
+      One card per language, built from the actual default-profile CV (not a placeholder persona) — every page, including profile and case-study pages, picks the card matching its own language automatically through the same `og:image` fallback.
+
+  - type: divider
+
+  - type: text
+    title: "Discoverability"
+    body: |
+      The part that's invisible until you check dev tools: a per-page meta description and title instead of one generic string across the whole site, `schema.org/Person` JSON-LD on CV pages so a name search has something to surface, `hreflang` alternates wired straight into the same data that drives the language switcher, a canonical URL on every route with no stray double slashes, and a sitemap that stays in sync with what's actually deployed.
 
   - type: divider
 
@@ -344,7 +368,17 @@ blocks:
       cd cv_hub
 
   - type: text
-    title: "2. Fill in your data"
+    title: "2. Start fresh"
+    body: |
+      `npm install`, then `npm run init` — wipes the example CV, showcase and profile data this repo ships with and reseeds it from a blank placeholder, so you're editing your own thing instead of someone else's resume. Backs everything up first; `npm run init -- --dry-run` previews without touching anything.
+
+  - type: code
+    body: |
+      npm install
+      npm run init
+
+  - type: text
+    title: "3. Fill in your data"
     body: |
       Everything lives in one file: `src/content/cv/en.yaml`. Three ways to fill it in — pick whichever is easiest:
     bullets:
@@ -353,17 +387,16 @@ blocks:
       - "`Feed it to an AI` — paste your existing resume (PDF or plain text) into Claude or ChatGPT together with the prompt from `docs/LLM-CONTEXT.md`. It hands back ready-to-use YAML — genuinely the fastest path if you'd rather not touch the schema by hand."
 
   - type: text
-    title: "3. Look at it"
+    title: "4. Look at it"
     body: |
-      Run it locally and open `http://localhost:4321` — every save shows up instantly.
+      Open `http://localhost:4321` — every save shows up instantly.
 
   - type: code
     body: |
-      npm install
       npm run dev
 
   - type: text
-    title: "4. Ship it"
+    title: "5. Ship it"
     body: |
       Turn on GitHub Pages once — `Settings → Pages → Source: GitHub Actions` — then just push. Every commit to `main` rebuilds and redeploys automatically. No separate deploy step, ever again.
 

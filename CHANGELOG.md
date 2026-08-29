@@ -9,6 +9,7 @@ Versioning: [Semantic Versioning](https://semver.org/).
 ## [1.6.0] — 2026-08-26
 
 ### Added
+- `@media print` — printing (or saving to PDF via the browser) now produces a clean document instead of a dark-theme screenshot: nav/footer/animated background/download buttons hidden, root color tokens remapped to print-safe values (reuses the same token-remap trick the theme system already relies on, so every component gets it for free)
 - JSON-LD `schema.org/Person` markup on CV/profile pages — name, job title, summary, email and `sameAs` links (GitHub/LinkedIn/Habr/etc. from `contacts`), `knowsAbout` from skills. Built from data the page already parses, no new schema
 - `hreflang` alternate tags, reusing the same data that drives the language switcher — CV pages, showcase list and case studies (each scoped to the languages that actually have content); skipped on `noindex`'d pages and on the changelog, which doesn't have a real per-language build
 - `noindex` on the 404 page
