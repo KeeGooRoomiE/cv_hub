@@ -1034,3 +1034,61 @@ a:hover { text-decoration: underline; }
   white-space: nowrap;
   padding-top: 2px;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PRINT — Ctrl+P should produce a clean document, not a dark-theme screenshot.
+   Same trick the theme system already uses: remap the root tokens instead of
+   overriding every component individually — everything already consumes
+   var(--bg)/var(--text)/var(--card-bg)/etc., so this alone fixes colors
+   site-wide. Structural chrome (nav, footer, animated background, buttons
+   that don't mean anything on paper) is hidden explicitly.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  :root {
+    --bg: #ffffff;
+    --bg-glow-1: transparent;
+    --bg-glow-2: transparent;
+    --text: #111111;
+    --text-strong: #000000;
+    --muted: #3a3a3a;
+    --border: #cccccc;
+    --border-2: #bbbbbb;
+    --card-bg: #ffffff;
+    --shadow: none;
+    --shadow-soft: none;
+    --header-bg: transparent;
+  }
+
+  .header,
+  .footer,
+  .bg,
+  .card--downloads,
+  .share-btn,
+  .project-page__nav,
+  .lightbox,
+  .dropdown__menu {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: underline;
+  }
+
+  .card,
+  .row,
+  .image-block__figure,
+  .video-block__frame,
+  .code-block__pre {
+    box-shadow: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+  }
+}
