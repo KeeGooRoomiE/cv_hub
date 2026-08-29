@@ -433,7 +433,7 @@ Examples: `resume_ru.pdf`, `resume_en_devops.docx`
 
 **PDF browser:** `resume-export-pdf.mjs` drives Playwright. On CI (`process.env.CI`) it launches the runner's preinstalled Google Chrome via `channel: 'chrome'` — no browser download (avoids `cdn.playwright.dev` stalls). Locally it uses Playwright's bundled chromium. The CI workflow has no `playwright install` step; it just verifies `google-chrome` is present.
 
-**OG image:** `npm run og:generate` (last stage of `npm run build`) screenshots `/og-preview` (sample data from `docs/examples/example_cv.yaml`) via the same Playwright pattern, then composites a framed 1200×630 card on a wallpaper matching the active theme's own CSS tokens. `--theme=<name>` and `--wallpaper=gradient|<path>` are optional flags. `public/media/og-image.png` is gitignored — regenerated every build, not a committed source file.
+**OG image:** `npm run og:generate` (last stage of `npm run build`) screenshots `/og-preview/{lang}` (one static route per configured language, real default-profile CV from `public/cv/{lang}.yaml`) via the same Playwright pattern, then composites a framed 1200×630 card per language on a wallpaper matching the active theme's own CSS tokens. `--theme=<name>` and `--wallpaper=gradient|<path>` are optional flags. `public/media/og-image-{lang}.png` files are gitignored — regenerated every build, not committed source files. Every page picks its OG image by its own `lang` (`Layout.astro`) — one image per language, not per profile or case study.
 
 ---
 

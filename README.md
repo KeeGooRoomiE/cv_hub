@@ -27,10 +27,14 @@
 ```bash
 git clone https://github.com/YOUR_ACCOUNT/cv_hub.git
 cd cv_hub
-npm install && npm run dev
+npm install
+npm run init      # wipe the example CV/portfolio, start from a blank placeholder
+npm run dev
 ```
 
 Open `http://localhost:4321`. Edit `src/content/cv/en.yaml`. Push — site deploys automatically.
+
+`npm run init` is optional but recommended on a fresh fork — it clears this repo's own CV, showcase and case-study data (backed up locally first, never touches git history) and reseeds it from `docs/examples/*`, so you're editing a blank placeholder instead of someone else's resume. Safe to skip if you'd rather study the real example content first.
 
 > Already have a resume? Paste it into Claude or ChatGPT with the prompt from [`docs/LLM-CONTEXT.md`](docs/LLM-CONTEXT.md) and get ready YAML in seconds.
 
@@ -43,12 +47,12 @@ One YAML file generates everything:
 | | |
 |---|---|
 | 🌐 Live website | Clean personal site with CV, projects, and case studies |
-| 📄 PDF / DOCX / TXT | Auto-generated resume files for every profile and language |
+| 📄 PDF / DOCX / TXT | Auto-generated resume files for every profile and language, plus an ATS-safe single-column PDF |
 | 🎭 Multiple profiles | DevOps, GameDev, Fullstack — different CV versions, one source |
 | 🌍 Multi-language | EN, RU, or any language — switcher included |
 | 📁 Case studies | Per-project deep-dive pages with text, images, architecture |
 | 🎨 Themes | 4 built-in themes, switchable via URL |
-| 🖼️ [Social card](https://keegooroomie.github.io/cv_hub/media/og-image.png) | Auto-generated on every build — a themed, framed screenshot, no manual design tool needed |
+| 🖼️ [Social card](https://keegooroomie.github.io/cv_hub/media/og-image-en.png) | Auto-generated on every build, one per language, from your real CV data — a themed, framed screenshot, no manual design tool needed |
 
 No duplicated resumes. No platform lock-in. No visual builders.
 
@@ -238,6 +242,16 @@ Your site will be live at `https://YOUR_ACCOUNT.github.io/cv_hub/`
 
 The deploy workflow runs automatically on every push to `main`. `BASE_URL` and `siteUrl` are resolved dynamically from `GITHUB_REPOSITORY` — forks work out of the box without config changes.
 
+### Using your own domain
+
+By default `site`/`base` in `astro.config.mjs` are derived from `GITHUB_REPOSITORY`, which assumes the default `https://YOUR_ACCOUNT.github.io/cv_hub/` project-page URL. To serve from your own domain instead:
+
+1. Set repo variables (`Settings → Secrets and variables → Actions → Variables`) — `SITE_URL=https://cv.example.com` and `BASE_PATH=` (empty — a custom domain is normally served from the root, not a `/cv_hub/` subpath). Pass them into `deploy.yml`'s build job as `env:` alongside the existing steps.
+2. Add a `public/CNAME` file containing just your domain (`cv.example.com`, no protocol) — GitHub Pages reads this to route the custom domain. It's a plain `public/` asset, copied to `dist/` like anything else.
+3. Point your domain's DNS at GitHub Pages ([GitHub's own guide](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
+
+Everything that needs the site's absolute URL (canonical tags, OG image, sitemap) reads from Astro's own `site` config — set `SITE_URL`/`BASE_PATH` once and the rest follows.
+
 ---
 
 ## Resume file generation
@@ -252,13 +266,14 @@ Build order:
 3. `resume:pdf` — PDF via Playwright
 4. `astro build` — static site
 
-Output: `public/downloads/resume_{lang}[_{spec}].{pdf|docx|txt}`
+Output: `public/downloads/resume_{lang}[_{spec}].{pdf|docx|txt}`, plus an ATS-safe single-column PDF at `resume_{lang}[_{spec}]_ats.pdf` — same data, no two-column layout, for parsers that mis-read multi-column resumes
 
 ---
 
 ## CLI reference
 
 ```bash
+npm run init                 # fresh fork: wipe example CV/portfolio, reseed from docs/examples/*
 npm run dev                  # start local dev server
 npm run build                # full build: merge → generate → pdf → astro
 npm run cv:build             # merge base + spec YAMLs → public/cv/
