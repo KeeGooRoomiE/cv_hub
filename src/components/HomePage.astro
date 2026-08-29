@@ -7,16 +7,15 @@
 //  @spartan121
 //
 import Layout from './Layout.astro';
+import { getEntry } from 'astro:content';
+import { makeT } from '../scripts/t';
 
 const {
   lang = 'en',
   data = {},
-  pdfUrl,
-  pdfAtsUrl,
-  docxUrl,
-  txtUrl,
+  downloadUrls = {},
   t: tProp = {},
-  profile = "" 
+  profile = ""
 } = Astro.props;
 
 const t = {
@@ -29,11 +28,56 @@ const t = {
   company:      tProp.company      ?? 'Company',
   empty_skills:      tProp.empty_skills      ?? 'Add skills to YAML — tags will appear here.',
   empty_experience:  tProp.empty_experience  ?? 'Add experience to YAML — your timeline will appear here.',
-  pdf:    'PDF',
-  pdfAts: 'ATS PDF',
-  docx:   'DOCX',
-  txt:    'TXT',
 };
+
+// Download buttons: which formats show, and in what order/grouping —
+// site.yml (defaults to the flat [pdf, docx], the pair a visitor actually
+// recognizes; see src/content/site/site.yml for the full reasoning).
+//
+// Two formats can render the *same* one-word label on purpose (pdf and
+// pdfAts both say "PDF" — the qualifier belongs on the group heading, not
+// the button, see docs/INFO.md §17) — so distinct aria-labels are required
+// wherever that happens, or a screen reader announces two identical items.
+let siteConfig = null;
+try { siteConfig = await getEntry('site', 'site'); } catch {}
+const rawDownloads = siteConfig?.data?.downloads ?? ['pdf', 'docx'];
+
+// Flat array of format keys → one implicit, unlabeled group. Array of
+// {group, items} → each entry is its own labeled section. Not a per-element
+// normalizer (like skills' bare-string-or-group entries) — these are two
+// mutually exclusive shapes for the whole field, since "flat" specifically
+// means "one group, no heading needed".
+const downloadGroups = rawDownloads.length === 0
+  ? []
+  : typeof rawDownloads[0] === 'string'
+    ? [{ group: null, items: rawDownloads }]
+    : rawDownloads.map((g) => ({ group: g.group ?? null, items: g.items ?? [] }));
+
+let translations = null;
+try { translations = await getEntry('i18n', 'translations'); } catch {}
+const t2 = makeT(translations?.data ?? {}, lang);
+const groupLabel = (group) => {
+  if (!group) return null;
+  const key = `cv.downloads_${group}`;
+  const resolved = t2(key);
+  return resolved === key ? group : resolved; // no translation → literal key, not the dotted path
+};
+
+const downloadMeta = {
+  pdf:    { label: 'PDF',  ariaLabel: 'Resume PDF',        solid: true },
+  pdfAts: { label: 'PDF',  ariaLabel: 'ATS-optimized PDF', solid: false, hint: 'ATS-optimized, single-column version — for pasting into a job-portal upload form' },
+  docx:   { label: 'DOCX', ariaLabel: 'Resume DOCX',       solid: false },
+  txt:    { label: 'TXT',  ariaLabel: 'Resume plain text', solid: false },
+};
+
+const downloads = downloadGroups
+  .map((g) => ({
+    label: groupLabel(g.group),
+    items: g.items
+      .map((key) => ({ key, url: downloadUrls[key], ...downloadMeta[key] }))
+      .filter((d) => d.url && d.label),
+  }))
+  .filter((g) => g.items.length > 0);
 
 const pageTitle = `${data?.name ?? t.nameFallback} — CV Hub`;
 
@@ -85,12 +129,16 @@ const personJsonLd = data?.name ? {
         {/* 1. Download */}
         <article class="card card--downloads">
           <h2 class="h2">{t.downloads}</h2>
-          <div class="btnrow" aria-label={t.downloads}>
-            <a class="btn btn--ghost" href={pdfUrl}    download>{t.pdf}</a>
-            <a class="btn btn--ghost" href={pdfAtsUrl} download>{t.pdfAts}</a>
-            <a class="btn btn--ghost" href={docxUrl}   download>{t.docx}</a>
-            <a class="btn btn--ghost" href={txtUrl}    download>{t.txt}</a>
-          </div>
+          {downloads.map((g) => (
+            <Fragment>
+              {g.label && <div class="skillsgroup__title">{g.label}</div>}
+              <div class="btnrow" aria-label={g.label ?? t.downloads}>
+                {g.items.map((d) => (
+                  <a class={`btn ${d.solid ? '' : 'btn--ghost'}`} href={d.url} download aria-label={d.ariaLabel} title={d.hint}>{d.label}</a>
+                ))}
+              </div>
+            </Fragment>
+          ))}
         </article>
 
         {/* 2. Skills */}

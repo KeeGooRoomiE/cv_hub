@@ -543,6 +543,13 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 
+/* A grouped download row's own title sits flush under the card heading, but
+   a second (or later) group needs breathing room above it — matched on "a
+   title right after a previous button row", so the first group is untouched. */
+.btnrow + .skillsgroup__title {
+  margin-top: 14px;
+}
+
 .btn {
   display: inline-block;
   padding: 10px 14px;
@@ -953,6 +960,12 @@ a:hover { text-decoration: underline; }
   justify-content: space-between;
   font-size: 13px;
   color: var(--muted);
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .footer__link {

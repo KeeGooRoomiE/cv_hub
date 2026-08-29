@@ -41,6 +41,14 @@ cv:
     en: "Download"
     ru: "Скачать"
     zh: "下载"
+  downloads_people:
+    en: "For people"
+    ru: "Людям"
+    zh: "给人看"
+  downloads_ats:
+    en: "For ATS"
+    ru: "Для ATS"
+    zh: "给 ATS"
   company_fallback:
     en: "Company"
     ru: "Компания"

@@ -1,0 +1,42 @@
+# Site-wide settings — not tied to any single profile or language.
+# Schema: src/content.config.ts. Reference: docs/INFO.md §17.
+
+# Which resume download buttons show on CV pages, and in what order.
+#   pdf     — polished two-column version. The one a visitor (recruiter,
+#             hiring manager) actually wants. Primary button.
+#   pdfAts  — single-column ATS-safe version. Mainly useful to you, the
+#             owner, when pasting into a job-portal upload form — a visitor
+#             browsing your site has no use for it and "ATS" reads as
+#             jargon, not a benefit.
+#   docx    — editable Word doc. Recruiting agencies reformat resumes with
+#             this — a real secondary audience, worth keeping visible.
+#   txt     — plain text. Yours: paste-into-a-textarea / email-body use.
+#
+# Two shapes:
+#   Flat  — one implicit, unlabeled group. Use when the set is a single
+#           unambiguous pair (no two entries would render the same button
+#           label):
+#             downloads: [pdf, docx]
+#   Grouped — a labeled section per audience. Required as soon as you'd
+#           show both a pdf-shaped format together (pdf + pdfAts both
+#           render as "PDF" — the group heading is what disambiguates
+#           them, the qualifier never goes on the button label itself):
+#             downloads:
+#               - group: people
+#                 items: [pdf, docx]
+#               - group: ats
+#                 items: [pdfAts, txt]
+#           `group` keys into translations.yaml under cv.downloads_{group}
+#           (falls back to the literal key if no translation exists).
+#
+# Personal site: keep it to [pdf, docx] — the two a visitor recognizes.
+# Demo/marketing deployment: show all four, grouped, so the ATS variant is
+# visible to people evaluating the product, not just the person running it.
+downloads: [pdf, docx]
+
+# "Made with CV Hub" footer credit, next to the GitHub link. Always points
+# at the upstream project regardless of whose fork this is — that's the
+# point: every deployed site becomes a discoverable backlink, which is how
+# templates like this one actually grow. On by default; set to false to
+# remove it (no judgment either way — it's your footer).
+footerCredit: true

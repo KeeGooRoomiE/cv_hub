@@ -70,19 +70,18 @@ if (existsSync(cvPath)) {
 // --- URLs ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const specSuffix = profileData.spec ? `_${profileData.spec}` : '';
-const pdfUrl    = `${base}/downloads/resume_${langId}${specSuffix}.pdf`;
-const pdfAtsUrl = `${base}/downloads/resume_${langId}${specSuffix}_ats.pdf`;
-const docxUrl   = `${base}/downloads/resume_${langId}${specSuffix}.docx`;
-const txtUrl    = `${base}/downloads/resume_${langId}${specSuffix}.txt`;
+const downloadUrls = {
+  pdf:    `${base}/downloads/resume_${langId}${specSuffix}.pdf`,
+  pdfAts: `${base}/downloads/resume_${langId}${specSuffix}_ats.pdf`,
+  docx:   `${base}/downloads/resume_${langId}${specSuffix}.docx`,
+  txt:    `${base}/downloads/resume_${langId}${specSuffix}.txt`,
+};
 ---
 
 <HomePage
   lang={langId}
   data={data}
-  pdfUrl={pdfUrl}
-  pdfAtsUrl={pdfAtsUrl}
-  docxUrl={docxUrl}
-  txtUrl={txtUrl}
+  downloadUrls={downloadUrls}
   profile={profileData.slug}
   t={{
     nameFallback:     t('cv.unnamed'),

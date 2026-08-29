@@ -193,6 +193,33 @@ const i18n = defineCollection({
   }),
 });
 
+// Site — deployment-wide settings, not tied to any profile or language.
+// Grows over time (analytics opt-in, "open to work" status, footer credit
+// toggle, ...); `downloads` is the first field. See docs/INFO.md.
+const downloadFormat = z.enum(['pdf', 'pdfAts', 'docx', 'txt']);
+
+const site = defineCollection({
+  loader: glob({ pattern: '*.{yaml,yml}', base: './src/content/site' }),
+  schema: z.object({
+    // Flat = one implicit ungrouped bucket: downloads: [pdf, docx].
+    // Grouped = a labeled section per audience — required as soon as two
+    // entries would render the same button label (e.g. pdf + pdfAts both
+    // show "PDF"); see docs/INFO.md §17 for the convention.
+    downloads: z.union([
+      z.array(downloadFormat),
+      z.array(z.object({
+        group: z.string().nullable().optional().default(null),
+        items: z.array(downloadFormat),
+      })),
+    ]).optional().default(['pdf', 'docx']),
+    // Opt-out "Made with CV Hub" footer credit, next to the GitHub link —
+    // always points at the upstream project (not GITHUB_REPOSITORY, unlike
+    // the rest of the footer), so every deployed fork stays a discoverable
+    // backlink. On by default; set to false to remove it.
+    footerCredit: z.boolean().optional().default(true),
+  }),
+});
+
 export const collections = {
   cv,
   showcase,
@@ -200,4 +227,5 @@ export const collections = {
   profiles,
   languages,
   i18n,
+  site,
 };

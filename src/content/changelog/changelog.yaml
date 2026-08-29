@@ -5,69 +5,39 @@ changelog:
     date: "2026-08-26"
     changes:
       - type: added
-        text: "@media print — printing (or saving to PDF via the browser) now produces a clean document instead of a dark-theme screenshot: nav/footer/animated background/download buttons hidden, root color tokens remapped to print-safe values (reuses the same token-remap trick the theme system already relies on, so every component gets it for free)"
+        text: "ATS-safe PDF resume — a single-column version built for pasting into job-portal upload forms, alongside the polished two-column one"
       - type: added
-        text: "JSON-LD schema.org/Person markup on CV/profile pages — name, job title, summary, email and sameAs links (GitHub/LinkedIn/Habr/etc. from contacts), knowsAbout from skills. Built from data the page already parses, no new schema"
+        text: "Case-study pages now support YouTube video embeds, code blocks, deep-linkable section anchors, and inline code formatting; showcase cards can use a looping video cover instead of a static image"
       - type: added
-        text: "hreflang alternate tags, reusing the same data that drives the language switcher — CV pages, showcase list and case studies (each scoped to the languages that actually have content); skipped on noindex'd pages and on the changelog, which doesn't have a real per-language build"
+        text: "Auto-generated social preview cards — one per language, built from real CV data instead of a placeholder"
       - type: added
-        text: "noindex on the 404 page"
+        text: "npm run init — a one-command reset for a fresh fork, so a new user starts from a blank CV instead of someone else's"
       - type: added
-        text: "Custom domain support — SITE_URL / BASE_PATH env overrides in astro.config.mjs, layered on top of the GITHUB_REPOSITORY-derived defaults ({owner}.github.io / /{repo}). Combined with a public/CNAME file, a fork can serve from its own domain instead of the default project-page URL"
+        text: "Custom domain support"
       - type: added
-        text: "npm run init — one-time onboarding script for a fresh fork. Backs up and clears the repo's own CV, showcase and case-study data (multi-profile reset to a single default) and reseeds it from docs/examples/*, so a new user edits a blank placeholder instead of someone else's resume. Interactive prompts for name/title/language, --dry-run to preview, --force to re-run, no new dependencies (node:readline/promises)"
+        text: "Structured data (JSON-LD), hreflang, and per-page SEO metadata — search engines and social previews now see real, page-specific content instead of one generic string site-wide"
       - type: added
-        text: "ATS-safe PDF resume — resume:pdf now renders a second, single-column PDF (resume_{lang}[_{spec}]_ats.pdf) alongside the existing two-column one, from the same CV data. The flagship two-column layout risks scrambled text on ATS parsers that read multi-column pages left-to-right across both columns; the new variant is plain Arial/Helvetica, standard section headings, contacts in the body flow, no icons — reading order in the file matches visual order top to bottom. Linked as a fourth 'ATS PDF' download button next to PDF/DOCX/TXT"
+        text: "Printing the page (Ctrl+P) now gives a clean document instead of a dark-theme screenshot"
       - type: added
-        text: "Automated OG-image pipeline — src/scripts/generate-og-image.mjs screenshots one dedicated /og-preview/{lang} route per configured language through Playwright and composites each into a framed, wallpapered 1200x630 card, matching the theme's own design tokens. Each screenshot renders the real default-profile CV (public/cv/{lang}.yaml — same data the site itself shows), not mock data — every page picks the matching-language image automatically via Layout.astro, so a /devops, /gamedev or case-study page reuses the same-language default-profile card instead of a dedicated screenshot per page. Supports --theme=<name> (falls back to the default look if unknown) and --wallpaper=gradient|<image path>. Runs as the last stage of npm run build and in CI (deploy.yml, ci.yml); images are regenerated every build and never committed to git"
+        text: "Download buttons are now visually prioritized (PDF first), grouped by audience, and configurable per deployment"
       - type: added
-        text: "Case-study video block now embeds YouTube — a src pointing at youtube.com/watch, youtu.be or youtube.com/embed renders a responsive 16:9 iframe instead of a local <video> tag, so a gameplay trailer or clip can be linked directly without hosting an mp4"
+        text: "Optional \"Made with CV Hub\" footer credit — on by default, one line in site.yml to remove"
       - type: added
-        text: "New code content block (type: code) — a verbatim monospace block for terminal commands and short snippets, no syntax-highlighting engine by design"
-      - type: added
-        text: "Any content block (text, image, video, code) now accepts anchor: \"id\" for deep-linking into a specific section, e.g. /showcase/{slug}#quickstart — accounts for the sticky header so the target isn't hidden underneath it"
-      - type: added
-        text: "Backtick-quoted spans in block prose (title, subtitle, body, bullets, caption) now render as styled inline code instead of literal backtick characters, via a shared InlineText component — fixes existing case studies that already used backticks to mention file names and identifiers"
-      - type: added
-        text: "/quickstart and /get-started — two short, memorable redirects to the CV Hub quickstart section, meant to replace a bare GitHub repo link in release announcements"
-      - type: added
-        text: "Showcase card featured media now supports an autoplaying, looping type: video cover — a lighter drop-in replacement for a heavy animated GIF (silent, muted, no controls)"
+        text: "/quickstart and /get-started — short links to the CV Hub quickstart section"
       - type: changed
-        text: "Upgraded to Astro 7 (from 5) — brings Vite 8 and closes every outstanding npm advisory; the audit now reports 0 vulnerabilities, down from 15"
-      - type: changed
-        text: "Content collections migrated to the Astro Content Layer — src/content/config.ts replaced by src/content.config.ts, with each collection switched from the removed type: 'data' to an explicit glob() loader. Rendered output is byte-identical: all 20 pages verified against the Astro 5 build with no content differences"
-      - type: changed
-        text: "Node 24 is now required to build locally, matching .nvmrc, package.json engines and the CI runner — Astro 7 dropped support for Node 20"
+        text: "Upgraded to Astro 7 — closes every outstanding dependency advisory (0 vulnerabilities, down from 15); requires Node 24 to build locally"
       - type: fixed
-        text: "og:image/twitter:image pointed at the wrong URL on every page — the meta tag never included base, so on the deployed project-page site it resolved to {owner}.github.io/media/og-image.png instead of {owner}.github.io/cv_hub/media/og-image.png and 404'd. Link/social previews have been showing no image because of this"
+        text: "The 404 page now renders with the site's full layout instead of a broken, doubled document"
       - type: fixed
-        text: "Canonical, OG and Twitter meta URLs had a literal double slash on every page (https://…github.io//cv_hub/…) — siteUrl already carried a trailing slash and every consumer added its own leading one. Layout.astro now derives siteUrl from Astro's own Astro.site (which SITE_URL/BASE_PATH also flow through) instead of hand-rolling it from GITHUB_REPOSITORY"
+        text: "Favicon was committed but never actually linked — fixed"
       - type: fixed
-        text: "Footer credit (GitHub link, 'Alexander Gusarov' byline URL) was hardcoded to the original repo — now derived from GITHUB_REPOSITORY, same as siteUrl already was, so a fork's footer points at itself"
+        text: "Case-study images now load faster and no longer shift the page layout while loading"
       - type: fixed
-        text: "CI: Telegram deploy notification no longer misreports a cancelled run as a failed build — deploy.yml now skips the notification entirely when concurrency: cancel-in-progress supersedes a run, instead of sending a false 'Build failed!'"
+        text: "Social-preview images and canonical links had broken or duplicated URLs across the site — fixed"
       - type: fixed
-        text: "404 page rendered a doubled <html>/<head>/<body> document — it wrapped its own scaffold around <Layout>, which already renders a full document — so the page was missing the site header/nav/footer and carried two competing <title> tags. Now renders through <Layout> like every other page"
-      - type: fixed
-        text: "i18n: the notfound404 translation block existed in translations.yaml but was missing from the content schema, so it was silently stripped on load — the 404 page's title now actually resolves instead of falling through"
-      - type: fixed
-        text: "Favicon — favicon.ico/favicon.svg were committed but never linked from <head>, and the browser's passive fallback missed them entirely under the GitHub Pages base path (/cv_hub/) — added explicit <link rel=\"icon\">, base-path aware"
-      - type: fixed
-        text: "Case-study hero image (the first image block on a Deep Dive page, usually the cover shot under the title) now loads eagerly with fetchpriority=\"high\" instead of lazy — same LCP treatment the showcase grid's first card already had"
-      - type: fixed
-        text: "Case-study images now reserve a 16:9 aspect ratio before loading instead of collapsing to zero height, preventing layout shift as they load in"
-      - type: fixed
-        text: "Every page previously shared one generic meta description and OG image regardless of content — case studies now use their own tagline, CV pages their summary, changelog its own subtitle"
-      - type: fixed
-        text: "Case-study and changelog <title> now carry the \"— CV Hub\" suffix, matching how CV/profile pages already read in a browser tab or search result"
-      - type: fixed
-        text: "resume-import-json.mjs and resume-import-linkedin.mjs printed a usage message pointing at npm scripts that don't exist (npm run convert, npm run parse) — now reference the real resume:import/resume:linkedin commands"
-      - type: fixed
-        text: "resume-import-linkedin.mjs wrote its JSON output to docs/ instead of public/downloads/json/, contradicting its own doc comment and the sibling import script's convention, and risking collision with the example input files README.md documents at that same docs/ path"
+        text: "CI no longer sends a false \"build failed\" alert when a deploy run gets superseded by a newer push"
       - type: removed
-        text: "public/themes/*.css untracked from git — it's a mechanical copy of src/styles/themes/*.css regenerated on every dev/build (astro.config.mjs's copy-themes plugin), not a source file; committing it separately from its source risked the two drifting out of sync"
-      - type: removed
-        text: "~5.1 MB of orphaned media — stale cover-image variants no longer referenced by any showcase or case-study YAML, plus a duplicate diceroll/ media folder left over from a prior rename (only apple-watch-diceroll is a real slug)"
+        text: "~5.1 MB of unused media and duplicate files cleaned out of the repository"
   - version: "1.5.5"
     date: "2026-08-26"
     changes:

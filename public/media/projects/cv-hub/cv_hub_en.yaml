@@ -234,6 +234,15 @@ blocks:
   - type: divider
 
   - type: text
+    title: "Right file, right audience"
+    body: |
+      PDF and DOCX are what a visitor recognizes — the polished resume, and the editable version recruiting agencies reformat with. The ATS-safe single-column PDF and the plain-text export are a different audience entirely: mostly useful to the CV's own owner, pasting into a job-portal upload form or a "paste your resume" textarea — not something a recruiter browsing the site would ever click, and "ATS" reads as jargon rather than a benefit to them.
+
+      Which formats show, and in what order, is a `site.yml` setting rather than a hardcoded button row — a personal site keeps just the two a visitor recognizes, a demo deployment can opt into all four to show the ATS variant off. PDF stays the one visually solid button regardless; everything else is secondary.
+
+  - type: divider
+
+  - type: text
     title: "Social preview cards"
     body: |
       Sharing a link should look like something. Every build screenshots a real, live-rendered page through a headless browser — no manual design tool, no static template — and composites it into a framed, wallpapered 1200×630 card using the active theme's own design tokens, so the card is always in sync with however the site happens to be themed.

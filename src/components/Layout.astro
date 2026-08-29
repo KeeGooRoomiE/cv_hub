@@ -34,6 +34,8 @@ const langConfig    = await getEntry('languages', 'languages');
 let profileConfig = null;
 try { profileConfig = await getEntry('profiles', 'profiles'); } catch {}
 const translations  = await getEntry('i18n', 'translations');
+let siteConfig = null;
+try { siteConfig = await getEntry('site', 'site'); } catch {}
 
 const defaultLang = langConfig?.data?.default ?? 'en';
 const allLangs    = langConfig?.data?.languages ?? [];
@@ -101,10 +103,16 @@ const profileLinks = allProfiles.map(p => ({
 const showHreflang = !noindex && section !== 'changelog' && langLinks.length > 1;
 
 const currentYear = new Date().getFullYear();
+const upstreamGit = 'https://github.com/KeeGooRoomiE/cv_hub';
 // Derived from GITHUB_REPOSITORY (same as siteUrl above) instead of hardcoded
 // — a fork's footer credit points at itself, not at the original repo.
-const authorGit = repo ? `https://github.com/${repo}` : 'https://github.com/KeeGooRoomiE/cv_hub';
+const authorGit = repo ? `https://github.com/${repo}` : upstreamGit;
 const authorGitHubPage = owner ? `https://github.com/${owner}/` : 'https://github.com/KeeGooRoomiE/';
+// "Made with CV Hub" always targets upstreamGit (see below) — on the
+// upstream repo itself that's the same URL as the GitHub link right next to
+// it, which is just noise (two links, same href, different labels). Only
+// show the credit once it actually points somewhere else.
+const showFooterCredit = (siteConfig?.data?.footerCredit ?? true) && authorGit !== upstreamGit;
 
 // schema.org/Person — only pages that describe an actual person pass
 // personJsonLd (HomePage.astro); url/image are filled in here from data this
@@ -271,9 +279,16 @@ const jsonLdSafe = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : nu
         <span><a href={authorGitHubPage} target="_blank" rel="noopener" class="footer__link">
           Alexander Gusarov
         </a> © {currentYear}</span>
-        <a href={authorGit} target="_blank" rel="noopener" class="footer__link">
-          GitHub
-        </a>
+        <span class="footer__links">
+          {showFooterCredit && (
+            <a href={upstreamGit} target="_blank" rel="noopener" class="footer__link">
+              Made with CV Hub
+            </a>
+          )}
+          <a href={authorGit} target="_blank" rel="noopener" class="footer__link">
+            GitHub
+          </a>
+        </span>
       </div>
     </footer>
   </body>

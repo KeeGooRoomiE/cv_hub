@@ -9,6 +9,11 @@
 import { getEntry } from 'astro:content';
 import Layout from '../components/Layout.astro';
 
+// Same GITHUB_REPOSITORY-derived pattern as Layout's footer credit — a fork's
+// "full log" links point at its own repo, not the original.
+const repo = import.meta.env.GITHUB_REPOSITORY;
+const repoUrl = repo ? `https://github.com/${repo}` : 'https://github.com/KeeGooRoomiE/cv_hub';
+
 let entries = [];
 
 try {
@@ -38,7 +43,7 @@ const typeColor: Record<string, string> = {
   <section class="container">
     <header class="changelog__header">
       <h1>Changelog</h1>
-      <p class="muted">Version history of CV Hub</p>
+      <p class="muted">Version history of CV Hub — curated highlights. Full technical changelog: <a class="changelog__fulllog" href={`${repoUrl}/blob/main/CHANGELOG.md`}>CHANGELOG.md</a> · <a class="changelog__fulllog" href={`${repoUrl}/releases`}>Releases</a></p>
     </header>
 
     {entries.length === 0 && (
@@ -69,3 +74,13 @@ const typeColor: Record<string, string> = {
     </div>
   </section>
 </Layout>
+
+<style>
+  .changelog__fulllog {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .changelog__fulllog:hover {
+    text-decoration: underline;
+  }
+</style>
