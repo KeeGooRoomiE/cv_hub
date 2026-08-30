@@ -16,7 +16,7 @@
     "resume:import": "node src/scripts/resume-import-json.mjs",
     "resume:linkedin": "node src/scripts/resume-import-linkedin.mjs",
     "resume:import:all": "node src/scripts/resume-import-json.mjs docs/cv_en.json en && node src/scripts/resume-import-json.mjs docs/cv_ru.json ru",
-    "og:generate": "node src/scripts/generate-og-image.mjs",
+    "og:generate": "node src/scripts/generate-og-image.mjs --wallpaper=docs/repo-assets/wallpaper-bigsur.jpg",
     "build": "npm run cv:build && npm run resume:generate && npm run resume:pdf && astro build && npm run og:generate"
   },
   "dependencies": {

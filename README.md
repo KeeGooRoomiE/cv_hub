@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Stars](https://img.shields.io/github/stars/KeeGooRoomiE/cv_hub?style=flat)
 
-![CV Hub Preview — one YAML file in, a full site out](docs/repo-assets/preview_yaml_to_site.jpeg)
+![CV Hub Preview — one YAML file in, a full site out](docs/repo-assets/preview_yaml_to_site.png)
 
 🌐 **Live demo:** **[keegooroomie.github.io/cv_hub](https://keegooroomie.github.io/cv_hub/)** — this is the author's real CV, running on CV Hub. There's no separate demo deployment on purpose: what you see is exactly what your fork becomes once you put your own data in.
 
