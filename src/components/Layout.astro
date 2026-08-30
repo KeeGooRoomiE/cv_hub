@@ -62,7 +62,16 @@ const metaDescription = description ?? t('meta.description');
 // generate-og-image.mjs) — every page already knows its own `lang`, so a
 // devops/gamedev/case-study page just reuses the same-language default-
 // profile image automatically, no per-page ogImage prop needed.
-const metaImage = ogImage ?? `${siteUrl}${base}/media/og-image-${lang}.png`;
+// `ogImage` accepts either an absolute URL or a site-relative path
+// ("/media/og-cover.png") — a page shouldn't have to know how siteUrl/base
+// resolve just to override its card. Product pages (the CV Hub case study,
+// the changelog) pass the static product cover this way; every CV/profile
+// page falls through to its own generated, per-language card.
+const metaImage = ogImage
+  ? (/^https?:\/\//.test(ogImage)
+      ? ogImage
+      : `${siteUrl}${base}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`)
+  : `${siteUrl}${base}/media/og-image-${lang}.png`;
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 
 // --- Navigation ---

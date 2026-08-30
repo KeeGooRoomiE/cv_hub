@@ -41,3 +41,4 @@ pnpm-debug.log*
 .claude/
 # Working audit — single whole file at root, not committed
 AUDIT.md
+/docs/repo-assets/cover.pxd

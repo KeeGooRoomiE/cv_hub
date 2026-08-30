@@ -13,7 +13,7 @@ import VideoBlock from './blocks/VideoBlock.astro';
 import CodeBlock  from './blocks/CodeBlock.astro';
 import Divider    from './blocks/DividerBlock.astro';
 
-const { data, showcaseHref, langLinks, lang } = Astro.props;
+const { data, showcaseHref, langLinks, lang, ogImage } = Astro.props;
 
 // LCP: the first image block is very likely the hero shot right under the
 // title — load it eagerly instead of the lazy default every other image
@@ -28,6 +28,7 @@ const pageTitle = projectTitle === 'CV Hub' ? 'CV Hub' : `${projectTitle} — CV
 <Layout
   title={pageTitle}
   description={data?.tagline || undefined}
+  ogImage={ogImage}
   lang={lang}
   section="showcase"
   profile=""
