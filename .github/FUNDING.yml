@@ -2,5 +2,8 @@
 
 github: [keegooroomie]
 # buy_me_a_coffee: YOUR_BUYMEACOFFEE_USERNAME
-buy_me_a_coffee: spartandgsv
-# buymeacoffee.com/
+# buy_me_a_coffee: spartandgsv
+custom:
+  - "https://tronscan.org/#/address/TNdpADBLtAXE26L9W2j7qLmkzUwEt2nWvq"
+  - "https://etherscan.io/address/0xC99B66E5Cb46A05Ea997B0847a1ec50Df7fe8976"
+  - "https://blockstream.info/address/bc1qpnfut422rr4w77y33h9gmc2jlcmllpdz0wp6nj"
