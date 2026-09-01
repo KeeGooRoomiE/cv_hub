@@ -23,7 +23,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
-    "astro": "^7.2.7",
+    "astro": "^7.2.9",
     "docx": "^9.7.1",
     "unpdf": "^1.8.1",
     "yaml": "^2.9.0"
