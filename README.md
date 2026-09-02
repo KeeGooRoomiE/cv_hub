@@ -481,6 +481,7 @@ Requires Node 24.
 | [keegooroomie.github.io/cv_hub](https://keegooroomie.github.io/cv_hub/) | Alexander Gusarov — DevOps / Fullstack / GameDev | the original |
 | [antlis.is-a.dev/cv](https://antlis.is-a.dev/cv/en/) | Anton Lisovsky — Senior Front-end Developer (Vue.js) | own domain |
 | [kennusk.github.io/cv_hub](https://kennusk.github.io/cv_hub/) | Valeria Kovalikova — Product / UX-UI Designer | not an engineer |
+| [lemonbw.github.io/cv_hub](https://lemonbw.github.io/cv_hub/) | Sergey Shter — Fullstack Developer | GitHub Pages |
 
 **Yours belongs here.** If you've deployed a fork, [open a pull request](https://github.com/KeeGooRoomiE/cv_hub/compare) adding one row to this table — your live URL and a short line about you. That's the whole review process. Seeing real sites is what convinces the next person that this works, so it genuinely helps.
 
