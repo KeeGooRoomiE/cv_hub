@@ -11,7 +11,7 @@ const [owner, name] = repo ? repo.split('/') : [null, null];
 // the root, unlike a GitHub Pages project page) as repo/CI secrets or vars —
 // they override the GITHUB_REPOSITORY-derived defaults below. Still need a
 // public/CNAME file with just the domain in it for GitHub Pages itself to
-// route the custom domain — see docs/INFO.md §3.
+// route the custom domain — see docs/INFO_en.md §15.
 const site = process.env.SITE_URL || (owner ? `https://${owner}.github.io` : 'http://localhost:4321');
 const base = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : (name ? `/${name}` : undefined);
 

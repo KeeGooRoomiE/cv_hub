@@ -1,6 +1,6 @@
 # CV Hub — INFO
 
-> 🌐 **This reference is Russian-only for now** (established convention for this file — see `CLAUDE.md`). If you don't read Russian: [README.md](../README.md) covers quickstart/CLI/deployment in English, and [`docs/LLM-CONTEXT.md`](LLM-CONTEXT.md) is English too. A full English version of this file is tracked as a pre-launch item, not done yet — feel free to open an issue if you need something from here translated sooner.
+> 🌐 **English version:** [`docs/INFO_en.md`](INFO_en.md)
 
 Полный справочник по структуре данных, конфигурации и архитектуре проекта.
 
@@ -74,7 +74,8 @@ public/
 
 docs/
   ENGINEERING.md         ← архитектурные решения и философия
-  INFO.md                ← этот файл, справочник по данным
+  INFO_en.md             ← справочник по данным (английский)
+  INFO_ru.md             ← этот файл, справочник по данным
   BKG_INFO.md            ← справочник по фоновым компонентам
   LLM-CONTEXT.md         ← контекст для AI-инструментов
   examples/              ← примеры YAML для CV, showcase, case study
@@ -477,7 +478,7 @@ Props: `data`, `showcaseHref`, `langLinks`, `lang`
 
 ### ProjectCard.astro
 
-Два режима: обычная карточка и сворачиваемая архивная (`archived: true` в YAML).  
+Два режима: обычная карточка и сворачиваемая архивная (`archived: true` в YAML).
 Prop `hasCasePage` — добавляет ссылку на case study если страница существует.
 
 ### Блоки (`blocks/`)

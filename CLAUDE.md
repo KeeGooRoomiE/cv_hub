@@ -32,7 +32,7 @@ Chat in **Russian**. Repo content (code, docs, comments, commit text) stays **En
 Read these when relevant; don't announce it.
 
 - `docs/LLM-CONTEXT.md` — LLM context of the project (the "context" doc)
-- `ARCHITECTURE.md` (root) + `docs/ENGINEERING.md`, `docs/INFO.md` — architecture & engineering notes
+- `ARCHITECTURE.md` (root) + `docs/ENGINEERING.md`, `docs/INFO_en.md` — architecture & engineering notes. `docs/INFO_ru.md` is a translation kept in sync with it — update both when this reference changes
 - `docs/BKG_INFO.md` — background components (props, tuning, previews)
 - `AUDIT.md` (root, **gitignored**) — working audit findings, one whole file appended as dated sections
 
@@ -62,13 +62,15 @@ This is the local memory that survives compaction — keep it accurate.
 
 ## Git
 
-- Work **only in `main`**. No feature branches, no worktrees.
+- Default branch is **`main`**. Work on a different branch only when the user explicitly names an existing one or explicitly asks for a new one to be created.
+- **No worktrees, ever** — not a manual `git worktree add`, not a harness-automatic one for background/subagent isolation. Plain branch checkouts only. (`worktree.bgIsolation: "none"` is set in `.claude/settings.json` for this.)
 - The user owns all git operations via **GitHub Desktop** — they stage, split and commit themselves. Default stance is hands-off.
 - **Do not** commit, push, merge, rebase, reset, tag, or add/remove worktrees — not even when it seems convenient. Only if explicitly told for a specific one-off.
 - Read operations are free: `git status`, `git log`, `git diff`, `git show`, `git branch`, `git ls-files`, `git remote -v`.
 - **Absolute prohibition:** `git push --force[-with-lease]`, deleting remote branches, rewriting published history.
 - Local branch is the source of truth; never auto-sync to remote.
 - GitHub API (PR/Issues/Actions): ask for a per-project token when needed; never store it.
+- Commits/PRs carry no Claude co-author trailer or "Generated with Claude Code" footer — `attribution.commit`/`attribution.pr` are set to `""` in `.claude/settings.json`.
 
 ---
 

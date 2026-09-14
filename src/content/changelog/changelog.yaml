@@ -24,6 +24,8 @@ changelog:
         text: "Optional \"Made with CV Hub\" footer credit — on by default, one line in site.yml to remove"
       - type: added
         text: "/quickstart and /get-started — short links to the CV Hub quickstart section"
+      - type: added
+        text: "Full English translation of the data/field reference doc (docs/INFO_en.md) — previously Russian-only"
       - type: changed
         text: "Upgraded to Astro 7 — closes every outstanding dependency advisory (0 vulnerabilities, down from 15); requires Node 24 to build locally"
       - type: fixed

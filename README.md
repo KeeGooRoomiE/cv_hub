@@ -99,7 +99,7 @@ The advice everyone gives is "tailor your resume to each role." The reason nobod
 
 Fix a typo in your base CV and every role version inherits it. Add a role and you write ten lines, not another resume.
 
-See **[`docs/INFO.md`](docs/INFO.md)** for merge rules and delta file format.
+See **[`docs/INFO_en.md`](docs/INFO_en.md)** for merge rules and delta file format.
 
 ---
 
@@ -182,66 +182,18 @@ If you only need a beautiful PDF, RenderCV is less machinery. If you want a GUI 
 
 `src/content/site/site.yml` holds settings that belong to the deployment rather than to any profile or language.
 
-### `downloads` — which buttons appear
-
-```yaml
-downloads: [pdf, docx]     # default
-```
-
-Available keys: `pdf`, `pdfAts`, `docx`, `txt`. PDF always renders as the single solid primary button; everything else is secondary.
-
-Showing more than one PDF-shaped file needs the **grouped** form, because `pdf` and `pdfAts` would both render a button labeled "PDF". The qualifier lives on the group heading, never on the button:
-
-```yaml
-downloads:
-  - group: people
-    items: [pdf, docx]
-  - group: ats
-    items: [pdfAts, txt]
-```
-
-Group headings are translatable. Full field reference → [`docs/INFO.md`](docs/INFO.md) §17.
-
-### `footerCredit` — the "Made with CV Hub" link
-
-```yaml
-footerCredit: true   # default; set to false to remove it
-```
-
-Adds a small **Made with CV Hub** link next to the GitHub link in your footer, pointing back at this project. It's on by default because backlinks from real deployed sites are how a project like this gets found at all — and it's one line to turn off, with no hard feelings. Everything else in the footer points at *your* repo, not this one.
+- **`downloads`** — which resume buttons show, and in what order. `downloads: [pdf, docx]` (default) for a personal site — a visitor sees only what they recognize. Add the ATS-safe PDF and TXT under a second, labeled group as soon as a deployment should show them off too. Full shapes, the translation hook, and why ATS/TXT aren't on by default → [`docs/INFO_en.md`](docs/INFO_en.md) §17.
+- **`footerCredit`** — the small **Made with CV Hub** link next to your GitHub link in the footer, pointing back at this project. On by default — deployed forks are how a template like this gets found — `footerCredit: false` removes it, no hard feelings.
 
 ---
 
 ## How to edit your data
 
-All data lives in `src/content/`:
-
-```
-src/content/
-  cv/
-    en.yaml            ← base CV in English
-    ru.yaml            ← base CV in Russian
-    en_devops.yaml     ← DevOps delta (optional)
-    ru_devops.yaml     ← DevOps delta in Russian (optional)
-  profiles/
-    profiles.yml       ← profile registry (optional)
-  languages/
-    languages.yml      ← language config
-  site/
-    site.yml           ← deployment-wide settings
-  showcase/
-    projects_{lang}.yaml  ← projects list (per language)
-  changelog/
-    changelog.yaml     ← version history
-  i18n/
-    translations.yaml  ← UI strings
-```
-
-For the full YAML structure reference — see **[`docs/INFO.md`](docs/INFO.md)**.
+All data lives in `src/content/` — one file per concern (CV, profiles, languages, site settings, showcase, changelog, translations). Full file map and every field → [`docs/INFO_en.md`](docs/INFO_en.md).
 
 ### Three ways to fill it in
 
-**A — Edit YAML directly.** Open `src/content/cv/en.yaml`. Field reference in [`docs/INFO.md`](docs/INFO.md).
+**A — Edit YAML directly.** Open `src/content/cv/en.yaml`. Field reference in [`docs/INFO_en.md`](docs/INFO_en.md).
 
 **B — Import from JSON Resume.**
 
@@ -436,7 +388,8 @@ public/
   workflows/               # deploy.yml, ci.yml, release.yml
 
 docs/
-  INFO.md                  # data structure + field reference
+  INFO_en.md               # data structure + field reference
+  INFO_ru.md               # Russian translation of INFO_en.md
   ENGINEERING.md           # architecture decisions
   BKG_INFO.md              # background components
   LLM-CONTEXT.md           # full project context for AI tools
@@ -466,7 +419,8 @@ Requires Node 24.
 
 | File | Description |
 |---|---|
-| [INFO.md](docs/INFO.md) | YAML field reference, routing, i18n, profiles, case studies, `site.yml` |
+| [INFO_en.md](docs/INFO_en.md) | YAML field reference, routing, i18n, profiles, case studies, `site.yml` |
+| [INFO_ru.md](docs/INFO_ru.md) | Russian translation of INFO_en.md |
 | [ENGINEERING.md](docs/ENGINEERING.md) | Architecture decisions, system design, trade-offs |
 | [`LLM-CONTEXT.md`](docs/LLM-CONTEXT.md) | Full project context for AI tools (Claude, ChatGPT, Cursor) |
 | [BKG_INFO.md](docs/BKG_INFO.md) | All background components — props, tuning, previews |

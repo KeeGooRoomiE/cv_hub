@@ -124,7 +124,7 @@ function buildCaseStudyYaml(lang) {
         'This is your first case study. It renders from a block-based YAML\n' +
         'file — text, image, video and code blocks, in any order. See\n' +
         '`docs/examples/example_cs.yaml` for every block type with comments,\n' +
-        'and `docs/INFO.md` §6 for the full reference.',
+        'and `docs/INFO_en.md` §6 for the full reference.',
       whatTitle: 'What I did',
       bullets: ['Replace this with your real bullet points', 'One per line, as many as you need'],
     },
@@ -136,7 +136,7 @@ function buildCaseStudyYaml(lang) {
         'Это твой первый кейс. Страница рендерится из YAML с блоками —\n' +
         'text, image, video и code, в любом порядке. Смотри\n' +
         '`docs/examples/example_cs.yaml` — там есть каждый тип блока с\n' +
-        'комментариями, и `docs/INFO.md` §6 — полный референс.',
+        'комментариями, и `docs/INFO_ru.md` §6 — полный референс.',
       whatTitle: 'Что я сделал',
       bullets: ['Замени на свои реальные пункты', 'По одному на строку, сколько нужно'],
     },
@@ -239,7 +239,7 @@ async function run() {
   }
   log('✔ src/content/cv/ reset');
 
-  // ── Profiles (single default — multi-profile is opt-in, see docs/INFO.md) ──
+  // ── Profiles (single default — multi-profile is opt-in, see docs/INFO_en.md) ──
   writeFile(TARGETS.profiles, buildProfilesYaml());
   log('✔ src/content/profiles/profiles.yml reset to a single default profile');
 
@@ -280,7 +280,7 @@ async function run() {
   log('  4. Flesh out public/media/projects/my-project/my_project_en.yaml —');
   log('     docs/examples/example_cs.yaml documents every block type');
   log('  5. Update the badge URLs at the top of README.md to your own repo');
-  log('  6. Want multi-profile (DevOps/GameDev/etc.) back? See docs/INFO.md §4');
+  log('  6. Want multi-profile (DevOps/GameDev/etc.) back? See docs/INFO_en.md §4');
   if (!DRY_RUN) log(`\nOld data backed up in .cv-hub-backup-${stamp}/ if you need to recover anything.`);
 }
 

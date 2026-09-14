@@ -100,7 +100,8 @@ public/
     deploy.yml             # full CI/CD pipeline
 
 docs/
-  INFO.md                  # data structure reference
+  INFO_en.md               # data structure reference (English)
+  INFO_ru.md               # data structure reference (Russian)
   ENGINEERING.md           # architecture decisions
   BKG_INFO.md              # all background components — props, tuning, previews
   LLM-CONTEXT.md           # this file

@@ -195,7 +195,7 @@ const i18n = defineCollection({
 
 // Site — deployment-wide settings, not tied to any profile or language.
 // Grows over time (analytics opt-in, "open to work" status, footer credit
-// toggle, ...); `downloads` is the first field. See docs/INFO.md.
+// toggle, ...); `downloads` is the first field. See docs/INFO_en.md.
 const downloadFormat = z.enum(['pdf', 'pdfAts', 'docx', 'txt']);
 
 const site = defineCollection({
@@ -204,7 +204,7 @@ const site = defineCollection({
     // Flat = one implicit ungrouped bucket: downloads: [pdf, docx].
     // Grouped = a labeled section per audience — required as soon as two
     // entries would render the same button label (e.g. pdf + pdfAts both
-    // show "PDF"); see docs/INFO.md §17 for the convention.
+    // show "PDF"); see docs/INFO_en.md §17 for the convention.
     downloads: z.union([
       z.array(downloadFormat),
       z.array(z.object({
