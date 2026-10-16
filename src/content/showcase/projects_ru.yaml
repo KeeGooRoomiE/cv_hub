@@ -180,9 +180,9 @@ projects:
   - slug: lana-and-ronen
     order: 7
     name: Lana & Ronen
-    role: Разработчик геймплея и дизайнер уровней
+    role: Единственный разработчик — геймдизайн, код, публикация
     year: "2019"
-    description: Мобильная match-3 игра с более чем 200 уровнями, анимированными фонами и системой прогрессии. Создана для YouTube-блогера Lana Meinart.
+    description: Match-3 на Unity, 200+ уровней в 5 биомах, 1M+ скачиваний на Google Play за полгода. Разработка и публикация в одиночку, плюс один художник в команде.
     theme: magenta
     featured: false
     platforms: [Android, iOS]
@@ -202,6 +202,9 @@ projects:
       - label: APKPure
         url: https://apkpure.com/lana-ronen/com.mkmx.lanam3
         type: store
+      - label: Deep Dive
+        url: /showcase/lana-and-ronen
+        type: product
 
   - slug: wings-gms-online
     order: 8
@@ -388,6 +391,9 @@ projects:
       - label: GitHub
         url: https://github.com/KeeGooRoomiE/timbermanMPGMS
         type: repo
+      - label: Deep Dive
+        url: /showcase/timberman-mp
+        type: product
     media:
       - type: video
         src: /media/projects/timberman-mp/cover.mp4

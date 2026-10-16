@@ -1,0 +1,53 @@
+title: "Timberman Multiplayer"
+role: "Primary Developer — Gameplay & Multiplayer Backend"
+year: "2022"
+tagline: "A 2-week solo build: a real-time 2-player Timberman duel with a custom Node.js/Socket.io backend, open-sourced on GitHub."
+shareable: true
+
+platforms: [Web, Windows]
+stack: [GameMaker, Node.js, Socket.io]
+
+links:
+  - label: GitHub
+    url: https://github.com/KeeGooRoomiE/timbermanMPGMS
+    type: repo
+
+blocks:
+
+  - type: video
+    src: /media/projects/timberman-mp/cover.mp4
+    loop: true
+    alt: "Timberman multiplayer gameplay"
+
+  - type: text
+    title: "Overview"
+    body: |
+      Timberman Multiplayer is a real-time, 2-player take on the Timberman formula: two lumberjacks chop the same tree head-to-head over a live connection, racing to outlast a falling branch. Built solo in GameMaker Studio in two weeks, with a custom Node.js + Socket.io backend running the multiplayer side. The project is open source on GitHub.
+
+  - type: divider
+
+  - type: text
+    title: "Role"
+    body: |
+      I was the sole developer on this one — gameplay, UI, the GameMaker build and the multiplayer server all went through me, on a two-week timeline.
+
+  - type: divider
+
+  - type: text
+    title: "Gameplay & Modes"
+    body: |
+      Each match opens with a 3-2-1-GO countdown, then both players chop in real time for 3 minutes. A branch can hit a lumberjack twice before the third hit kills them. Two sub-modes sit on top of that same core loop: Survival, where whoever has more points when the clock runs out wins, and Speed, a race to 500 points — hitting that threshold early triggers a nest-with-chicks animation and ends the match on the spot. Four lumberjack skins and three environment styles add surface variety without touching the core mechanic.
+
+  - type: divider
+
+  - type: text
+    title: "Multiplayer & Networking"
+    body: |
+      The multiplayer layer is a separate server on Node.js with Socket.io, independent from the GameMaker client. Disconnects are handled explicitly instead of just ending the match: a disconnected player's score freezes where it was, and the opponent keeps playing live against that frozen target. The opponent only wins outright if they're still alive and ahead on points — otherwise it comes down to comparing final scores, frozen versus live. A player who reconnects in time rejoins the same match in progress.
+
+  - type: divider
+
+  - type: text
+    title: "Outcome"
+    body: |
+      The game shipped, then was later folded into MINDPLAYS, a game portal that doesn't break out metrics per individual title — so there are no standalone numbers for this one beyond the source being public on GitHub.

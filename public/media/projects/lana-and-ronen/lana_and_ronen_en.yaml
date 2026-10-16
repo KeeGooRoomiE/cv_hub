@@ -1,0 +1,109 @@
+title: "Lana & Ronen"
+role: "Solo Developer — Level Design, Gameplay & Publishing"
+year: "2019"
+tagline: "200+ hand-tuned match-3 levels for a children's audience, built solo alongside one artist — 1M+ downloads within six months."
+shareable: true
+
+platforms: [Android, iOS]
+stack: [Unity, Firebase]
+
+links:
+  - label: APKPure
+    url: https://apkpure.com/lana-ronen/com.mkmx.lanam3
+    type: store
+
+blocks:
+
+  - type: image
+    src: /media/projects/lana-and-ronen/cover.png
+    alt: "Lana & Ronen — gameplay screenshot"
+
+  - type: text
+    title: "Overview"
+    body: |
+      Lana & Ronen is a mobile match-3 game built around a fruit character and a dinosaur, aimed at a children's audience. It shipped in Hebrew, Russian and English, with Israel as the primary market.
+
+      It was a commission from Lana Meinart, a YouTube blogger, who wanted a branded game for her channel. I was the sole developer — everything from level design to publishing — with one artist on the team.
+
+  - type: divider
+
+  - type: text
+    title: "Role"
+    body: |
+      As the only developer, I owned the full pipeline: level game design, Unity implementation, balancing, ad and store integration, localization, builds, and store publishing — plus the direct line of communication with the client. The one artist on the project covered the visual assets; everything else ran through me.
+
+  - type: divider
+
+  - type: text
+    title: "Built on a proven base"
+    body: |
+      Rather than starting from zero, Lana & Ronen reused the match-3 core and the screen/UI logic from Helens Quiz, an earlier project of mine — a working foundation instead of a blank Unity project. Everything game-specific was built fresh on top of it: level content, obstacles, boosters, and the metagame systems (the fortune wheel, the shop, the dinosaur egg).
+
+  - type: divider
+
+  - type: text
+    title: "Content"
+    anchor: "content"
+    body: |
+      The game launched with 150 levels across 5 biomes, each transitioning smoothly into the next, and has since grown past 200. Obstacles were introduced one at a time rather than all at once: wrapped fruit from level 11, candy from level 50, waffles and crackers from level 57, and an acorn mechanic — an ingredient that has to be dropped to the bottom of the board — from level 30, alongside dedicated water levels.
+
+      Boosters were a tornado and fireworks. The metagame layer sat around the core loop: a fortune wheel, an in-game shop, and a dinosaur egg to hatch through play.
+
+  - type: image
+    src: /media/projects/lana-and-ronen/map-overview.jpg
+    alt: "Level map — one of the 5 biomes, with the path winding between levels"
+    caption: "Each biome gets its own setting and level path before smoothly handing off to the next."
+
+  - type: image
+    src: /media/projects/lana-and-ronen/biome-ocean.jpg
+    alt: "Match-3 board in the underwater biome, with a firework booster active"
+    caption: "The underwater biome — one of 5, each with its own board dressing and obstacle mix."
+
+  - type: divider
+
+  - type: text
+    title: "Balance"
+    body: |
+      Difficulty was tracked automatically through custom tooling built in Unity, logging dynamic difficulty, fail rate and completion time per level. Tuning itself was manual: after every change to a level, I played it through roughly ten times to cancel out the noise from random board states before trusting the numbers. Levels 46 through 100 were later reordered to smooth out an uneven difficulty curve.
+
+  - type: divider
+
+  - type: text
+    title: "Onboarding"
+    body: |
+      Basic rules and any non-obvious mechanic are introduced through dialogue; everything else, players are left to figure out on their own. Level 50 is a deliberate no-hints checkpoint — a pure skill test before the game trusts the player fully. The level right after it specifically contrasts waffles and crackers, since the two obstacles look similar enough to confuse a new player.
+
+  - type: divider
+
+  - type: text
+    title: "Monetization"
+    body: |
+      A rewarded ad is offered every 3 wins, in exchange for extra moves or an extra spin of the fortune wheel. Whether the prompt appears at all depends on ad fill — if no ad is available, the button simply goes inactive instead of showing a broken offer.
+
+  - type: divider
+
+  - type: text
+    title: "Localization"
+    body: |
+      Hebrew reads right-to-left, so Hebrew strings were placed by hand rather than relying on automatic mirroring. The word for "points" also has two different grammatical forms in Hebrew, which had to be handled explicitly rather than treated as a single fixed label.
+
+      Some content was adapted per market rather than just translated: refined sugar was swapped out for something recognizable locally (it isn't a familiar item in Israel), syrup was renamed to honey, and the black-rocket boosters were replaced with falling stars.
+
+  - type: image
+    src: /media/projects/lana-and-ronen/biome-volcano.jpg
+    alt: "Match-3 board in the volcano biome, with the Hebrew UI reading right-to-left"
+    caption: "The HUD text at the top reads right-to-left — Hebrew strings were hand-placed, not auto-mirrored."
+
+  - type: divider
+
+  - type: text
+    title: "Working with the client"
+    body: |
+      Three rounds of revisions landed over May–June 2019, totaling 74 comment threads — every one of them closed, either with a fix or a documented reason it wasn't actioned. The finished project was handed over to Lana Meinart for her channel.
+
+  - type: divider
+
+  - type: text
+    title: "Outcome"
+    body: |
+      The game passed 1M+ downloads on Google Play within six months of release.
